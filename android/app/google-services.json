@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "950578543441",
+    "project_id": "presensi-ddd76",
+    "storage_bucket": "presensi-ddd76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:950578543441:android:2efac338a328b99fe53170",
+        "android_client_info": {
+          "package_name": "com.proTA.protoype_t_a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "950578543441-skv3hbhkeukhhis078s9q6ikt2a6joma.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByMG2b9zgLeBUpGy80qqP9lNkVpyx5Vms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950578543441-skv3hbhkeukhhis078s9q6ikt2a6joma.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "950578543441-t7k7sb0ekjvfc7ctn9e1hdulecr9porm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.proTA.protoypeTa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,40 @@
+name: protoype_t_a
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.19.5 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  get_storage: ^2.1.1
+  firebase_core: 2.9.0
+  firebase_auth: 4.4.0
+  cloud_firestore: 4.5.0
+  firebase_storage: 11.1.0
+  flutter: 
+    sdk: flutter
+  local_auth: ^2.1.6
+
+dev_dependencies: 
+  flutter_lints: 2.0.1
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - Assets/image/pei 1.png
+    - Assets/image/peiPutih.png
+    - Assets/image/Exp1.png
+    - Assets/image/exp2.png
+    - Assets/image/girlWithPohne.png
+    - Assets/image/Rectangle 29.png
+    - Assets/image/White_fingeprint.png
+    - Assets/icon/
+  fonts: 
+    - family: Lexend
+      fonts: 
+        - asset: Assets/font/Lexend-VariableFont_wght.ttf
+  uses-material-design: true
+
