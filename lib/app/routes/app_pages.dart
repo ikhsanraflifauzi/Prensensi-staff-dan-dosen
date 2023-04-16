@@ -8,6 +8,8 @@ import '../modules/Explain1/bindings/explain1_binding.dart';
 import '../modules/Explain1/views/explain1_view.dart';
 import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
 import '../modules/FingerAuth/views/finger_auth_view.dart';
+import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
+import '../modules/ForgotPassword/views/forgot_password_view.dart';
 import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
 import '../modules/ImpresionPage/views/impresion_page_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.NEW_PASSWORD,
       page: () => const NewPasswordView(),
       binding: NewPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

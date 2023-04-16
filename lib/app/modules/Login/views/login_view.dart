@@ -66,13 +66,13 @@ class LoginView extends GetView<LoginController> {
                   }
                   return null;
                 },
-                obscureText: controller.passwordHidden.value,
+                obscureText: controller.passwordHidden.value == true,
                 suffixIcon: IconButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       controller.passwordHidden.toggle();
                     },
-                    icon: controller.passwordHidden.value == true
+                    icon: controller.passwordHidden.isTrue
                         ? const Icon(Icons.visibility_outlined)
                         : const Icon(Icons.visibility_off_outlined)),
               ),
@@ -83,23 +83,27 @@ class LoginView extends GetView<LoginController> {
             SizedBox(
               width: 100,
               height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  controller.login();
-                },
-                child: const Text(
-                  'Masuk',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Lexend',
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+              child: Obx(
+                () => ElevatedButton(
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.login();
+                    }
+                  },
+                  child: Text(
+                    controller.isLoading.isFalse ? "Login" : "Loading",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Lexend',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      backgroundColor: ColorConstants.lightClearBlue),
                 ),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    backgroundColor: ColorConstants.lightClearBlue),
               ),
             ),
             Padding(

@@ -13,8 +13,11 @@ class AddEmployeeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
+  RxBool isLoading = false.obs;
+
   Future<void> processAddEmploye() async {
     if (passwordAdminController.text.isNotEmpty) {
+      isLoading.value = true;
       try {
         String emailAdmin = auth.currentUser!.email!;
 
@@ -50,14 +53,17 @@ class AddEmployeeController extends GetxController {
           );
           Get.back();
           Get.back();
-          Get.snackbar('Behasil', 'Berhasil menambahkan user');
+          isLoading.value = false;
+          Get.snackbar('Behasil', 'Berhasil menambahkan user',
+              backgroundColor: Colors.white);
         }
         print(userCredential);
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          Get.snackbar(
-              "Terjadi kesalahan", "Password yang digunakan terlalu lemah");
+        if (e.code == 'wrong-password') {
+          isLoading.value = false;
+          Get.snackbar("Terjadi kesalahan", "Password yang digunakan salah");
         } else if (e.code == 'email-already-in-use') {
+          isLoading.value = false;
           Get.snackbar(
               "Terjadi kesalahan", "email yang anda gunakan telah terdaftar");
         }
@@ -71,7 +77,7 @@ class AddEmployeeController extends GetxController {
     }
   }
 
-  void addEmploye() async {
+  Future<void> addEmploye() async {
     if (nipController.text.isNotEmpty &&
         nameController.text.isNotEmpty &&
         emailController.text.isNotEmpty) {
@@ -99,16 +105,21 @@ class AddEmployeeController extends GetxController {
                     fontFamily: 'Lexend', fontWeight: FontWeight.w500),
               ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await processAddEmploye();
-              },
-              child: Text(
-                'Ok',
-                style: TextStyle(
-                    fontFamily: 'Lexend',
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+            Obx(
+              () => ElevatedButton(
+                onPressed: () async {
+                  if (isLoading.isFalse) {
+                    await processAddEmploye();
+                  }
+                  isLoading.value = false;
+                },
+                child: Text(
+                  isLoading.isFalse ? 'Ok' : 'Loading',
+                  style: TextStyle(
+                      fontFamily: 'Lexend',
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                ),
               ),
             )
           ]);

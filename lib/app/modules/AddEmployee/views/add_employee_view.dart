@@ -50,13 +50,13 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
               height: 30,
             ),
             ElevatedButton(
-                onPressed: () {
-                  controller.addEmploye();
+                onPressed: () async {
+                  await controller.addEmploye();
                 },
                 child: Text(
-                  'Masukkan User',
+                  "Masukkan user",
                   style: TextStyle(fontFamily: 'Lexend', fontSize: 20),
-                ))
+                )),
           ],
         ));
   }

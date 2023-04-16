@@ -19,25 +19,31 @@ class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   @override
-  void login() async {
+  Future<void> login() async {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
+      isLoading.value = true;
       try {
         UserCredential userCredential = await auth.signInWithEmailAndPassword(
             email: emailController.text, password: passController.text);
         if (userCredential.user != null) {
           if (userCredential.user!.emailVerified == true) {
+            isLoading.value = false;
             if (passController.text == "Politeknik Enjinering Indorama") {
               Get.offAllNamed(Routes.NEW_PASSWORD);
             } else {
               Get.offAllNamed(Routes.HOME);
             }
           } else {
+            isLoading.value = true;
             Get.defaultDialog(
                 title: 'Pemberitahuan',
                 middleText: 'Email Anda belum di verifikasi',
                 actions: [
                   OutlinedButton(
-                      onPressed: () => Get.back(),
+                      onPressed: () {
+                        isLoading.value = false;
+                        Get.back();
+                      },
                       child: Text(
                         'batal',
                         style: TextStyle(
@@ -53,7 +59,9 @@ class LoginController extends GetxController {
                           'Berhasil',
                           ' verifikasi email telah terkirim',
                         );
+                        isLoading.value = false;
                       } catch (e) {
+                        isLoading.value = false;
                         Get.snackbar(
                             'Gagal', ' verifikasi email tidak terkirim');
                       }
