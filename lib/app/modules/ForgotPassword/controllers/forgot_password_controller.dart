@@ -1,23 +1,33 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/Utils/Colors.dart';
 
 class ForgotPasswordController extends GetxController {
-  //TODO: Implement ForgotPasswordController
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  TextEditingController newPasswordController = TextEditingController();
+
+  RxBool isLoading = false.obs;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<void> emailVerif() async {
+    if (emailController.text.isNotEmpty) {
+      isLoading.value = true;
+      try {
+        await auth.sendPasswordResetEmail(email: emailController.text);
+        Get.snackbar('berhasil', 'email untuk ganti password telah terkirim',
+            backgroundColor: Colors.white);
+      } on FirebaseException catch (e) {
+        Get.snackbar(
+            ' Terjadi Kesalahan', 'email untuk ganti password tidak terkirim',
+            backgroundColor: Colors.red.shade600);
+      } finally {
+        isLoading.value = false;
+      }
+    }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  Future<void> resetPassword() async {}
 }

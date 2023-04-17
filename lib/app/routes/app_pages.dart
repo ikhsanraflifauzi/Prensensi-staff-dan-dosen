@@ -4,6 +4,8 @@ import '../modules/AddEmployee/bindings/add_employee_binding.dart';
 import '../modules/AddEmployee/views/add_employee_view.dart';
 import '../modules/Daftar/bindings/daftar_binding.dart';
 import '../modules/Daftar/views/daftar_view.dart';
+import '../modules/DashboardEmployee/bindings/dashboard_employee_binding.dart';
+import '../modules/DashboardEmployee/views/dashboard_employee_view.dart';
 import '../modules/Explain1/bindings/explain1_binding.dart';
 import '../modules/Explain1/views/explain1_view.dart';
 import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.DASHBOARD_EMPLOYEE,
+      page: () => const DashboardEmployeeView(),
+      binding: DashboardEmployeeBinding(),
     ),
   ];
 }

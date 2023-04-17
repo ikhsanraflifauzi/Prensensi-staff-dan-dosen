@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/Utils/Colors.dart';
+import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
 import '../controllers/forgot_password_controller.dart';
 
@@ -9,16 +11,51 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ForgotPasswordView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'ForgotPasswordView is working',
-          style: TextStyle(fontSize: 20),
+        backgroundColor: ColorConstants.darkClearBlue,
+        appBar: AppBar(
+          title: const Text('Lupa Password'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: ListView(
+          padding: EdgeInsets.all(20),
+          children: [
+            SizedBox(
+              height: 54,
+            ),
+            Text(
+              'Ganti Password',
+              style: TextStyle(
+                  fontFamily: 'Lexend', fontSize: 20, color: Colors.white),
+            ),
+            PrimaryTextfield(
+              controller: controller.emailController,
+              hintText: 'Masukkan email',
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(
+              () => ElevatedButton(
+                onPressed: () async {
+                  if (controller.isLoading.isFalse) {
+                    await controller.emailVerif();
+                  }
+                },
+                child: Text(
+                  controller.isLoading.isFalse ? 'Verfikasi email' : 'Loding',
+                  style: TextStyle(
+                    fontFamily: 'Lexend',
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: ColorConstants.lightClearBlue),
+              ),
+            )
+          ],
+        ));
   }
 }

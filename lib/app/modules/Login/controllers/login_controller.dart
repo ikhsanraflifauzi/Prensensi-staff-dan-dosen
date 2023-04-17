@@ -18,6 +18,7 @@ class LoginController extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
   @override
   Future<void> login() async {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
@@ -79,6 +80,7 @@ class LoginController extends GetxController {
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
+          isLoading.value = false;
           Get.defaultDialog(
               title: 'Terjadi Kesalahan',
               titleStyle: TextStyle(fontFamily: 'Lexend'),
@@ -118,6 +120,7 @@ class LoginController extends GetxController {
                           color: ColorConstants.darkClearBlue),
                     ))
               ]);
+          isLoading.value = false;
         }
       }
     } else {

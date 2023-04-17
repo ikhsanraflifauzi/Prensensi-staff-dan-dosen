@@ -3,17 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_storage/get_storage.dart';
 
 class AddEmployeeController extends GetxController {
   TextEditingController nipController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordAdminController = TextEditingController();
+  TextEditingController roleController = TextEditingController();
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   RxBool isLoading = false.obs;
+  RxBool errorInputProgram = false.obs;
+
+  String? selectedprogram, program;
+
+  var items = ['admin', 'employee'];
+  void setProgram(String? value) {
+    switch (value) {
+      case 'admin':
+        selectedprogram = 'admin';
+        break;
+      case 'employee':
+        selectedprogram = 'employee';
+        break;
+      default:
+        selectedprogram = '';
+    }
+    program = value;
+    errorInputProgram.value = false;
+    update();
+  }
 
   Future<void> processAddEmploye() async {
     if (passwordAdminController.text.isNotEmpty) {
@@ -39,6 +61,7 @@ class AddEmployeeController extends GetxController {
               "NIP": nipController.text,
               "Name": nameController.text,
               "email": emailController.text,
+              "role": selectedprogram,
               "createAT": DateTime.now().toIso8601String(),
               "Uid": uid,
             });
@@ -80,7 +103,8 @@ class AddEmployeeController extends GetxController {
   Future<void> addEmploye() async {
     if (nipController.text.isNotEmpty &&
         nameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty) {
+        emailController.text.isNotEmpty &&
+        items.isNotEmpty) {
       Get.defaultDialog(
           title: "validasi admin",
           content: Column(
