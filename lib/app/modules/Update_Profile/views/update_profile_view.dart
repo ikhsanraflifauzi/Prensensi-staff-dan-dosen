@@ -24,7 +24,6 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             ),
             centerTitle: true,
             backgroundColor: ColorConstants.darkClearBlue,
-            leading: Icon(Icons.arrow_back_ios),
             actions: [
               IconButton(
                   onPressed: () async {

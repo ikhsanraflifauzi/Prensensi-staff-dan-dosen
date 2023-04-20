@@ -47,6 +47,12 @@ class HomeView extends GetView<HomeController> {
               },
               child: Text("Profil"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed(Routes.PASSWORD_UPDATES);
+              },
+              child: Text("update password"),
+            ),
           ],
         ),
       ),

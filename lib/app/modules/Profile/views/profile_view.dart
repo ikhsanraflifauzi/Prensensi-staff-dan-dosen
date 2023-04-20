@@ -35,11 +35,23 @@ class ProfileView extends GetView<ProfileController> {
             return ListView(
               padding: const EdgeInsets.all(20.0),
               children: [
-                // Container(
-                //   child: ,
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipOval(
+                      child: Container(
+                        width: 165,
+                        height: 165,
+                        child: Image.network(
+                          "https://ui-avatars.com/api/?name= ${user['Name']}",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(
-                  height: 26,
+                  height: 10,
                 ),
                 Text(
                   "${user['Name']}",
@@ -66,7 +78,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 ListTile(
                   onTap: () {
-                    Get.toNamed(Routes.FORGOT_PASSWORD);
+                    Get.toNamed(Routes.PASSWORD_UPDATES);
                   },
                   leading: Icon(Icons.key, color: Colors.white),
                   title: Text('Ganti Password',

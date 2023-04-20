@@ -19,7 +19,6 @@ class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-  @override
   Future<void> login() async {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
       isLoading.value = true;

@@ -16,6 +16,8 @@ import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
 import '../modules/ImpresionPage/views/impresion_page_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
+import '../modules/Password_Updates/bindings/password_updates_binding.dart';
+import '../modules/Password_Updates/views/password_updates_view.dart';
 import '../modules/Presensi/bindings/presensi_binding.dart';
 import '../modules/Presensi/views/presensi_view.dart';
 import '../modules/Profile/bindings/profile_binding.dart';
@@ -26,8 +28,6 @@ import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/newPassword/bindings/new_password_binding.dart';
-import '../modules/newPassword/views/new_password_view.dart';
 
 part 'app_routes.dart';
 
@@ -82,11 +82,7 @@ class AppPages {
       page: () => const FingerAuthView(),
       binding: FingerAuthBinding(),
     ),
-    GetPage(
-      name: _Paths.NEW_PASSWORD,
-      page: () => const NewPasswordView(),
-      binding: NewPasswordBinding(),
-    ),
+
     GetPage(
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
@@ -106,6 +102,11 @@ class AppPages {
       name: _Paths.UPDATE_PROFILE,
       page: () => const UpdateProfileView(),
       binding: UpdateProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASSWORD_UPDATES,
+      page: () => const PasswordUpdatesView(),
+      binding: PasswordUpdatesBinding(),
     ),
   ];
 }
