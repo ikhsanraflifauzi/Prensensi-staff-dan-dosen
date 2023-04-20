@@ -41,6 +41,12 @@ class HomeView extends GetView<HomeController> {
               },
               child: Text("Logout"),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Get.toNamed(Routes.PROFILE);
+              },
+              child: Text("Profil"),
+            ),
           ],
         ),
       ),

@@ -18,6 +18,7 @@ abstract class Routes {
   static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const DASHBOARD_EMPLOYEE = _Paths.DASHBOARD_EMPLOYEE;
   static const PROFILE = _Paths.PROFILE;
+  static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const FORGOT_PASSWORD = '/forgot-password';
   static const DASHBOARD_EMPLOYEE = '/dashboard-employee';
   static const PROFILE = '/profile';
+  static const UPDATE_PROFILE = '/update-profile';
 }
