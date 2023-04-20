@@ -18,6 +18,8 @@ import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
 import '../modules/Presensi/bindings/presensi_binding.dart';
 import '../modules/Presensi/views/presensi_view.dart';
+import '../modules/Profile/bindings/profile_binding.dart';
+import '../modules/Profile/views/profile_view.dart';
 import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.DASHBOARD_EMPLOYEE,
       page: () => const DashboardEmployeeView(),
       binding: DashboardEmployeeBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

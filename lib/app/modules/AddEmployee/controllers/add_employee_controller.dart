@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_storage/get_storage.dart';
@@ -56,15 +55,14 @@ class AddEmployeeController extends GetxController {
         if (userCredential.user != null) {
           String uid = userCredential.user!.uid;
 
-          fireStore
-            ..collection('Employee').doc(uid).set({
-              "NIP": nipController.text,
-              "Name": nameController.text,
-              "email": emailController.text,
-              "role": selectedprogram,
-              "createAT": DateTime.now().toIso8601String(),
-              "Uid": uid,
-            });
+          fireStore.collection('Employee').doc(uid).set({
+            "NIP": nipController.text,
+            "Name": nameController.text,
+            "email": emailController.text,
+            "role": selectedprogram,
+            "createAT": DateTime.now().toIso8601String(),
+            "Uid": uid,
+          });
           await userCredential.user!.sendEmailVerification();
 
           await auth.signOut();
@@ -77,25 +75,75 @@ class AddEmployeeController extends GetxController {
           Get.back();
           Get.back();
           isLoading.value = false;
-          Get.snackbar('Behasil', 'Berhasil menambahkan user',
+          Get.snackbar(
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  'Assets/icon/check icon.png',
+                  width: 36,
+                  height: 38,
+                ),
+              ),
+              'Behasil',
+              ' Akun user telah di tambahkan',
               backgroundColor: Colors.white);
         }
         print(userCredential);
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'wrong-password') {
+        if (selectedprogram == null) {
           isLoading.value = false;
-          Get.snackbar("Terjadi kesalahan", "Password yang digunakan salah");
+          Get.snackbar(
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  'Assets/icon/Warning icon.png',
+                  width: 36,
+                  height: 38,
+                ),
+              ),
+              "Terjadi kesalahan",
+              "Pilih role user terlebih dahulu",
+              backgroundColor: Colors.white);
         } else if (e.code == 'email-already-in-use') {
           isLoading.value = false;
           Get.snackbar(
-              "Terjadi kesalahan", "email yang anda gunakan telah terdaftar");
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  'Assets/icon/Warning icon.png',
+                  width: 36,
+                  height: 38,
+                ),
+              ),
+              "Terjadi kesalahan",
+              "email yang anda gunakan telah terdaftar",
+              backgroundColor: Colors.white);
         }
       } catch (e) {
-        Get.snackbar("Terjadi kesalahan", "tidak dapat menambahkan user");
+        Get.snackbar(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Image.asset(
+                'Assets/icon/Failed Icon.png',
+                width: 36,
+                height: 38,
+              ),
+            ),
+            "Terjadi kesalahan",
+            "tidak dapat menambahkan user");
       }
     } else {
       Get.snackbar(
-          'Terjadi kesalahan', "masukkan password admin terlebih dahulu",
+          icon: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Image.asset(
+              'Assets/icon/Warning icon.png',
+              width: 36,
+              height: 38,
+            ),
+          ),
+          'Terjadi kesalahan',
+          "masukkan password admin terlebih dahulu",
           backgroundColor: Colors.white);
     }
   }
@@ -150,7 +198,17 @@ class AddEmployeeController extends GetxController {
       //
     } else {
       Get.snackbar(
-          "Terjadi kesalahan", "NIP,nama, dan email tidak bolleh kosong");
+          icon: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Image.asset(
+              'Assets/icon/Warning icon.png',
+              width: 36,
+              height: 38,
+            ),
+          ),
+          "Terjadi kesalahan",
+          "NIP,nama, dan email tidak bolleh kosong",
+          backgroundColor: Colors.white);
     }
   }
 }

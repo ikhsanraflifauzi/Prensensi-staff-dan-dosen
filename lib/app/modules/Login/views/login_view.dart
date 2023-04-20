@@ -55,26 +55,28 @@ class LoginView extends GetView<LoginController> {
                 keyboardType: TextInputType.emailAddress,
               )),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: PrimaryTextfield(
-                controller: controller.passController,
-                hintText: 'masukkan kata sandi',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'masukkan kata sandi anda';
-                  }
-                  return null;
-                },
-                obscureText: controller.passwordHidden.value == true,
-                suffixIcon: IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      controller.passwordHidden.toggle();
-                    },
-                    icon: controller.passwordHidden.isTrue
-                        ? const Icon(Icons.visibility_outlined)
-                        : const Icon(Icons.visibility_off_outlined)),
+            Obx(
+              () => Padding(
+                padding: const EdgeInsets.all(12),
+                child: PrimaryTextfield(
+                  controller: controller.passController,
+                  hintText: 'masukkan kata sandi',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'masukkan kata sandi anda';
+                    }
+                    return null;
+                  },
+                  obscureText: controller.passwordIsHidden.value,
+                  suffixIcon: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        controller.passwordIsHidden.toggle();
+                      },
+                      icon: controller.passwordIsHidden.value == true
+                          ? const Icon(Icons.visibility_outlined)
+                          : const Icon(Icons.visibility_off_outlined)),
+                ),
               ),
             ),
             SizedBox(

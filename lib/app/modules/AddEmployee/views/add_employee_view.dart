@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/Utils/Colors.dart';
+import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
 import '../controllers/add_employee_controller.dart';
 
@@ -10,41 +12,34 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AddEmployeeView'),
+        title: const Text(' Tambah user'),
         centerTitle: true,
+        backgroundColor: ColorConstants.darkClearBlue,
       ),
+      backgroundColor: ColorConstants.whitegray,
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
           SizedBox(
             height: 20,
           ),
-          TextField(
+          PrimaryTextfield(
             controller: controller.nipController,
-            decoration: InputDecoration(
-                labelText: 'NIP',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15))),
+            labelText: 'NIP',
           ),
           SizedBox(
             height: 20,
           ),
-          TextField(
+          PrimaryTextfield(
             controller: controller.nameController,
-            decoration: InputDecoration(
-                labelText: 'Nama',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15))),
+            labelText: 'Nams',
           ),
           SizedBox(
             height: 20,
           ),
-          TextField(
+          PrimaryTextfield(
             controller: controller.emailController,
-            decoration: InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15))),
+            labelText: 'email',
           ),
           SizedBox(
             height: 20,
@@ -83,14 +78,24 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
                 SizedBox(
                   height: 30,
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      await controller.addEmploye();
-                    },
-                    child: Text(
-                      "Masukkan user",
-                      style: TextStyle(fontFamily: 'Lexend', fontSize: 20),
-                    )),
+                Center(
+                  child: SizedBox(
+                    width: 320,
+                    height: 47,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorConstants.lightClearBlue,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30))),
+                        onPressed: () async {
+                          await controller.addEmploye();
+                        },
+                        child: Text(
+                          "Tambahkan",
+                          style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
+                        )),
+                  ),
+                ),
               ],
             ),
           )

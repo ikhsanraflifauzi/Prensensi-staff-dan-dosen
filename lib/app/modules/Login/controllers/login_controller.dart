@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-  RxBool passwordHidden = true.obs;
+  RxBool passwordIsHidden = true.obs;
   RxBool isLoading = false.obs;
   RxBool errorInputProgram = false.obs;
 
@@ -30,15 +30,30 @@ class LoginController extends GetxController {
           if (userCredential.user!.emailVerified == true) {
             isLoading.value = false;
             if (passController.text == "Politeknik Enjinering Indorama") {
-              Get.offAllNamed(Routes.NEW_PASSWORD);
+              Get.offAllNamed(Routes.FORGOT_PASSWORD);
             } else {
               Get.offAllNamed(Routes.HOME);
             }
           } else {
             isLoading.value = true;
             Get.defaultDialog(
+                content: Column(
+                  children: [
+                    Image.asset(
+                      'Assets/image/emailverif.jpg',
+                      width: 150,
+                      height: 150,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Email Anda belum di verifikasi',
+                      textAlign: TextAlign.center,
+                    )
+                  ],
+                ),
                 title: 'Pemberitahuan',
-                middleText: 'Email Anda belum di verifikasi',
                 actions: [
                   OutlinedButton(
                       onPressed: () {
@@ -57,6 +72,14 @@ class LoginController extends GetxController {
                         await userCredential.user!.sendEmailVerification();
                         Get.back();
                         Get.snackbar(
+                          icon: Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Image.asset(
+                              'Assets/icon/check icon.png',
+                              width: 36,
+                              height: 38,
+                            ),
+                          ),
                           'Berhasil',
                           ' verifikasi email telah terkirim',
                         );
@@ -64,7 +87,16 @@ class LoginController extends GetxController {
                       } catch (e) {
                         isLoading.value = false;
                         Get.snackbar(
-                            'Gagal', ' verifikasi email tidak terkirim');
+                            icon: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Image.asset(
+                                'Assets/icon/Warning icon.png',
+                                width: 36,
+                                height: 38,
+                              ),
+                            ),
+                            'Gagal',
+                            ' verifikasi email tidak terkirim');
                       }
                     },
                     child: Text(
@@ -103,6 +135,18 @@ class LoginController extends GetxController {
         } else if (e.code == 'wrong-password') {
           print('Wrong password provided for that user.');
           Get.defaultDialog(
+              content: Column(
+                children: [
+                  Image.asset('Assets/icon/Failed Icon.png'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'password anda salah',
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
               title: 'Terjadi Kesalahan',
               titleStyle: TextStyle(fontFamily: 'Lexend'),
               middleText: 'password anda salah',
@@ -125,10 +169,28 @@ class LoginController extends GetxController {
       }
     } else {
       Get.defaultDialog(
+          content: Column(
+            children: [
+              Image.asset('Assets/icon/Warning icon.png'),
+              Text(
+                'email dan password yang anda masukkan tidak valid',
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
           title: 'Terjadi Kesalahan',
-          middleText: 'email dan password yang anda masukkan tidak valid',
-          onCancel: () => Get.back(),
-          backgroundColor: Colors.white);
+          backgroundColor: Colors.white,
+          actions: [
+            TextButton(
+                onPressed: () => Get.back(),
+                child: Text(
+                  'kembali',
+                  style: TextStyle(
+                      fontFamily: 'Lexend',
+                      fontSize: 18,
+                      color: ColorConstants.darkClearBlue),
+                ))
+          ]);
     }
   }
 }

@@ -23,6 +23,7 @@ class ColorConstants {
   static Color grey40 = hexToColor('#F3F3F3');
   static Color green1 = hexToColor('#15C8A8');
   static Color green2 = hexToColor('#3AAA35');
+  static Color whitegray = hexToColor('#EDEDED');
   static Color cyan1 = hexToColor('#15C8A8');
   // static Color mainBlue = hexToColor('#83B4E1');
   static Color mainBlue = hexToColor('#106FA4');
