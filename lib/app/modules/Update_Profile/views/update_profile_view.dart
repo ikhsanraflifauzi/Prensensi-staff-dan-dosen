@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -40,16 +43,29 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             SizedBox(
               height: 54,
             ),
-            TextField(
+            Text(
+              'NIP',
+              style: TextStyle(
+                  fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            PrimaryTextfield(
               controller: controller.nipController,
+              labelText: 'NIP',
               readOnly: true,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  fillColor: Colors.white),
             ),
             SizedBox(
               height: 12,
+            ),
+            Text(
+              'Nama',
+              style: TextStyle(
+                  fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
+            ),
+            SizedBox(
+              height: 5,
             ),
             PrimaryTextfield(
               controller: controller.nameController,
@@ -58,24 +74,107 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             SizedBox(
               height: 12,
             ),
+            Text(
+              'email',
+              style: TextStyle(
+                  fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
+            ),
+            SizedBox(
+              height: 5,
+            ),
             PrimaryTextfield(
               controller: controller.emailController,
               labelText: 'email',
+              readOnly: true,
             ),
             SizedBox(
               height: 20,
             ),
+            Text(
+              'Pilih Foto',
+              style: TextStyle(
+                  fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
+            ),
+            SizedBox(
+              height: 5,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('image picker'),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.upload),
-                  label: Text('Upload foto'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorConstants.lightClearBlue),
-                )
+                GetBuilder<UpdateProfileController>(builder: (b) {
+                  if (b.image != null) {
+                    return ClipOval(
+                        child: Container(
+                      width: 100,
+                      height: 100,
+                      child: Image.file(
+                        File(b.image!.path),
+                        fit: BoxFit.cover,
+                      ),
+                    ));
+                  } else {
+                    if (user["profile"] != null) {
+                      return ClipOval(
+                          child: InkWell(
+                        onTap: () {
+                          Get.defaultDialog(
+                              content: Column(
+                                children: [
+                                  Image.asset('Assets/icon/Warning icon.png'),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'Anda akan menghapus foto profil',
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                              title: 'Peringatan !',
+                              titleStyle: TextStyle(fontFamily: 'Lexend'),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      controller.deletepic(
+                                        user["Uid"],
+                                      );
+                                    },
+                                    child: Text(
+                                      'Hapus',
+                                      style: TextStyle(
+                                          fontFamily: 'Lexend',
+                                          color: ColorConstants.darkClearBlue),
+                                    )),
+                              ]);
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: Image.network(
+                            user["profile"],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ));
+                    }
+                    return Text(
+                      'tidak ada foto',
+                      style: TextStyle(
+                          fontFamily: 'Lexend',
+                          color: Colors.white,
+                          fontSize: 12),
+                    );
+                  }
+                }),
+                IconButton(
+                  onPressed: () {
+                    controller.imagepic();
+                  },
+                  icon: Icon(
+                    Icons.upload,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ],

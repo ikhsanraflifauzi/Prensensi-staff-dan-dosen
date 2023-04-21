@@ -11,6 +11,7 @@ class PrimaryTextfield extends StatelessWidget {
       this.suffixIcon,
       this.keyboardType,
       this.obscureText,
+      this.readOnly,
       this.validator,
       this.onChanged,
       this.withBorderSide = false})
@@ -20,7 +21,7 @@ class PrimaryTextfield extends StatelessWidget {
   final String? labelText, hintText, helperText;
   final Widget? prefixIcon, suffixIcon;
   final TextInputType? keyboardType;
-  final bool? obscureText;
+  final bool? obscureText, readOnly;
   final String? Function(String? value)? validator;
   final void Function(String)? onChanged;
   final bool withBorderSide;
@@ -31,6 +32,7 @@ class PrimaryTextfield extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       obscureText: obscureText ?? false,
+      readOnly: readOnly ?? false,
       controller: controller,
       decoration: InputDecoration(
         helperText: helperText,

@@ -43,7 +43,9 @@ class ProfileView extends GetView<ProfileController> {
                         width: 165,
                         height: 165,
                         child: Image.network(
-                          "https://ui-avatars.com/api/?name= ${user['Name']}",
+                          user["profile"] != null
+                              ? user["profile"]
+                              : "https://ui-avatars.com/api/?name= ${user['Name']}",
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -13,8 +13,11 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
     return Scaffold(
         backgroundColor: ColorConstants.darkClearBlue,
         appBar: AppBar(
-          title: const Text('Lupa Password'),
+          title: const Text('Lupa Password',
+              style:
+                  TextStyle(fontFamily: 'Lexend', fontWeight: FontWeight.w500)),
           centerTitle: true,
+          backgroundColor: ColorConstants.darkClearBlue,
         ),
         body: ListView(
           padding: EdgeInsets.all(20),
@@ -23,9 +26,12 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               height: 54,
             ),
             Text(
-              'Ganti Password',
+              'email ',
               style: TextStyle(
                   fontFamily: 'Lexend', fontSize: 20, color: Colors.white),
+            ),
+            SizedBox(
+              height: 10,
             ),
             PrimaryTextfield(
               controller: controller.emailController,

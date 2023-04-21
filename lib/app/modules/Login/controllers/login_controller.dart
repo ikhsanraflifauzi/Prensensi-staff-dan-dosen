@@ -71,17 +71,17 @@ class LoginController extends GetxController {
                         await userCredential.user!.sendEmailVerification();
                         Get.back();
                         Get.snackbar(
-                          icon: Padding(
-                            padding: const EdgeInsets.only(left: 15),
-                            child: Image.asset(
-                              'Assets/icon/check icon.png',
-                              width: 36,
-                              height: 38,
+                            icon: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Image.asset(
+                                'Assets/icon/check icon.png',
+                                width: 36,
+                                height: 38,
+                              ),
                             ),
-                          ),
-                          'Berhasil',
-                          ' verifikasi email telah terkirim',
-                        );
+                            'Berhasil',
+                            ' verifikasi email telah terkirim',
+                            backgroundColor: Colors.white);
                         isLoading.value = false;
                       } catch (e) {
                         isLoading.value = false;
@@ -95,7 +95,8 @@ class LoginController extends GetxController {
                               ),
                             ),
                             'Gagal',
-                            ' verifikasi email tidak terkirim');
+                            ' verifikasi email tidak terkirim',
+                            backgroundColor: Colors.white);
                       }
                     },
                     child: Text(
