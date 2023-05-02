@@ -4,25 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../Utils/Colors.dart';
+import '../controllers/surat_keluar_controller.dart';
 import '../../../controllers/page_index_controller.dart';
-import '../controllers/riwayat_presensi_controller.dart';
 
-class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
-  const RiwayatPresensiView({Key? key}) : super(key: key);
+class SuratKeluarView extends GetView<SuratKeluarController> {
+  const SuratKeluarView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final pageController = Get.find<PageIndexController>();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('RiwayatPresensiView'),
+          title: const Text('SuratKeluarView'),
           centerTitle: true,
         ),
-        body: const Center(
-          child: Text(
-            'RiwayatPresensiView is working',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
+        body: ListView(),
         bottomNavigationBar: ConvexAppBar(
             backgroundColor: ColorConstants.darkClearBlue,
             // cornerRadius: 30,

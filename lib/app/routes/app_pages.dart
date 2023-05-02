@@ -24,10 +24,14 @@ import '../modules/Profile/bindings/profile_binding.dart';
 import '../modules/Profile/views/profile_view.dart';
 import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
+import '../modules/Surat_keluar/bindings/surat_keluar_binding.dart';
+import '../modules/Surat_keluar/views/surat_keluar_view.dart';
 import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/user_control/bindings/user_control_binding.dart';
+import '../modules/user_control/views/user_control_view.dart';
 
 part 'app_routes.dart';
 
@@ -107,6 +111,16 @@ class AppPages {
       name: _Paths.PASSWORD_UPDATES,
       page: () => const PasswordUpdatesView(),
       binding: PasswordUpdatesBinding(),
+    ),
+    GetPage(
+      name: _Paths.USER_CONTROL,
+      page: () => const UserControlView(),
+      binding: UserControlBinding(),
+    ),
+    GetPage(
+      name: _Paths.SURAT_KELUAR,
+      page: () => const SuratKeluarView(),
+      binding: SuratKeluarBinding(),
     ),
   ];
 }

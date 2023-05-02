@@ -7,13 +7,16 @@ import 'package:protoype_t_a/app/Utils/Colors.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
+import '../../../controllers/page_index_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final pageController = Get.find<PageIndexController>();
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: ColorConstants.darkClearBlue,
           title: const Text('HomeView'),
           centerTitle: true,
           actions: [
@@ -36,33 +39,21 @@ class HomeView extends GetView<HomeController> {
         ),
         body: Center(
           child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  controller.logout();
-                },
-                child: Text("Logout"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(Routes.PROFILE);
-                },
-                child: Text("Profil"),
-              ),
-            ],
+            children: [Container()],
           ),
         ),
         bottomNavigationBar: ConvexAppBar(
-          backgroundColor: ColorConstants.darkClearBlue,
-          cornerRadius: 30,
-          items: [
-            TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.map, title: 'Discovery'),
-            TabItem(icon: Icons.add, title: 'Add'),
-            TabItem(icon: Icons.message, title: 'Message'),
-            TabItem(icon: Icons.people, title: 'Profile'),
-          ],
-          onTap: (int i) => print('click index=$i'),
-        ));
+            backgroundColor: ColorConstants.darkClearBlue,
+            // cornerRadius: 30,
+            style: TabStyle.flip,
+            items: [
+              TabItem(icon: Icons.home, title: 'Home'),
+              TabItem(icon: Icons.mail, title: 'Surat keluar'),
+              TabItem(icon: Icons.add, title: 'Presensi'),
+              TabItem(icon: Icons.history, title: 'Riwayat presensi'),
+              TabItem(icon: Icons.person, title: 'Profil'),
+            ],
+            initialActiveIndex: pageController.pageIndex.value,
+            onTap: (int i) => pageController.pagemove(i)));
   }
 }
