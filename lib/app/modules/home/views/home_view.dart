@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
+import 'package:protoype_t_a/app/modules/home/component/body.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -17,7 +18,10 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ColorConstants.darkClearBlue,
-          title: const Text('HomeView'),
+          title: const Text(
+            'Dashboard',
+            style: TextStyle(fontFamily: 'Lexend'),
+          ),
           centerTitle: true,
           actions: [
             StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -37,11 +41,7 @@ class HomeView extends GetView<HomeController> {
                 }),
           ],
         ),
-        body: Center(
-          child: Column(
-            children: [Container()],
-          ),
-        ),
+        body: BodyHomeScreen(),
         bottomNavigationBar: ConvexAppBar(
             backgroundColor: ColorConstants.darkClearBlue,
             // cornerRadius: 30,
@@ -49,7 +49,7 @@ class HomeView extends GetView<HomeController> {
             items: [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.mail, title: 'Surat keluar'),
-              TabItem(icon: Icons.add, title: 'Presensi'),
+              TabItem(icon: Icons.handshake, title: 'Presensi'),
               TabItem(icon: Icons.history, title: 'Riwayat presensi'),
               TabItem(icon: Icons.person, title: 'Profil'),
             ],

@@ -2,6 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/modules/Riwayat_Presensi/Component/bodyRiwayat.dart';
 
 import '../../../Utils/Colors.dart';
 import '../../../controllers/page_index_controller.dart';
@@ -14,15 +15,15 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
     final pageController = Get.find<PageIndexController>();
     return Scaffold(
         appBar: AppBar(
-          title: const Text('RiwayatPresensiView'),
-          centerTitle: true,
-        ),
-        body: const Center(
-          child: Text(
-            'RiwayatPresensiView is working',
-            style: TextStyle(fontSize: 20),
+          title: const Text(
+            'Riwayat Presensi',
+            style: TextStyle(fontFamily: 'Lexend'),
           ),
+          centerTitle: true,
+          backgroundColor: ColorConstants.darkClearBlue,
         ),
+        backgroundColor: ColorConstants.whitegray,
+        body: BodyRiwayat(),
         bottomNavigationBar: ConvexAppBar(
             backgroundColor: ColorConstants.darkClearBlue,
             // cornerRadius: 30,
@@ -30,7 +31,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
             items: [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.mail, title: 'Surat keluar'),
-              TabItem(icon: Icons.add, title: 'Presensi'),
+              TabItem(icon: Icons.handshake, title: 'Presensi'),
               TabItem(icon: Icons.history, title: 'Riwayat presensi'),
               TabItem(icon: Icons.person, title: 'Profil'),
             ],

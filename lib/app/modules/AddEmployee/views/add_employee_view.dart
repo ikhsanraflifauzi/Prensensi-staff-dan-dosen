@@ -80,7 +80,7 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
                 ),
                 Center(
                   child: SizedBox(
-                    width: 320,
+                    width: 350,
                     height: 47,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(

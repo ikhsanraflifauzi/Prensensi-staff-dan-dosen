@@ -40,6 +40,7 @@ flutter:
     - Assets/icon/check icon.png
     - Assets/icon/Failed Icon.png
     - Assets/icon/Warning icon.png
+    - Assets/icon/Hand.png
   fonts: 
     - family: Lexend
       fonts: 
