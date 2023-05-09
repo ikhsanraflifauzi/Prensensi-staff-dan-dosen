@@ -61,9 +61,7 @@ class HomeView extends GetView<HomeController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 13,
-                        ),
+                        padding: const EdgeInsets.only(left: 20),
                         child: ClipOval(
                           child: Container(
                             width: 50,
@@ -77,6 +75,9 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Column(
                         children: [
                           Text(
@@ -86,12 +87,17 @@ class HomeView extends GetView<HomeController> {
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500),
                           ),
-                          Text(
-                            'jl.Cipmai desa citeko',
-                            style: TextStyle(
-                                fontFamily: 'Lexend',
-                                fontSize: 15,
-                                fontWeight: FontWeight.w100),
+                          Container(
+                            width: 200,
+                            child: Text(
+                              user["alamat"] != null
+                                  ? "${user['alamat']}"
+                                  : "posisi tidak terdeteksi",
+                              style: TextStyle(
+                                  fontFamily: 'Lexend',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w100),
+                            ),
                           ),
                         ],
                       )

@@ -1,11 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   void pagemove(int i) async {
     // pageIndex.value = i;
@@ -16,18 +22,26 @@ class PageIndexController extends GetxController {
         try {
           if (!dataResponse["error"]) {
             Position position = dataResponse["Position"];
-            print(" ${position.latitude},${position.longitude} ");
+
+            List<Placemark> placemarks = await placemarkFromCoordinates(
+                position.latitude, position.longitude);
+            String address =
+                "${placemarks[0].street}, ${placemarks[0].subLocality}, ${placemarks[0].locality}";
+            await updatePosition(position, address);
+            // print(placemarks[0].street);
+            //
+            await presensi(position, address);
             Get.snackbar(
                 icon: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
-                    ' Assets/icon/location.png',
+                    'Assets/icon/location.png',
                     width: 36,
                     height: 38,
                   ),
                 ),
                 "${dataResponse['message']}",
-                "${position.latitude},${position.longitude}",
+                address,
                 backgroundColor: Colors.white);
           } else {
             Get.snackbar(
@@ -54,6 +68,42 @@ class PageIndexController extends GetxController {
       default:
         pageIndex.value = i;
         Get.offAllNamed(Routes.HOME);
+    }
+  }
+
+  Future<void> updatePosition(Position position, String address) async {
+    String uid = auth.currentUser!.uid;
+
+    fireStore.collection("Employee").doc(uid).update({
+      "Position": {
+        "latitude": position.latitude,
+        "longitude": position.longitude,
+      },
+      "alamat": address
+    });
+  }
+
+  Future<void> presensi(Position position, String address) async {
+    String uid = auth.currentUser!.uid;
+    DateTime dateTime = DateTime.now();
+    String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
+
+    CollectionReference<Map<String, dynamic>> colPresensi =
+        await fireStore.collection("Employee").doc(uid).collection("presensi");
+
+    QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
+    if (snapPresensi.docs.length == 0) {
+      await colPresensi.doc(docPresensi).set({
+        "tanggal": dateTime.toIso8601String(),
+        "check in": {
+          "tanggal": dateTime.toIso8601String(),
+          "alamat": address,
+          "latitude": position.latitude,
+          "longitude": position.longitude,
+          "status": "masuk",
+          "jangkauan": "di dalam area"
+        }
+      });
     }
   }
 
