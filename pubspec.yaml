@@ -44,6 +44,7 @@ flutter:
     - Assets/icon/Failed Icon.png
     - Assets/icon/Warning icon.png
     - Assets/icon/Hand.png
+    - Assets/icon/location.png
   fonts: 
     - family: Lexend
       fonts: 

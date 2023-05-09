@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +12,39 @@ class PageIndexController extends GetxController {
     switch (i) {
       case 1:
         print("this is for presensce");
+        Map<String, dynamic> dataResponse = await determinePosition();
+        try {
+          if (!dataResponse["error"]) {
+            Position position = dataResponse["Position"];
+            print(" ${position.latitude},${position.longitude} ");
+            Get.snackbar(
+                icon: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Image.asset(
+                    ' Assets/icon/location.png',
+                    width: 36,
+                    height: 38,
+                  ),
+                ),
+                "${dataResponse['message']}",
+                "${position.latitude},${position.longitude}",
+                backgroundColor: Colors.white);
+          } else {
+            Get.snackbar(
+                icon: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Image.asset(
+                    'Assets/icon/Warning icon.png',
+                    width: 36,
+                    height: 38,
+                  ),
+                ),
+                ' Terjadi kesalahan',
+                dataResponse["message"],
+                backgroundColor: Colors.white);
+          }
+        } catch (e) {}
+
         break;
 
       case 2:
@@ -22,7 +57,7 @@ class PageIndexController extends GetxController {
     }
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Map<String, dynamic>> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -44,18 +79,29 @@ class PageIndexController extends GetxController {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
+        return {
+          "message": "Izin aplikasi untuk menggunakan GPS di tolak",
+          "error": true
+        };
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return {
+        "message":
+            "Perangkat anda tidak mengizinkan menggunakan GPS, coba ubah di bagian Setting",
+        "error": true
+      };
     }
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    Position position = await Geolocator.getCurrentPosition();
+    return {
+      "Position": position,
+      "message": "Berhasil mendapatkan posisi device",
+      "error": false
+    };
   }
 }
