@@ -119,12 +119,12 @@ class ProfileView extends GetView<ProfileController> {
         bottomNavigationBar: ConvexAppBar(
             backgroundColor: ColorConstants.lightClearBlue,
             // cornerRadius: 30,
-            style: TabStyle.flip,
+            style: TabStyle.fixedCircle,
+            activeColor: Colors.white,
+            height: 60,
             items: [
               TabItem(icon: Icons.home, title: 'Home'),
-              TabItem(icon: Icons.mail, title: 'Surat keluar'),
-              TabItem(icon: Icons.add, title: 'Presensi'),
-              TabItem(icon: Icons.history, title: 'Riwayat presensi'),
+              TabItem(icon: Icons.handshake, title: 'Presensi'),
               TabItem(icon: Icons.person, title: 'Profil'),
             ],
             initialActiveIndex: pageController.pageIndex.value,

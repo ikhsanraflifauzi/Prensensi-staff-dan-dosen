@@ -14,6 +14,7 @@ class PrimaryTextfield extends StatelessWidget {
       this.readOnly,
       this.validator,
       this.onChanged,
+      this.maxLines,
       this.withBorderSide = false})
       : super(key: key);
 
@@ -25,6 +26,7 @@ class PrimaryTextfield extends StatelessWidget {
   final String? Function(String? value)? validator;
   final void Function(String)? onChanged;
   final bool withBorderSide;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {

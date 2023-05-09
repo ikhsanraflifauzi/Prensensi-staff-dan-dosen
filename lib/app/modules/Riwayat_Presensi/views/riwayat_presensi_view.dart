@@ -2,10 +2,12 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:protoype_t_a/app/modules/Riwayat_Presensi/Component/bodyRiwayat.dart';
+import 'package:protoype_t_a/app/routes/app_pages.dart';
+import 'package:simple_navigation_menu/simple_navigation_menu.dart';
 
 import '../../../Utils/Colors.dart';
 import '../../../controllers/page_index_controller.dart';
+import '../Component/list_riwayat_presensi.dart';
 import '../controllers/riwayat_presensi_controller.dart';
 
 class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
@@ -13,29 +15,47 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
   @override
   Widget build(BuildContext context) {
     final pageController = Get.find<PageIndexController>();
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Riwayat Presensi',
-            style: TextStyle(fontFamily: 'Lexend'),
-          ),
-          centerTitle: true,
-          backgroundColor: ColorConstants.darkClearBlue,
-        ),
-        backgroundColor: ColorConstants.whitegray,
-        body: BodyRiwayat(),
-        bottomNavigationBar: ConvexAppBar(
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Riwayat Presensi',
+              style: TextStyle(fontFamily: 'Lexend'),
+            ),
+            centerTitle: true,
             backgroundColor: ColorConstants.darkClearBlue,
-            // cornerRadius: 30,
-            style: TabStyle.flip,
-            items: [
-              TabItem(icon: Icons.home, title: 'Home'),
-              TabItem(icon: Icons.mail, title: 'Surat keluar'),
-              TabItem(icon: Icons.handshake, title: 'Presensi'),
-              TabItem(icon: Icons.history, title: 'Riwayat presensi'),
-              TabItem(icon: Icons.person, title: 'Profil'),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios_new),
+                onPressed: () {
+                  Get.offAllNamed(Routes.HOME);
+                }),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  text: 'Riwayat Presensi',
+                ),
+                Tab(
+                  text: 'Get pass',
+                )
+              ],
+              dividerColor: ColorConstants.whitegray,
+              indicatorColor: Colors.white,
+            ),
+          ),
+          backgroundColor: ColorConstants.whitegray,
+          body: TabBarView(
+            children: [
+              Tab(child: ListRiwayat()),
+              Tab(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  color: Colors.green,
+                ),
+              ),
             ],
-            initialActiveIndex: pageController.pageIndex.value,
-            onTap: (int i) => pageController.pagemove(i)));
+          )),
+    );
   }
 }
