@@ -106,66 +106,83 @@ class HomeView extends GetView<HomeController> {
                   SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    height: 150,
-                    decoration: BoxDecoration(
-                        color: ColorConstants.lightClearBlue,
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Center(
-                            child: Text(
-                          'Presensi',
-                          style: TextStyle(
-                              fontFamily: 'Lexend',
-                              fontSize: 14,
-                              color: Colors.white),
-                        )),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: DataText(
-                              name: 'Hari/Tanggal',
-                              value:
-                                  '${DateFormat.yMMMEd().format(DateTime.now())}'),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: DataText(name: 'Status', value: 'Masuk'),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: DataText(
-                              name: 'Jam Masuk',
-                              value:
-                                  "${DateFormat.Hm().format(DateTime.now())}"),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: DataText(
-                              name: 'Jam pulang',
-                              value:
-                                  "${DateFormat.Hm().format(DateTime.now())}"),
-                        ),
-                      ],
-                    ),
-                  ),
+                  StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamInfoPresensi(),
+                      builder: (
+                        context,
+                        snapDataPresensi,
+                      ) {
+                        Map<String, dynamic>? dataToday =
+                            snapDataPresensi.data?.data();
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          height: 150,
+                          decoration: BoxDecoration(
+                              color: ColorConstants.lightClearBlue,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Center(
+                                  child: Text(
+                                'Presensi',
+                                style: TextStyle(
+                                    fontFamily: 'Lexend',
+                                    fontSize: 14,
+                                    color: Colors.white),
+                              )),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: DataText(
+                                    name: 'Hari/Tanggal',
+                                    value:
+                                        '${DateFormat.yMMMEd().format(DateTime.now())}'),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: DataText(
+                                    name: 'Status',
+                                    value: dataToday?['check in'] == null
+                                        ? "-"
+                                        : dataToday!['check in']['status']),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: DataText(
+                                  name: 'Jam Masuk',
+                                  value: dataToday?["check in"] == null
+                                      ? "-"
+                                      : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check in"]!["tanggal"]))}',
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: DataText(
+                                  name: 'Jam pulang',
+                                  value: dataToday?["check out"] == null
+                                      ? "-"
+                                      : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check out"]!["tanggal"]))}',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                   SizedBox(
                     height: 15,
                   ),
@@ -299,97 +316,126 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ],
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 5,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 15),
-                          width: 303,
-                          height: 113,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                  offset: Offset(0, 7),
-                                  blurRadius: 7,
-                                  color: Colors.grey),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Column(children: [
-                              SizedBox(
-                                height: 10,
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamLastPresensi(),
+                      builder: (context, snapPresnsi) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapPresnsi.data!.docs.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            if (snapPresnsi.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapPresnsi.data?.docs.length == 0 ||
+                                snapPresnsi.data == null) {
+                              return Center(
+                                child: Text(
+                                  'belum ada data presensi',
+                                  style: TextStyle(
+                                      fontFamily: 'Lexend', fontSize: 14),
+                                ),
+                              );
+                            }
+
+                            Map<String, dynamic> data = snapPresnsi
+                                .data!.docs.reversed
+                                .toList()[index]
+                                .data();
+                            return Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 15),
+                                width: 303,
+                                height: 113,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0, 7),
+                                        blurRadius: 7,
+                                        color: Colors.grey),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(children: [
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Check in ',
+                                          style: TextStyle(
+                                              fontFamily: 'Lexend',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                            '${DateFormat.yMMMEd().format(DateTime.parse(data["tanggal"]))}'),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data['check in']?['tanggal'] == null
+                                              ? "-"
+                                              : '${DateFormat.Hms().format(DateTime.parse(data["check in"]!["tanggal"]))}',
+                                          style: TextStyle(
+                                              fontFamily: 'Lexend',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text('Status : masuk'),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: const [
+                                        Text(
+                                          'Check Out',
+                                          style: TextStyle(
+                                              fontFamily: 'Lexend',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data['check out']?['tanggal'] == null
+                                              ? "-"
+                                              : '${DateFormat.Hms().format(DateTime.parse(data["check out"]!["tanggal"]))}',
+                                          style: TextStyle(
+                                              fontFamily: 'Lexend',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                  ]),
+                                ),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Check in ',
-                                    style: TextStyle(
-                                        fontFamily: 'Lexend',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text(
-                                      '${DateFormat.yMMMEd().format(DateTime.now())}'),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "${DateFormat.Hms().format(DateTime.now())}",
-                                    style: TextStyle(
-                                        fontFamily: 'Lexend',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Text('Status : masuk'),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
-                                    'Chek Out',
-                                    style: TextStyle(
-                                        fontFamily: 'Lexend',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "${DateFormat.Hms().format(DateTime.now())}",
-                                    style: TextStyle(
-                                        fontFamily: 'Lexend',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                            ]),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                            );
+                          },
+                        );
+                      }),
                 ]);
               } else {
                 return Center(

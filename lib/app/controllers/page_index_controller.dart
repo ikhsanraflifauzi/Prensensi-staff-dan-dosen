@@ -7,6 +7,8 @@ import 'package:protoype_t_a/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
+import '../Utils/Colors.dart';
+
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
 
@@ -29,15 +31,16 @@ class PageIndexController extends GetxController {
                 "${placemarks[0].street}, ${placemarks[0].subLocality}, ${placemarks[0].locality}";
             await updatePosition(position, address);
             // print(placemarks[0].street);
-            //
-            await presensi(position, address);
+            double jarak = Geolocator.distanceBetween(
+                6.5540221, 107.4155447, position.latitude, position.longitude);
+            await presensi(position, address, jarak);
             Get.snackbar(
                 icon: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Image.asset(
                     'Assets/icon/location.png',
-                    width: 36,
-                    height: 38,
+                    width: 25,
+                    height: 25,
                   ),
                 ),
                 "${dataResponse['message']}",
@@ -50,14 +53,27 @@ class PageIndexController extends GetxController {
                   child: Image.asset(
                     'Assets/icon/Warning icon.png',
                     width: 36,
-                    height: 38,
+                    height: 36,
                   ),
                 ),
                 ' Terjadi kesalahan',
                 dataResponse["message"],
                 backgroundColor: Colors.white);
           }
-        } catch (e) {}
+        } catch (e) {
+          Get.snackbar(
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  'Assets/icon/Warning icon.png',
+                  width: 36,
+                  height: 36,
+                ),
+              ),
+              ' Terjadi kesalahan',
+              dataResponse["message"],
+              backgroundColor: Colors.white);
+        }
 
         break;
 
@@ -83,16 +99,26 @@ class PageIndexController extends GetxController {
     });
   }
 
-  Future<void> presensi(Position position, String address) async {
+  Future<void> presensi(Position position, String address, double jarak) async {
     String uid = auth.currentUser!.uid;
     DateTime dateTime = DateTime.now();
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
+    String jangkauan = "di luar area";
+    String status = "Terlambat";
+    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
 
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
 
     QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
-    if (snapPresensi.docs.length == 0) {
+
+    if (jarak <= 100) {
+      jangkauan = "di dalam area";
+    } else {
+      jangkauan = "di luar area";
+    }
+    if (snapPresensi.docs.length == 0 && waktu == true) {
+      status = "Masuk";
       await colPresensi.doc(docPresensi).set({
         "tanggal": dateTime.toIso8601String(),
         "check in": {
@@ -100,10 +126,73 @@ class PageIndexController extends GetxController {
           "alamat": address,
           "latitude": position.latitude,
           "longitude": position.longitude,
-          "status": "masuk",
-          "jangkauan": "di dalam area"
+          "status": status,
+          "jangkauan": jangkauan
         }
       });
+    } else if (snapPresensi.docs.length == 0 && waktu == false) {
+      status = "Terlambat";
+      await colPresensi.doc(docPresensi).set({
+        "tanggal": dateTime.toIso8601String(),
+        "check in": {
+          "tanggal": dateTime.toIso8601String(),
+          "alamat": address,
+          "latitude": position.latitude,
+          "longitude": position.longitude,
+          "status": status,
+          "jangkauan": jangkauan
+        }
+      });
+    } else {
+      DocumentSnapshot<Map<String, dynamic>> todayPresensi =
+          await colPresensi.doc(docPresensi).get();
+
+      if (todayPresensi.exists == true) {
+        Map<String, dynamic>? dataTodayPresensi = todayPresensi.data();
+        if (dataTodayPresensi?["check out"] != null) {
+          Get.defaultDialog(
+              title: 'Pemberitahuan',
+              titleStyle: TextStyle(fontFamily: 'Lexend'),
+              middleText:
+                  'Anda sudah melakukan presensi hari ini, silakhan lakukan lakukan presensi besok ',
+              middleTextStyle:
+                  TextStyle(fontFamily: 'Lexend', fontWeight: FontWeight.w500),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text(
+                      'Kembali',
+                      style: TextStyle(
+                          fontFamily: 'Lexend',
+                          color: ColorConstants.darkClearBlue),
+                    ))
+              ]);
+        } else {
+          await colPresensi.doc(docPresensi).update({
+            "check out": {
+              "tanggal": dateTime.toIso8601String(),
+              "alamat": address,
+              "latitude": position.latitude,
+              "longitude": position.longitude,
+              "jangkauan": jangkauan
+            }
+          });
+        }
+      } else {
+        await colPresensi.doc(docPresensi).set({
+          "tanggal": dateTime.toIso8601String(),
+          "check in": {
+            "tanggal": dateTime.toIso8601String(),
+            "alamat": address,
+            "latitude": position.latitude,
+            "longitude": position.longitude,
+            "status": status,
+            "jangkauan": jangkauan
+          }
+        });
+      }
     }
   }
 
