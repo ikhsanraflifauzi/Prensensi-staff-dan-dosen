@@ -32,7 +32,7 @@ class PageIndexController extends GetxController {
             await updatePosition(position, address);
             // print(placemarks[0].street);
             double jarak = Geolocator.distanceBetween(
-                6.5540221, 107.4155447, position.latitude, position.longitude);
+                -6.5540221, 107.4155447, position.latitude, position.longitude);
             await presensi(position, address, jarak);
             Get.snackbar(
                 icon: Padding(
@@ -114,7 +114,8 @@ class PageIndexController extends GetxController {
 
     QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
 
-    if (jarak <= 100) {
+    if (jarak <= 500) {
+      print(jarak);
       jangkauan = "di dalam area";
       if (snapPresensi.docs.length == 0 && waktu == waktu2) {
         status = "Masuk";
@@ -194,6 +195,7 @@ class PageIndexController extends GetxController {
         }
       }
     } else {
+      print(jarak);
       jangkauan = "di luar area";
       Get.defaultDialog(
           content: Column(

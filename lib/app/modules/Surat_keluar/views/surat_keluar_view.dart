@@ -47,10 +47,8 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
             height: 20,
           ),
           TextField(
-            // controller: controller.nameController,
-
+            controller: controller.pass,
             maxLines: 3,
-
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -70,7 +68,7 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                   onPressed: () async {
-                    //  await controller.addEmploye();
+                    await controller.getPass();
                   },
                   child: Text(
                     "Tambahkan",

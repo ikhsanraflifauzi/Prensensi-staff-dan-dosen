@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:protoype_t_a/app/modules/home/component/isiText.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
@@ -54,6 +55,36 @@ class HomeController extends GetxController {
       },
       "alamat": address,
     });
+  }
+
+  Future<void> detallPresensi() async {
+    try {
+      Get.defaultDialog(
+          title: "Detail Presensi",
+          content: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+              stream: streamInfoPresensi(),
+              builder: (context, detailPresensi) {
+                Map<String, dynamic>? dataDetail = detailPresensi.data!.data();
+                return Container(
+                  width: 500,
+                  height: 250,
+                  color: Colors.white,
+                  child: Column(children: [
+                    Text('${DateFormat.yMMMEd().format(DateTime.now())}'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        DataText(
+                            name: "jam",
+                            value: dataDetail?["Check in"] == null
+                                ? "-"
+                                : '${DateFormat.Hms().format(DateTime.parse(dataDetail!["check in"]!["tanggal"]))}')
+                      ],
+                    )
+                  ]),
+                );
+              }));
+    } catch (e) {}
   }
 
   Future<Map<String, dynamic>> determinePosition() async {
