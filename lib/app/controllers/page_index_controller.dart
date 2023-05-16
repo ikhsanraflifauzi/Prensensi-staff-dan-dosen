@@ -106,6 +106,8 @@ class PageIndexController extends GetxController {
     String jangkauan = "di luar area";
     String status = "Terlambat";
     TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
+    TimeOfDay waktu2 = TimeOfDay.now();
+    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
 
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
@@ -114,73 +116,8 @@ class PageIndexController extends GetxController {
 
     if (jarak <= 100) {
       jangkauan = "di dalam area";
-    } else {
-      jangkauan = "di luar area";
-    }
-    if (snapPresensi.docs.length == 0 && waktu == true) {
-      status = "Masuk";
-      await colPresensi.doc(docPresensi).set({
-        "tanggal": dateTime.toIso8601String(),
-        "check in": {
-          "tanggal": dateTime.toIso8601String(),
-          "alamat": address,
-          "latitude": position.latitude,
-          "longitude": position.longitude,
-          "status": status,
-          "jangkauan": jangkauan
-        }
-      });
-    } else if (snapPresensi.docs.length == 0 && waktu == false) {
-      status = "Terlambat";
-      await colPresensi.doc(docPresensi).set({
-        "tanggal": dateTime.toIso8601String(),
-        "check in": {
-          "tanggal": dateTime.toIso8601String(),
-          "alamat": address,
-          "latitude": position.latitude,
-          "longitude": position.longitude,
-          "status": status,
-          "jangkauan": jangkauan
-        }
-      });
-    } else {
-      DocumentSnapshot<Map<String, dynamic>> todayPresensi =
-          await colPresensi.doc(docPresensi).get();
-
-      if (todayPresensi.exists == true) {
-        Map<String, dynamic>? dataTodayPresensi = todayPresensi.data();
-        if (dataTodayPresensi?["check out"] != null) {
-          Get.defaultDialog(
-              title: 'Pemberitahuan',
-              titleStyle: TextStyle(fontFamily: 'Lexend'),
-              middleText:
-                  'Anda sudah melakukan presensi hari ini, silakhan lakukan lakukan presensi besok ',
-              middleTextStyle:
-                  TextStyle(fontFamily: 'Lexend', fontWeight: FontWeight.w500),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: Text(
-                      'Kembali',
-                      style: TextStyle(
-                          fontFamily: 'Lexend',
-                          color: ColorConstants.darkClearBlue),
-                    ))
-              ]);
-        } else {
-          await colPresensi.doc(docPresensi).update({
-            "check out": {
-              "tanggal": dateTime.toIso8601String(),
-              "alamat": address,
-              "latitude": position.latitude,
-              "longitude": position.longitude,
-              "jangkauan": jangkauan
-            }
-          });
-        }
-      } else {
+      if (snapPresensi.docs.length == 0 && waktu == waktu2) {
+        status = "Masuk";
         await colPresensi.doc(docPresensi).set({
           "tanggal": dateTime.toIso8601String(),
           "check in": {
@@ -192,8 +129,97 @@ class PageIndexController extends GetxController {
             "jangkauan": jangkauan
           }
         });
+      } else if (snapPresensi.docs.length == 0 && waktu3 == waktu2) {
+        status = "Terlambat";
+        await colPresensi.doc(docPresensi).set({
+          "tanggal": dateTime.toIso8601String(),
+          "check in": {
+            "tanggal": dateTime.toIso8601String(),
+            "alamat": address,
+            "latitude": position.latitude,
+            "longitude": position.longitude,
+            "status": status,
+            "jangkauan": jangkauan
+          }
+        });
+      } else {
+        DocumentSnapshot<Map<String, dynamic>> todayPresensi =
+            await colPresensi.doc(docPresensi).get();
+
+        if (todayPresensi.exists == true) {
+          Map<String, dynamic>? dataTodayPresensi = todayPresensi.data();
+          if (dataTodayPresensi?["check out"] != null) {
+            Get.defaultDialog(
+                title: 'Pemberitahuan',
+                titleStyle: TextStyle(fontFamily: 'Lexend'),
+                middleText:
+                    'Anda sudah melakukan presensi hari ini, silakhan lakukan lakukan presensi besok ',
+                middleTextStyle: TextStyle(
+                    fontFamily: 'Lexend', fontWeight: FontWeight.w500),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        'Kembali',
+                        style: TextStyle(
+                            fontFamily: 'Lexend',
+                            color: ColorConstants.darkClearBlue),
+                      ))
+                ]);
+          } else {
+            await colPresensi.doc(docPresensi).update({
+              "check out": {
+                "tanggal": dateTime.toIso8601String(),
+                "alamat": address,
+                "latitude": position.latitude,
+                "longitude": position.longitude,
+                "jangkauan": jangkauan
+              }
+            });
+          }
+        } else {
+          await colPresensi.doc(docPresensi).set({
+            "tanggal": dateTime.toIso8601String(),
+            "check in": {
+              "tanggal": dateTime.toIso8601String(),
+              "alamat": address,
+              "latitude": position.latitude,
+              "longitude": position.longitude,
+              "status": status,
+              "jangkauan": jangkauan
+            }
+          });
+        }
       }
+    } else {
+      jangkauan = "di luar area";
+      Get.defaultDialog(
+          content: Column(
+            children: [
+              Image.asset('Assets/icon/Warning icon.png'),
+              Text(
+                'anda berada di luar jangkauan area presnsi',
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
+          title: 'Terjadi Kesalahan',
+          backgroundColor: Colors.white,
+          actions: [
+            TextButton(
+                onPressed: () => Get.back(),
+                child: Text(
+                  'kembali',
+                  style: TextStyle(
+                      fontFamily: 'Lexend',
+                      fontSize: 18,
+                      color: ColorConstants.darkClearBlue),
+                ))
+          ]);
     }
+    ;
   }
 
   Future<Map<String, dynamic>> determinePosition() async {

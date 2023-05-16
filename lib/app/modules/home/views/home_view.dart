@@ -345,6 +345,7 @@ class HomeView extends GetView<HomeController> {
                                 .data!.docs.reversed
                                 .toList()[index]
                                 .data();
+
                             return Padding(
                               padding: const EdgeInsets.all(20),
                               child: Container(
@@ -395,7 +396,7 @@ class HomeView extends GetView<HomeController> {
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text('Status : masuk'),
+                                        Text('-'),
                                       ],
                                     ),
                                     SizedBox(
