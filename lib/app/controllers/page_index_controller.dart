@@ -36,18 +36,18 @@ class PageIndexController extends GetxController {
 
             await presensi(position, address, jarak);
 
-            Get.snackbar(
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Image.asset(
-                    'Assets/icon/location.png',
-                    width: 25,
-                    height: 25,
-                  ),
-                ),
-                "${dataResponse['message']}",
-                address,
-                backgroundColor: Colors.white);
+            // Get.snackbar(
+            //     icon: Padding(
+            //       padding: const EdgeInsets.only(left: 15),
+            //       child: Image.asset(
+            //         'Assets/icon/location.png',
+            //         width: 25,
+            //         height: 25,
+            //       ),
+            //     ),
+            //     "${dataResponse['message']}",
+            //     address,
+            //     backgroundColor: Colors.white);
           } else {
             Get.snackbar(
                 icon: Padding(
