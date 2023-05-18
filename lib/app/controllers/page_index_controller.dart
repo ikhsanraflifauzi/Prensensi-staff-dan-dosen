@@ -33,7 +33,9 @@ class PageIndexController extends GetxController {
             // print(placemarks[0].street);
             double jarak = Geolocator.distanceBetween(
                 -6.5540221, 107.4155447, position.latitude, position.longitude);
+
             await presensi(position, address, jarak);
+
             Get.snackbar(
                 icon: Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -224,51 +226,77 @@ class PageIndexController extends GetxController {
     ;
   }
 
-  Future<Map<String, dynamic>> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+  Future<void> onCheckout(
+      Position position, String address, double jarak) async {
+    String uid = auth.currentUser!.uid;
+    DateTime dateTime = DateTime.now();
+    String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
+    String jangkauan = "di luar area";
+    String status = "Terlambat";
+    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
+    TimeOfDay waktu2 = TimeOfDay.now();
+    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
 
-    // Test if location services are enabled.
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
-      return Future.error('Location services are disabled.');
-    }
+    CollectionReference<Map<String, dynamic>> colPresensi =
+        await fireStore.collection("Employee").doc(uid).collection("presensi");
 
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return {
-          "message": "Izin aplikasi untuk menggunakan GPS di tolak",
-          "error": true
-        };
+    QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
+    await colPresensi.doc(docPresensi).update({
+      "check out": {
+        "tanggal": dateTime.toIso8601String(),
+        "alamat": address,
+        "latitude": position.latitude,
+        "longitude": position.longitude,
+        "jangkauan": jangkauan
       }
-    }
+    });
+  }
+}
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
+Future<Map<String, dynamic>> determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
       return {
-        "message":
-            "Perangkat anda tidak mengizinkan menggunakan GPS, coba ubah di bagian Setting",
+        "message": "Izin aplikasi untuk menggunakan GPS di tolak",
         "error": true
       };
     }
+  }
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    Position position = await Geolocator.getCurrentPosition();
+  if (permission == LocationPermission.deniedForever) {
+    // Permissions are denied forever, handle appropriately.
     return {
-      "Position": position,
-      "message": "Berhasil mendapatkan posisi device",
-      "error": false
+      "message":
+          "Perangkat anda tidak mengizinkan menggunakan GPS, coba ubah di bagian Setting",
+      "error": true
     };
   }
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  Position position = await Geolocator.getCurrentPosition();
+  return {
+    "Position": position,
+    "message": "Berhasil mendapatkan posisi device",
+    "error": false
+  };
 }
