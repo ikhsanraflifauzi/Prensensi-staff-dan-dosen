@@ -31,8 +31,13 @@ class HomeController extends GetxController {
           // print(placemarks[0].street);
           double jarak = Geolocator.distanceBetween(
               -6.5540221, 107.4155447, position.latitude, position.longitude);
-
-          await checkIn(position, address, jarak);
+          if (isLoading.isTrue) {
+            Center(
+              child: CircularProgressIndicator(),
+            );
+            await checkIn(position, address, jarak);
+          }
+          isLoading.isFalse;
 
           // Get.snackbar(
           //     icon: Padding(
@@ -170,7 +175,6 @@ class HomeController extends GetxController {
 
     QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
     if (jarak <= 500) {
-      print(jarak);
       jangkauan = "di dalam area";
       if (snapPresensi.docs.length == 0 && waktu == waktu2) {
         status = "Masuk";

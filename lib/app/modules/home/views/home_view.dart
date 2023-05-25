@@ -19,6 +19,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final pageController = Get.find<PageIndexController>();
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ColorConstants.darkClearBlue,
@@ -50,7 +51,8 @@ class HomeView extends GetView<HomeController> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                      color: ColorConstants.darkClearBlue),
                 );
               }
 
@@ -78,9 +80,9 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      // SizedBox(
+                      //   width: 10,
+                      // ),
                       Column(
                         children: [
                           Text(
@@ -122,7 +124,13 @@ class HomeView extends GetView<HomeController> {
                           height: 150,
                           decoration: BoxDecoration(
                               color: ColorConstants.lightClearBlue,
-                              borderRadius: BorderRadius.circular(15)),
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: ColorConstants.darkClearBlue,
+                                    offset: Offset(5, 6),
+                                    blurRadius: 5)
+                              ]),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -198,9 +206,14 @@ class HomeView extends GetView<HomeController> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstants.lightClearBlue,
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorConstants.lightClearBlue,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: ColorConstants.darkClearBlue,
+                                      offset: Offset(5, 6),
+                                      blurRadius: 5)
+                                ]),
                             child: Center(
                               child: IconButton(
                                 icon: Icon(
@@ -228,9 +241,14 @@ class HomeView extends GetView<HomeController> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstants.lightClearBlue,
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorConstants.lightClearBlue,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: ColorConstants.darkClearBlue,
+                                      offset: Offset(5, 6),
+                                      blurRadius: 5)
+                                ]),
                             child: Center(
                               child: IconButton(
                                 icon: Icon(
@@ -258,9 +276,14 @@ class HomeView extends GetView<HomeController> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstants.lightClearBlue,
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorConstants.lightClearBlue,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: ColorConstants.darkClearBlue,
+                                      offset: Offset(5, 6),
+                                      blurRadius: 5)
+                                ]),
                             child: Center(
                               child: IconButton(
                                 icon: Icon(
@@ -288,9 +311,14 @@ class HomeView extends GetView<HomeController> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: ColorConstants.lightClearBlue,
-                            ),
+                                borderRadius: BorderRadius.circular(15),
+                                color: ColorConstants.lightClearBlue,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: ColorConstants.darkClearBlue,
+                                      offset: Offset(5, 6),
+                                      blurRadius: 5)
+                                ]),
                             child: Center(
                               child: IconButton(
                                 icon: Icon(

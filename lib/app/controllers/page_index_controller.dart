@@ -19,7 +19,6 @@ class PageIndexController extends GetxController {
     // pageIndex.value = i;
     switch (i) {
       case 1:
-        print("this is for presensce");
         Map<String, dynamic> dataResponse = await determinePosition();
         try {
           if (!dataResponse["error"]) {
@@ -107,9 +106,9 @@ class PageIndexController extends GetxController {
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
     String status = "Terlambat";
-    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
+    TimeOfDay waktu = const TimeOfDay(hour: 08, minute: 15);
     TimeOfDay waktu2 = TimeOfDay.now();
-    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
+    TimeOfDay waktu3 = const TimeOfDay(hour: 08, minute: 30);
 
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
