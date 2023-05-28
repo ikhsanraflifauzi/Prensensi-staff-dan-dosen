@@ -149,13 +149,31 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                     await controller.getPass();
                   },
                   child: Text(
-                    "Tambahkan",
+                    "Kirim",
                     style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
                   )),
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
+          ),
+          Center(
+            child: SizedBox(
+              width: 350,
+              height: 47,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorConstants.lightClearBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  onPressed: () async {
+                    Get.toNamed(Routes.IZIN_SAKIT);
+                  },
+                  child: Text(
+                    "anda tidak dapat hadir ?",
+                    style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
+                  )),
+            ),
           ),
         ],
       ),

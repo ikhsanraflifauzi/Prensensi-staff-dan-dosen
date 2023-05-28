@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../Utils/Colors.dart';
+
 class SuratKeluarController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -61,45 +63,55 @@ class SuratKeluarController extends GetxController {
                 )
               ],
             ));
-      }
-      if (todayGetPass.exists) {
-        statusGetPass;
-        await colGetPass.doc(docGetPass).set({
-          "Tanggal": dateTime.toIso8601String(),
-          "GetPass": {
-            "Tanggal": dateTime.toIso8601String(),
-            "Alasan": pass.text,
-            "Status": statusGetPass
-          }
-        });
-        Get.defaultDialog(
-            title: "Berhasil",
-            content: Column(
-              children: [
-                Image.asset('Assets/icon/check icon.png'),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ));
       } else {
-        statusGetPass = "kembali ke Kantor";
-        await colGetPass.doc(docGetPass).update({
-          "Tanggal": dateTime.toIso8601String(),
-          "GetBack": {
-            "Tanggal": dateTime.toIso8601String(),
-            "Status": statusGetPass
+        DocumentSnapshot<Map<String, dynamic>> todayGetPass =
+            await colGetPass.doc(docGetPass).get();
+        if (todayGetPass.exists == true) {
+          Map<String, dynamic>? dataTodayGetPass = todayGetPass.data();
+          if (dataTodayGetPass?["GetBack"] != null) {
+            Get.defaultDialog(
+                title: 'Pemberitahuan',
+                titleStyle: TextStyle(fontFamily: 'Lexend'),
+                middleText: 'Anda sudah melakukan GetPass hari ini',
+                middleTextStyle: TextStyle(
+                    fontFamily: 'Lexend', fontWeight: FontWeight.w500),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        'Kembali',
+                        style: TextStyle(
+                            fontFamily: 'Lexend',
+                            color: ColorConstants.darkClearBlue),
+                      ))
+                ]);
+          } else {
+            statusGetPass = "kembali ke Kantor";
+            await colGetPass.doc(docGetPass).update({
+              "Tanggal": dateTime.toIso8601String(),
+              "GetBack": {
+                "Tanggal": dateTime.toIso8601String(),
+                "Status": statusGetPass
+              }
+            });
+            Get.snackbar("Pemberitahuan",
+                " Anda telah melakukan konfrmasi untuk kembali ke kantor",
+                backgroundColor: Colors.white);
           }
-        });
-        Get.snackbar("Pemberitahuan",
-            " Anda telah melakukan konfrmasi untuk kembali ke kantor",
-            backgroundColor: Colors.white);
 
-        ;
+          //
+        } else {
+          await colGetPass.doc(docGetPass).set({
+            "Tanggal": dateTime.toIso8601String(),
+            "GetPass": {
+              "Tanggal": dateTime.toIso8601String(),
+              "Alasan": pass.text,
+              "Status": statusGetPass
+            }
+          });
+        }
       }
     } catch (e) {
       Get.defaultDialog(

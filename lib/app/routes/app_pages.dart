@@ -14,6 +14,8 @@ import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
 import '../modules/ForgotPassword/views/forgot_password_view.dart';
 import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
 import '../modules/ImpresionPage/views/impresion_page_view.dart';
+import '../modules/IzinSakit/bindings/izin_sakit_binding.dart';
+import '../modules/IzinSakit/views/izin_sakit_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
 import '../modules/Login/views/login_view.dart';
 import '../modules/Password_Updates/bindings/password_updates_binding.dart';
@@ -121,6 +123,11 @@ class AppPages {
       name: _Paths.SURAT_KELUAR,
       page: () => const SuratKeluarView(),
       binding: SuratKeluarBinding(),
+    ),
+    GetPage(
+      name: _Paths.IZIN_SAKIT,
+      page: () => const IzinSakitView(),
+      binding: IzinSakitBinding(),
     ),
   ];
 }

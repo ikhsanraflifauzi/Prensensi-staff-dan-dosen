@@ -22,6 +22,7 @@ abstract class Routes {
   static const PASSWORD_UPDATES = _Paths.PASSWORD_UPDATES;
   static const USER_CONTROL = _Paths.USER_CONTROL;
   static const SURAT_KELUAR = _Paths.SURAT_KELUAR;
+  static const IZIN_SAKIT = _Paths.IZIN_SAKIT;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const PASSWORD_UPDATES = '/password-updates';
   static const USER_CONTROL = '/user-control';
   static const SURAT_KELUAR = '/surat-keluar';
+  static const IZIN_SAKIT = '/izin-sakit';
 }
