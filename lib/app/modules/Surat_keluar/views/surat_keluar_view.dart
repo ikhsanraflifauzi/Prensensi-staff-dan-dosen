@@ -2,6 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/modules/home/component/isiText.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
@@ -67,18 +68,6 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                               fontFamily: 'Lexend',
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Status"),
-                            Text(dataGetPass?['GetPass'] == null
-                                ? "dI Kantor"
-                                : dataGetPass!['GetPass']['Status'])
-                          ],
                         ),
                         SizedBox(
                           height: 10,
@@ -155,26 +144,18 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 2,
           ),
           Center(
-            child: SizedBox(
-              width: 350,
-              height: 47,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorConstants.lightClearBlue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30))),
-                  onPressed: () async {
-                    Get.toNamed(Routes.IZIN_SAKIT);
-                  },
+              child: TextButton(
+                  onPressed: () => Get.toNamed(Routes.IZIN_SAKIT),
                   child: Text(
-                    "anda tidak dapat hadir ?",
-                    style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
-                  )),
-            ),
-          ),
+                    'Anda tidak dapat hadir?',
+                    style: TextStyle(
+                        fontFamily: 'Lexend',
+                        fontSize: 14,
+                        color: ColorConstants.darkClearBlue),
+                  ))),
         ],
       ),
     );
