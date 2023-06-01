@@ -28,17 +28,57 @@ class IzinSakitView extends GetView<IzinSakitController> {
           SizedBox(
             height: 20,
           ),
-          Text('Nama'),
-          PrimaryTextfield(),
-          SizedBox(
-            height: 10,
+          Text(
+            'Keterangan ',
+            style: TextStyle(
+                fontFamily: 'Lexend',
+                fontSize: 14,
+                color: ColorConstants.darkClearBlue),
           ),
-          Text('Keterangan '),
-          PrimaryTextfield(),
-          SizedBox(
-            height: 20,
+          GetBuilder<IzinSakitController>(
+            builder: (_) => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InputDecorator(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide.none),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8.0),
+                      fillColor: const Color(0xffFFFBFE),
+                      filled: true),
+                  child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                    borderRadius: BorderRadius.circular(24.0),
+                    isDense: true,
+                    hint: const Text('Pilihan Keterangan'),
+                    value: controller.program,
+                    isExpanded: true,
+                    items: controller.items
+                        .map((value) => DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      controller.setProgram(value);
+                    },
+                  )),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
-          Text('Pilih Foto'),
+          Text(
+            'Pilih Foto',
+            style: TextStyle(
+                fontFamily: 'Lexend',
+                fontSize: 14,
+                color: ColorConstants.darkClearBlue),
+          ),
           SizedBox(
             height: 10,
           ),
@@ -46,8 +86,8 @@ class IzinSakitView extends GetView<IzinSakitController> {
             width: 300,
             height: 60,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ColorConstants.darkClearBlue),
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,47 +107,33 @@ class IzinSakitView extends GetView<IzinSakitController> {
                 }),
                 IconButton(
                   onPressed: () {
-                    // controller.imagepic();
+                    controller.imagepic();
                   },
                   icon: Icon(
                     Icons.upload,
-                    color: Colors.white,
+                    color: ColorConstants.darkClearBlue,
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          Text('Pilih File'),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            width: 300,
-            height: 60,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: ColorConstants.lightClearBlue),
-            child: Row(
-              children: [
-                GetBuilder<IzinSakitController>(builder: (c) {
-                  if (c.filePic != null) {}
-                  return Center();
-                }),
-                IconButton(
-                  onPressed: () {
-                    // controller.imagepic();
+          Center(
+            child: SizedBox(
+              width: 350,
+              height: 47,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorConstants.lightClearBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  onPressed: () async {
+                    await controller.uploadImage();
                   },
-                  icon: Icon(
-                    Icons.upload,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+                  child: Text(
+                    "Kirim",
+                    style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
+                  )),
             ),
-            // color: ColorConstants.darkClearBlue,
           ),
         ],
       ),
