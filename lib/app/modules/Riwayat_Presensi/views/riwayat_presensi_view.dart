@@ -1,74 +1,84 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:circular_menu/circular_menu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
-import 'package:simple_navigation_menu/simple_navigation_menu.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../Utils/Colors.dart';
 import '../../../controllers/page_index_controller.dart';
 import '../Component/list_riwayat_presensi.dart';
 import '../controllers/riwayat_presensi_controller.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
   const RiwayatPresensiView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final pageController = Get.find<PageIndexController>();
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Riwayat Presensi',
-            style: TextStyle(fontFamily: 'Lexend'),
-          ),
-          centerTitle: true,
-          backgroundColor: ColorConstants.darkClearBlue,
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              onPressed: () {
-                Get.offAllNamed(Routes.HOME);
-              }),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                text: 'Riwayat Presensi',
-              ),
-              Tab(
-                text: 'Get pass',
-              )
-            ],
-            dividerColor: ColorConstants.whitegray,
-            indicatorColor: Colors.white,
-          ),
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Riwayat Presensi',
+          style: TextStyle(fontFamily: 'Lexend'),
         ),
-        backgroundColor: ColorConstants.whitegray,
-        body: TabBarView(
-          children: [
-            Tab(child: ListRiwayat()),
-            Tab(
-              child: Container(
-                width: 100,
-                height: 100,
-                color: Colors.green,
-              ),
-            ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Get.dialog(Dialog(
-            //   child: Container
-            //   (
-            //     child: SfDateRangePicker()),
-            // ));
-          },
-          child: Icon(Icons.calendar_month_outlined),
-          backgroundColor: ColorConstants.lightClearBlue,
-        ),
+        centerTitle: true,
+        backgroundColor: ColorConstants.darkClearBlue,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              Get.offAllNamed(Routes.HOME);
+            }),
       ),
+      backgroundColor: ColorConstants.whitegray,
+      body: const ListRiwayat(),
+      floatingActionButton: CircularMenu(
+          alignment: Alignment.bottomRight,
+          toggleButtonColor: ColorConstants.darkClearBlue,
+          items: [
+            CircularMenuItem(
+              onTap: () {},
+              color: ColorConstants.lightClearBlue,
+              icon: Icons.outbond,
+            ),
+            CircularMenuItem(
+              onTap: () {},
+              color: ColorConstants.lightClearBlue,
+              icon: Icons.sick,
+            ),
+            CircularMenuItem(
+              onTap: () {
+                Get.dialog(Dialog(
+                  child: Container(
+                      padding: EdgeInsets.all(20),
+                      height: 400,
+                      child: SfDateRangePicker(
+                        startRangeSelectionColor: ColorConstants.lightClearBlue,
+                        endRangeSelectionColor: ColorConstants.darkClearBlue,
+                        selectionMode: DateRangePickerSelectionMode.range,
+                        showActionButtons: true,
+                        onCancel: () => Get.back(),
+                        onSubmit: (cal) {
+                          if (cal != null) {
+                            if ((cal as PickerDateRange).endDate != null) {
+                              controller.pickDate(cal.startDate!, cal.endDate!);
+                            }
+                          }
+                        },
+                      )),
+                ));
+              },
+              color: ColorConstants.lightClearBlue,
+              icon: Icons.calendar_month,
+            ),
+          ]),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //
+      //   },
+      //   child: Icon(Icons.calendar_month_outlined),
+      //   backgroundColor: ColorConstants.lightClearBlue,
+      // ),
     );
   }
 }

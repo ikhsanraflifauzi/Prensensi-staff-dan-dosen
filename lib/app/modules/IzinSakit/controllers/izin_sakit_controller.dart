@@ -77,19 +77,21 @@ class IzinSakitController extends GetxController {
             }
           });
         }
-        Get.back();
-        Get.snackbar(
-            icon: Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Image.asset(
-                'Assets/icon/check icon.png',
-                width: 36,
-                height: 38,
-              ),
-            ),
-            'Berhasil',
-            'foto berhasil di upload',
-            backgroundColor: Colors.white);
+
+        Get.defaultDialog(
+            title: "Berhasil",
+            content: Column(
+              children: [
+                Image.asset('Assets/icon/check icon.png'),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "foto dan keterangan tidak dapat hadir telah terkirim",
+                  textAlign: TextAlign.center,
+                )
+              ],
+            ));
       } catch (e) {
         Get.snackbar(
             icon: Padding(

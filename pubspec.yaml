@@ -25,7 +25,10 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   file_picker: ^5.3.1
+  expendable_fab: ^0.0.1
+  circular_menu : any
   syncfusion_flutter_datepicker: ^21.2.3
+  
 
 dev_dependencies: 
   flutter_lints: 2.0.1

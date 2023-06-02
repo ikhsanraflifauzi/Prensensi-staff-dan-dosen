@@ -49,7 +49,7 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                 return Center(
                   child: Container(
                     width: 500,
-                    height: 210,
+                    height: 160,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
