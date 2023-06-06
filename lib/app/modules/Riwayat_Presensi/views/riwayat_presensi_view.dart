@@ -37,12 +37,16 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
           toggleButtonColor: ColorConstants.darkClearBlue,
           items: [
             CircularMenuItem(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.RIWAYAT_GET_PASS);
+              },
               color: ColorConstants.lightClearBlue,
               icon: Icons.outbond,
             ),
             CircularMenuItem(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.RIWAYAT_IZIN);
+              },
               color: ColorConstants.lightClearBlue,
               icon: Icons.sick,
             ),

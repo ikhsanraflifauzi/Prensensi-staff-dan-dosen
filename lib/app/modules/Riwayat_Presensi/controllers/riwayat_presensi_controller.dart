@@ -28,8 +28,8 @@ class RiwayatPresensiController extends GetxController {
           .collection('Employee')
           .doc(uid)
           .collection("presensi")
-          .where("Tanggal", isGreaterThan: start!.toIso8601String())
-          .where("Tanggal", isLessThan: end.toIso8601String())
+          .where("tanggal", isGreaterThan: start!.toIso8601String())
+          .where("tanggal", isLessThan: end.toIso8601String())
           .orderBy("tanggal")
           .get();
     }
