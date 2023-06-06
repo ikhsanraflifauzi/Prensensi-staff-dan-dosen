@@ -23,6 +23,8 @@ abstract class Routes {
   static const USER_CONTROL = _Paths.USER_CONTROL;
   static const SURAT_KELUAR = _Paths.SURAT_KELUAR;
   static const IZIN_SAKIT = _Paths.IZIN_SAKIT;
+  static const RIWAYAT_GET_PASS = _Paths.RIWAYAT_GET_PASS;
+  static const RIWAYAT_IZIN = _Paths.RIWAYAT_IZIN;
 }
 
 abstract class _Paths {
@@ -47,4 +49,6 @@ abstract class _Paths {
   static const USER_CONTROL = '/user-control';
   static const SURAT_KELUAR = '/surat-keluar';
   static const IZIN_SAKIT = '/izin-sakit';
+  static const RIWAYAT_GET_PASS = '/riwayat-get-pass';
+  static const RIWAYAT_IZIN = '/riwayat-izin';
 }

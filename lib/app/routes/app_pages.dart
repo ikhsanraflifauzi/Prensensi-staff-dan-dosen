@@ -24,6 +24,10 @@ import '../modules/Presensi/bindings/presensi_binding.dart';
 import '../modules/Presensi/views/presensi_view.dart';
 import '../modules/Profile/bindings/profile_binding.dart';
 import '../modules/Profile/views/profile_view.dart';
+import '../modules/Riwayat_GetPass/bindings/riwayat_get_pass_binding.dart';
+import '../modules/Riwayat_GetPass/views/riwayat_get_pass_view.dart';
+import '../modules/Riwayat_Izin/bindings/riwayat_izin_binding.dart';
+import '../modules/Riwayat_Izin/views/riwayat_izin_view.dart';
 import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
 import '../modules/Surat_keluar/bindings/surat_keluar_binding.dart';
@@ -128,6 +132,16 @@ class AppPages {
       name: _Paths.IZIN_SAKIT,
       page: () => const IzinSakitView(),
       binding: IzinSakitBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIWAYAT_GET_PASS,
+      page: () => const RiwayatGetPassView(),
+      binding: RiwayatGetPassBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIWAYAT_IZIN,
+      page: () => const RiwayatIzinView(),
+      binding: RiwayatIzinBinding(),
     ),
   ];
 }
