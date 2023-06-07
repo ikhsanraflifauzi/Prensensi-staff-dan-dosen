@@ -7,7 +7,7 @@ class RiwayatIzinController extends GetxController {
   DateTime end = DateTime.now();
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
-  Future<QuerySnapshot<Map<String, dynamic>>> getAllGetPass() async {
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllIzin() async {
     String uid = auth.currentUser!.uid;
 
     if (start == null) {
@@ -28,6 +28,11 @@ class RiwayatIzinController extends GetxController {
           .orderBy("Tanggal")
           .get();
     }
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getPhoto() async* {
+    String uid = auth.currentUser!.uid;
+    yield* fireStore.collection('Absen').doc(uid).snapshots();
   }
 
   void pickDate(DateTime pickStart, DateTime pickEnd) {
