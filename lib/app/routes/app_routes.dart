@@ -25,6 +25,7 @@ abstract class Routes {
   static const IZIN_SAKIT = _Paths.IZIN_SAKIT;
   static const RIWAYAT_GET_PASS = _Paths.RIWAYAT_GET_PASS;
   static const RIWAYAT_IZIN = _Paths.RIWAYAT_IZIN;
+  static const FINGER_PRINT = _Paths.FINGER_PRINT;
 }
 
 abstract class _Paths {
@@ -51,4 +52,5 @@ abstract class _Paths {
   static const IZIN_SAKIT = '/izin-sakit';
   static const RIWAYAT_GET_PASS = '/riwayat-get-pass';
   static const RIWAYAT_IZIN = '/riwayat-izin';
+  static const FINGER_PRINT = '/finger-print';
 }

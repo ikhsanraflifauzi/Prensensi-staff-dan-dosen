@@ -16,6 +16,6 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await FirebaseAuth.instance.signOut();
-    Get.offAllNamed(Routes.LOGIN);
+    Get.offAllNamed(Routes.IMPRESION_PAGE);
   }
 }
