@@ -1,13 +1,52 @@
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 class FingerAuthController extends GetxController {
-  //TODO: Implement FingerAuthController
+  final _localAuth = LocalAuthentication();
+  var fingerPrint = false.obs;
+  var faceAuth = false.obs;
+  var userAuth = false.obs;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final LocalAuthentication _localAuth = LocalAuthentication();
+  void getBiometrics() async {
+    bool hasLoacalAuth = await _localAuth.canCheckBiometrics;
+
+    if (hasLoacalAuth) {
+      List<BiometricType> availableBiometrics =
+          await _localAuth.getAvailableBiometrics();
+      faceAuth.value = availableBiometrics.contains(BiometricType.face);
+      fingerPrint.value =
+          availableBiometrics.contains(BiometricType.fingerprint);
+    } else {
+      Get.defaultDialog(
+          title: 'Error',
+          middleText: 'tidak dapat menggunakan fitur pada device');
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getBiometrics();
+  }
+
+  void authenticated() async {
+    try {
+      userAuth.value = await _localAuth.authenticate(
+          localizedReason: 'autentikasi diri',
+          options:
+              AuthenticationOptions(biometricOnly: true, stickyAuth: true));
+      if (userAuth.value) {
+        Get.offAllNamed(Routes.LOGIN);
+      }
+    } catch (e) {
+      Get.defaultDialog(
+          title: 'terjadi Kesalahan',
+          middleText: 'device tidak mendukung untuk fingerprint auth');
+    }
+  }
 }

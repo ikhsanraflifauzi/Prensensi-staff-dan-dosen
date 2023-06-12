@@ -52,7 +52,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
             ),
             CircularMenuItem(
               onTap: () {
-                Get.toNamed(Routes.IMPRESION_PAGE);
+                Get.toNamed(Routes.FINGER_AUTH);
               },
               color: ColorConstants.lightClearBlue,
               icon: Icons.fingerprint,

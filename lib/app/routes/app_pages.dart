@@ -10,8 +10,7 @@ import '../modules/Explain1/bindings/explain1_binding.dart';
 import '../modules/Explain1/views/explain1_view.dart';
 import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
 import '../modules/FingerAuth/views/finger_auth_view.dart';
-import '../modules/FingerPrint/bindings/finger_print_binding.dart';
-import '../modules/FingerPrint/views/finger_print_view.dart';
+
 import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
 import '../modules/ForgotPassword/views/forgot_password_view.dart';
 import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
@@ -144,11 +143,6 @@ class AppPages {
       name: _Paths.RIWAYAT_IZIN,
       page: () => const RiwayatIzinView(),
       binding: RiwayatIzinBinding(),
-    ),
-    GetPage(
-      name: _Paths.FINGER_PRINT,
-      page: () => const FingerPrintView(),
-      binding: FingerPrintBinding(),
     ),
   ];
 }
