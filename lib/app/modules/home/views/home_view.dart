@@ -62,15 +62,15 @@ class HomeView extends GetView<HomeController> {
                   SizedBox(
                     height: 24,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: ClipOval(
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ClipOval(
                           child: Container(
-                            width: 50,
-                            height: 50,
+                            width: 70,
+                            height: 70,
                             child: Image.network(
                               user["profile"] != null
                                   ? user["profile"]
@@ -79,34 +79,35 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
-                      ),
-                      // SizedBox(
-                      //   width: 10,
-                      // ),
-                      Column(
-                        children: [
-                          Text(
-                            '${user['Name']}',
-                            style: TextStyle(
-                                fontFamily: 'Lexend',
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            width: 200,
-                            child: Text(
-                              user["alamat"] != null
-                                  ? "${user['alamat']}"
-                                  : "posisi tidak terdeteksi",
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${user['Name']}',
                               style: TextStyle(
                                   fontFamily: 'Lexend',
                                   fontSize: 15,
-                                  fontWeight: FontWeight.w100),
+                                  fontWeight: FontWeight.w500),
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                            Container(
+                              width: 200,
+                              child: Text(
+                                user["alamat"] != null
+                                    ? "${user['alamat']}"
+                                    : "posisi tidak terdeteksi",
+                                style: TextStyle(
+                                    fontFamily: 'Lexend',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w100),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 30,

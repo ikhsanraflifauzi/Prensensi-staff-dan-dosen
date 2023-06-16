@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginController extends GetxController {
   final getStorge = GetStorage();
@@ -18,6 +19,33 @@ class LoginController extends GetxController {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
+
+  final _localAuth = LocalAuthentication();
+  var fingerPrint = false.obs;
+  var faceAuth = false.obs;
+  var userAuth = false.obs;
+
+  void getBiometrics() async {
+    bool hasLoacalAuth = await _localAuth.canCheckBiometrics;
+
+    if (hasLoacalAuth) {
+      List<BiometricType> availableBiometrics =
+          await _localAuth.getAvailableBiometrics();
+      faceAuth.value = availableBiometrics.contains(BiometricType.face);
+      fingerPrint.value =
+          availableBiometrics.contains(BiometricType.fingerprint);
+    } else {
+      Get.defaultDialog(
+          title: 'Error',
+          middleText: 'tidak dapat menggunakan fitur pada device');
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getBiometrics();
+  }
 
   Future<void> login() async {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
