@@ -10,7 +10,6 @@ import '../modules/Explain1/bindings/explain1_binding.dart';
 import '../modules/Explain1/views/explain1_view.dart';
 import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
 import '../modules/FingerAuth/views/finger_auth_view.dart';
-
 import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
 import '../modules/ForgotPassword/views/forgot_password_view.dart';
 import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
@@ -33,6 +32,8 @@ import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
 import '../modules/Surat_keluar/bindings/surat_keluar_binding.dart';
 import '../modules/Surat_keluar/views/surat_keluar_view.dart';
+import '../modules/TimeControl/bindings/time_control_binding.dart';
+import '../modules/TimeControl/views/time_control_view.dart';
 import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -144,6 +145,11 @@ class AppPages {
       name: _Paths.RIWAYAT_IZIN,
       page: () => const RiwayatIzinView(),
       binding: RiwayatIzinBinding(),
+    ),
+    GetPage(
+      name: _Paths.TIME_CONTROL,
+      page: () => const TimeControlView(),
+      binding: TimeControlBinding(),
     ),
   ];
 }
