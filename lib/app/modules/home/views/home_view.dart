@@ -38,7 +38,7 @@ class HomeView extends GetView<HomeController> {
                   String role = snap.data!.data()!["role"];
                   if (role == "admin") {
                     return IconButton(
-                        onPressed: () => Get.toNamed(Routes.ADD_EMPLOYEE),
+                        onPressed: () => Get.toNamed(Routes.TIME_CONTROL),
                         icon: Icon(Icons.admin_panel_settings_outlined));
                   } else {
                     return SizedBox();

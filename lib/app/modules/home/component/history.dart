@@ -42,7 +42,7 @@ class lastFiveDay extends StatelessWidget {
                 Map<String, dynamic>? data =
                     snapPresnsi.data!.docs.reversed.toList()[index].data();
                 return Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
                   child: Container(
                     margin: EdgeInsets.only(bottom: 15),
                     width: 303,

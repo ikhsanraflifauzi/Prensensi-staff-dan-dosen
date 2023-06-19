@@ -1,23 +1,31 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TimeControlController extends GetxController {
   //TODO: Implement TimeControlController
+  Rx<DateTime> selectedTime = Rx<DateTime>(DateTime.now());
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void updateTime(DateTime newTime) {
+    selectedTime.value = newTime;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  void howTimePicker(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+    if (pickedTime != null) {
+      final DateTime now = DateTime.now();
+      final DateTime selectedDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
 
-  void increment() => count.value++;
+      updateTime(selectedDateTime);
+    }
+  }
 }
