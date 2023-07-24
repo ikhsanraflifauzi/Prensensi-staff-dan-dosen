@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 // Import the generated file
 import 'firebase_options.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,8 @@ void main() async {
 
   // await GetStorage.init();
   final pageController = Get.put(PageIndexController(), permanent: true);
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
     StreamBuilder<User?>(
@@ -35,7 +38,7 @@ void main() async {
             );
           }
           return GetMaterialApp(
-            title: "Prototype Presensi",
+            title: "Aplikasi Presensi",
             initialRoute:
                 snapshot.data != null ? Routes.HOME : AppPages.INITIAL,
             getPages: AppPages.routes,

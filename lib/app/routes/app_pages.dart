@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/modules/Surat_keluar/views/getpassView.dart';
 
 import '../modules/AddEmployee/bindings/add_employee_binding.dart';
 import '../modules/AddEmployee/views/add_employee_view.dart';
@@ -75,16 +76,6 @@ class AppPages {
       page: () => const PresensiView(),
       binding: PresensiBinding(),
     ),
-    // GetPage(
-    //   name: _Paths.IMPRESION_PAGE,
-    //   page: () => const ImpresionPageView(),
-    //   binding: ImpresionPageBinding(),
-    // ),
-    // GetPage(
-    //   name: _Paths.EXPLAIN1,
-    //   page: () => const Explain1View(),
-    //   binding: Explain1Binding(),
-    // ),
     GetPage(
       name: _Paths.ADD_EMPLOYEE,
       page: () => const AddEmployeeView(),
@@ -95,7 +86,6 @@ class AppPages {
       page: () => const FingerAuthView(),
       binding: FingerAuthBinding(),
     ),
-
     GetPage(
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
@@ -129,6 +119,11 @@ class AppPages {
     GetPage(
       name: _Paths.SURAT_KELUAR,
       page: () => const SuratKeluarView(),
+      binding: SuratKeluarBinding(),
+    ),
+    GetPage(
+      name: _Paths.SURAT_KELUAR,
+      page: () => const GetPassView(),
       binding: SuratKeluarBinding(),
     ),
     GetPage(
