@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../../../Utils/Colors.dart';
 
@@ -49,20 +50,6 @@ class SuratKeluarController extends GetxController {
             "Status": statusGetPass
           }
         });
-        Get.defaultDialog(
-            title: "Berhasil",
-            content: Column(
-              children: [
-                Image.asset('Assets/icon/check icon.png'),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ));
       } else {
         DocumentSnapshot<Map<String, dynamic>> todayGetPass =
             await colGetPass.doc(docGetPass).get();
@@ -111,6 +98,21 @@ class SuratKeluarController extends GetxController {
               "Status": statusGetPass
             }
           });
+          Get.defaultDialog(
+              title: "Berhasil",
+              content: Column(
+                children: [
+                  Image.asset('Assets/icon/check icon.png'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ));
+          Get.toNamed(Routes.GetPassView);
         }
       }
     } catch (e) {

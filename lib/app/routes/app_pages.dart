@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:protoype_t_a/app/modules/Surat_keluar/bindings/getpassview_binding.dart';
 import 'package:protoype_t_a/app/modules/Surat_keluar/views/getpassView.dart';
 
 import '../modules/AddEmployee/bindings/add_employee_binding.dart';
@@ -122,9 +123,9 @@ class AppPages {
       binding: SuratKeluarBinding(),
     ),
     GetPage(
-      name: _Paths.SURAT_KELUAR,
+      name: _Paths.GetPassView,
       page: () => const GetPassView(),
-      binding: SuratKeluarBinding(),
+      binding: GetPassViewBinding(),
     ),
     GetPage(
       name: _Paths.IZIN_SAKIT,
