@@ -1,31 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:intl/intl.dart';
-import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../../../Utils/Colors.dart';
-import '../../Login/Component/primaryTextField.dart';
-import '../controllers/surat_keluar_controller.dart';
-import '../../../controllers/page_index_controller.dart';
+import '../../../routes/app_pages.dart';
+import '../controllers/getpassview_controller.dart';
 
-class GetPassView extends GetView<SuratKeluarController> {
-  const GetPassView({Key? key}) : super(key: key);
-
+class GetpassviewView extends GetView<GetpassviewController> {
+  const GetpassviewView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Data GetPass'),
-          backgroundColor: ColorConstants.darkClearBlue,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new),
-            onPressed: () {
-              Get.toNamed(Routes.SURAT_KELUAR);
-            },
-          )),
+        title: const Text('Data Get Pass'),
+        centerTitle: true,
+      ),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -123,7 +113,7 @@ class GetPassView extends GetView<SuratKeluarController> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
                   onPressed: () async {
-                    await controller.getPass();
+                    //await controller.getPass();
                   },
                   child: Text(
                     "Kirim",

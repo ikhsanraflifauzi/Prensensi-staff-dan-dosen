@@ -112,7 +112,7 @@ class SuratKeluarController extends GetxController {
                   )
                 ],
               ));
-          Get.toNamed(Routes.GetPassView);
+          // Get.toNamed(Routes.GetPassView);
         }
       }
     } catch (e) {
