@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,20 @@ class HomeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-  void onCheckIn() async {
+  void onCheckIn(context) async {
     try {
+      isLoading.isTrue;
+      await showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext birudo) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       Map<String, dynamic> dataResponse = await determinePosition();
+
       try {
         if (!dataResponse["error"]) {
           Position position = dataResponse["Position"];
@@ -28,30 +41,38 @@ class HomeController extends GetxController {
           String address =
               "${placemarks[0].street}, ${placemarks[0].subLocality}, ${placemarks[0].locality}";
           await updatePosition(position, address);
-          // print(placemarks[0].street);
+
           double jarak = Geolocator.distanceBetween(
               -6.5540221, 107.4155447, position.latitude, position.longitude);
-          if (isLoading.isTrue) {
-            Center(
-              child: CircularProgressIndicator(),
-            );
-            await checkIn(position, address, jarak);
-          }
+
+          await checkIn(position, address, jarak);
+
+          // Hide loading indicator
           isLoading.isFalse;
 
-          // Get.snackbar(
-          //     icon: Padding(
-          //       padding: const EdgeInsets.only(left: 15),
-          //       child: Image.asset(
-          //         'Assets/icon/location.png',
-          //         width: 25,
-          //         height: 25,
-          //       ),
-          //     ),
-          //     "${dataResponse['message']}",
-          //     address,
-          //     backgroundColor: Colors.white);
+          // Dismiss the loading dialog
+          Navigator.of(context, rootNavigator: true).pop();
+
+          Get.snackbar(
+              icon: Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Image.asset(
+                  'Assets/icon/location.png',
+                  width: 25,
+                  height: 25,
+                ),
+              ),
+              "${dataResponse['message']}",
+              address,
+              backgroundColor: Colors.white);
         } else {
+          // Hide loading indicator
+          isLoading.isFalse;
+
+          // Dismiss the loading dialog
+
+          Navigator.of(context, rootNavigator: true).pop();
+
           Get.snackbar(
               icon: Padding(
                 padding: const EdgeInsets.only(left: 15),
@@ -66,6 +87,13 @@ class HomeController extends GetxController {
               backgroundColor: Colors.white);
         }
       } catch (e) {
+        // Hide loading indicator
+        isLoading.isFalse;
+
+        // Dismiss the loading dialog
+
+        Navigator.of(context, rootNavigator: true).pop();
+
         Get.snackbar(
             icon: Padding(
               padding: const EdgeInsets.only(left: 15),
@@ -80,6 +108,12 @@ class HomeController extends GetxController {
             backgroundColor: Colors.white);
       }
     } catch (e) {
+      // Hide loading indicator
+      isLoading.isFalse;
+
+      // Dismiss the loading dialog
+      Navigator.of(context, rootNavigator: true).pop();
+
       Get.snackbar("terjadi kesalahan", "tidak dapat check in");
     }
   }
@@ -163,6 +197,7 @@ class HomeController extends GetxController {
     QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
     // if (jarak <= 500) {
     jangkauan = "di dalam area";
+
     if (snapPresensi.docs.length == 0 && waktu == waktu2) {
       status = "Masuk";
       await colPresensi.doc(docPresensi).set({
