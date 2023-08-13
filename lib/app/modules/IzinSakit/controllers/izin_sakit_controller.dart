@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 class IzinSakitController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -76,22 +77,28 @@ class IzinSakitController extends GetxController {
               "fotoSurat": urlImage
             }
           });
+          Get.defaultDialog(
+              title: "Berhasil",
+              content: Column(
+                children: [
+                  Image.asset('Assets/icon/check icon.png'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "foto dan keterangan tidak dapat hadir telah terkirim",
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.offNamed(Routes.RIWAYAT_IZIN);
+                    },
+                    child: Text('ok'))
+              ]);
         }
-
-        Get.defaultDialog(
-            title: "Berhasil",
-            content: Column(
-              children: [
-                Image.asset('Assets/icon/check icon.png'),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "foto dan keterangan tidak dapat hadir telah terkirim",
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ));
       } catch (e) {
         Get.snackbar(
             icon: Padding(
@@ -106,6 +113,39 @@ class IzinSakitController extends GetxController {
             ' foto  tidak terupload',
             backgroundColor: Colors.white);
       } finally {}
+    }
+
+    if (image == null && items.isEmpty) {
+      Get.defaultDialog(
+          title: "Peringatan",
+          content: Column(
+            children: [
+              Image.asset('Assets/icon/Warning icon.png'),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Anda harus mengisi keterangan dan foto bukti ketidak hadarian",
+                textAlign: TextAlign.center,
+              )
+            ],
+          ));
+    }
+    if (image == null) {
+      Get.defaultDialog(
+          title: "Peringatan",
+          content: Column(
+            children: [
+              Image.asset('Assets/icon/Warning icon.png'),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Anda harus mengirimkan foto bukti keterangan tidak hadir",
+                textAlign: TextAlign.center,
+              )
+            ],
+          ));
     }
   }
 }

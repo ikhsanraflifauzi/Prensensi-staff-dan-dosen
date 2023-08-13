@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
 import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/add_employee_controller.dart';
 
 class AddEmployeeView extends GetView<AddEmployeeController> {
@@ -12,7 +14,7 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(' Tambah user'),
+        title: const Text(' Data GetPass'),
         centerTitle: true,
         backgroundColor: ColorConstants.darkClearBlue,
       ),
@@ -23,82 +25,136 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
           SizedBox(
             height: 20,
           ),
-          PrimaryTextfield(
-            controller: controller.nipController,
-            labelText: 'NIP',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          PrimaryTextfield(
-            controller: controller.nameController,
-            labelText: 'Nams',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          PrimaryTextfield(
-            controller: controller.emailController,
-            labelText: 'email',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          GetBuilder<AddEmployeeController>(
-            builder: (_) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                InputDecorator(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(100),
-                          borderSide: BorderSide.none),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8.0),
-                      fillColor: const Color(0xffFFFBFE),
-                      filled: true),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                    borderRadius: BorderRadius.circular(24.0),
-                    isDense: true,
-                    hint: const Text('Pilihan Role'),
-                    value: controller.program,
-                    isExpanded: true,
-                    items: controller.items
-                        .map((value) => DropdownMenuItem(
-                              value: value,
-                              child: Text(value),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      controller.setProgram(value);
-                    },
-                  )),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: SizedBox(
-                    width: 350,
-                    height: 47,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: ColorConstants.lightClearBlue,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30))),
-                        onPressed: () async {
-                          await controller.addEmploye();
-                        },
-                        child: Text(
-                          "Tambahkan",
-                          style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
-                        )),
+          StreamBuilder(
+              stream: controller.streamInfoGetPass(),
+              builder: (context, snapGetPass) {
+                if (snapGetPass.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: ColorConstants.darkClearBlue,
+                    ),
+                  );
+                }
+                Map<String, dynamic>? dataGetPass = snapGetPass.data?.data();
+                return Center(
+                  child: Container(
+                    width: 500,
+                    height: 160,
+                    decoration: BoxDecoration(
+                        color: ColorConstants.lightClearBlue,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(color: Colors.grey, offset: Offset(5, 6))
+                        ]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          "Status Get Pass",
+                          style: TextStyle(
+                              fontFamily: 'Lexend',
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "jam keluar",
+                              style: TextStyle(
+                                  fontFamily: 'Lexend', color: Colors.white),
+                            ),
+                            Text(
+                                dataGetPass?["GetPass"] == null
+                                    ? "-"
+                                    : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetPass"]!["Tanggal"]))}',
+                                style: TextStyle(
+                                    fontFamily: 'Lexend', color: Colors.white))
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Jam kembali",
+                                style: TextStyle(
+                                    fontFamily: 'Lexend', color: Colors.white)),
+                            Text(
+                                dataGetPass?["GetBack"] == null
+                                    ? "-"
+                                    : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetBack"]!["Tanggal"]))}',
+                                style: TextStyle(
+                                    fontFamily: 'Lexend', color: Colors.white)),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("perihal :",
+                                style: TextStyle(
+                                    fontFamily: 'Lexend', color: Colors.white)),
+                            Text(
+                                dataGetPass?['GetPass'] == null
+                                    ? "-"
+                                    : dataGetPass!['GetPass']['Alasan'],
+                                style: TextStyle(
+                                    fontFamily: 'Lexend', color: Colors.white))
+                          ],
+                        ),
+                      ]),
+                    ),
                   ),
-                ),
-              ],
+                );
+              }),
+          SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: SizedBox(
+              width: 350,
+              height: 47,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorConstants.lightClearBlue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  onPressed: () async {
+                    await controller.getPass();
+                  },
+                  child: Text(
+                    "Kembali",
+                    style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
+                  )),
             ),
-          )
+          ),
+          SizedBox(
+            height: 2,
+          ),
+          Center(
+              child: TextButton(
+                  onPressed: () => Get.toNamed(Routes.IZIN_SAKIT),
+                  child: Text(
+                    'Anda tidak dapat hadir?',
+                    style: TextStyle(
+                        fontFamily: 'Lexend',
+                        fontSize: 14,
+                        color: ColorConstants.darkClearBlue),
+                  ))),
         ],
       ),
     );

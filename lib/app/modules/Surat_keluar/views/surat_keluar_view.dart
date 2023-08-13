@@ -35,92 +35,45 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
           SizedBox(
             height: 20,
           ),
-          StreamBuilder(
-              stream: controller.streamInfoGetPass(),
-              builder: (context, snapGetPass) {
-                if (snapGetPass.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: ColorConstants.darkClearBlue,
-                    ),
-                  );
-                }
-                Map<String, dynamic>? dataGetPass = snapGetPass.data?.data();
-                return Center(
-                  child: Container(
-                    width: 500,
-                    height: 160,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(color: Colors.grey, offset: Offset(5, 6))
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "Status Get Pass",
-                          style: TextStyle(
-                              fontFamily: 'Lexend',
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("jam keluar"),
-                            Text(dataGetPass?["GetPass"] == null
-                                ? "-"
-                                : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetPass"]!["Tanggal"]))}')
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Jam kembali"),
-                            Text(dataGetPass?["GetBack"] == null
-                                ? "-"
-                                : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetBack"]!["Tanggal"]))}'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("perihal :"),
-                            Text(dataGetPass?['GetPass'] == null
-                                ? "-"
-                                : dataGetPass!['GetPass']['Alasan'])
-                          ],
-                        ),
-                      ]),
-                    ),
-                  ),
-                );
-              }),
+          Container(
+            width: 360,
+            height: 202,
+            // color: ColorConstants.blue1,
+            child: Image.asset('Assets/image/getpass.jpg', fit: BoxFit.cover),
+          ),
           SizedBox(
             height: 20,
           ),
-          TextField(
-            controller: controller.pass,
-            maxLines: 3,
-            decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+          Center(
+            child: Column(children: [
+              Text(
+                'Get Pass',
+                style: TextStyle(
+                    fontFamily: 'Lexend',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                ' Tuliskan perihal anda untuk keluar kantor sementara ',
+                style: TextStyle(
+                  fontFamily: 'Lexend',
+                  fontSize: 15,
                 ),
-                fillColor: Colors.white),
+              ),
+            ]),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(15)),
+            child: TextField(
+              controller: controller.pass,
+              maxLines: 3,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  fillColor: Colors.white),
+            ),
           ),
           SizedBox(
             height: 20,

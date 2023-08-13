@@ -38,8 +38,7 @@ import '../modules/TimeControl/bindings/time_control_binding.dart';
 import '../modules/TimeControl/views/time_control_view.dart';
 import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
-import '../modules/getpassview/bindings/getpassview_binding.dart';
-import '../modules/getpassview/views/getpassview_view.dart';
+
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/user_control/bindings/user_control_binding.dart';
@@ -143,11 +142,6 @@ class AppPages {
       name: _Paths.TIME_CONTROL,
       page: () => const TimeControlView(),
       binding: TimeControlBinding(),
-    ),
-    GetPage(
-      name: _Paths.GETPASSVIEW,
-      page: () => const GetpassviewView(),
-      binding: GetpassviewBinding(),
     ),
   ];
 }

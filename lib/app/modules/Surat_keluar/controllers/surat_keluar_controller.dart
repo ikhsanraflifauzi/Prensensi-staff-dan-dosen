@@ -40,7 +40,7 @@ class SuratKeluarController extends GetxController {
         await colGetPass.doc(docGetPass).get();
 
     try {
-      if (snapGetPass.docs.length == 0) {
+      if (pass.text.isNotEmpty && snapGetPass.docs.length == 0) {
         statusGetPass;
         await colGetPass.doc(docGetPass).set({
           "Tanggal": dateTime.toIso8601String(),
@@ -50,6 +50,10 @@ class SuratKeluarController extends GetxController {
             "Status": statusGetPass
           }
         });
+      }
+      if (pass.text.isEmpty) {
+        Get.snackbar('Peringatan', 'text area harus di isi',
+            backgroundColor: Colors.white);
       } else {
         DocumentSnapshot<Map<String, dynamic>> todayGetPass =
             await colGetPass.doc(docGetPass).get();
@@ -109,10 +113,16 @@ class SuratKeluarController extends GetxController {
                   Text(
                     "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
                     textAlign: TextAlign.center,
-                  )
+                  ),
                 ],
-              ));
-          // Get.toNamed(Routes.GetPassView);
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.offNamed(Routes.ADD_EMPLOYEE);
+                    },
+                    child: Text('Ok'))
+              ]);
         }
       }
     } catch (e) {

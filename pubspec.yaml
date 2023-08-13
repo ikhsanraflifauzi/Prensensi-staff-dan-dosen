@@ -38,6 +38,7 @@ dev_dependencies:
 flutter: 
   assets: 
     - Assets/image/pei 1.png
+    - Assets/image/getpass.jpg
     - Assets/image/peiPutih.png
     - Assets/image/Exp1.png
     - Assets/image/exp2.png
