@@ -6,10 +6,10 @@ import 'package:protoype_t_a/app/Utils/Colors.dart';
 import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
 import '../../../routes/app_pages.dart';
-import '../controllers/add_employee_controller.dart';
+import '../controllers/getPass_landing_controller.dart';
 
-class AddEmployeeView extends GetView<AddEmployeeController> {
-  const AddEmployeeView({Key? key}) : super(key: key);
+class GetPassLandingView extends GetView<GetPassLandingController> {
+  const GetPassLandingView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

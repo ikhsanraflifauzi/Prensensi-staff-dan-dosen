@@ -35,24 +35,8 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
           SizedBox(
             height: 20,
           ),
-          Container(
-            width: 360,
-            height: 202,
-            // color: ColorConstants.blue1,
-            child: Image.asset('Assets/image/getpass.jpg', fit: BoxFit.cover),
-          ),
-          SizedBox(
-            height: 20,
-          ),
           Center(
             child: Column(children: [
-              Text(
-                'Get Pass',
-                style: TextStyle(
-                    fontFamily: 'Lexend',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600),
-              ),
               Text(
                 ' Tuliskan perihal anda untuk keluar kantor sementara ',
                 style: TextStyle(
@@ -61,6 +45,9 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                 ),
               ),
             ]),
+          ),
+          SizedBox(
+            height: 20,
           ),
           Container(
             decoration: BoxDecoration(

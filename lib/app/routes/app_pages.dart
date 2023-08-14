@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../modules/AddEmployee/bindings/add_employee_binding.dart';
-import '../modules/AddEmployee/views/add_employee_view.dart';
 import '../modules/Daftar/bindings/daftar_binding.dart';
 import '../modules/Daftar/views/daftar_view.dart';
 import '../modules/DashboardEmployee/bindings/dashboard_employee_binding.dart';
@@ -12,6 +10,8 @@ import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
 import '../modules/FingerAuth/views/finger_auth_view.dart';
 import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
 import '../modules/ForgotPassword/views/forgot_password_view.dart';
+import '../modules/GetPassLanding/bindings/getPass_landing_binding.dart';
+import '../modules/GetPassLanding/views/getpass_landing_view.dart';
 import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
 import '../modules/ImpresionPage/views/impresion_page_view.dart';
 import '../modules/IzinSakit/bindings/izin_sakit_binding.dart';
@@ -50,7 +50,7 @@ class AppPages {
   AppPages._();
 
   // ignore: constant_identifier_names
-  static const INITIAL = Routes.FINGER_AUTH;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -80,8 +80,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ADD_EMPLOYEE,
-      page: () => const AddEmployeeView(),
-      binding: AddEmployeeBinding(),
+      page: () => const GetPassLandingView(),
+      binding: GetPassLandingBinding(),
     ),
     GetPage(
       name: _Paths.FINGER_AUTH,

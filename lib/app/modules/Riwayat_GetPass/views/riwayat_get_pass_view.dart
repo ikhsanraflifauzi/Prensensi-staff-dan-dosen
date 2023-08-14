@@ -23,7 +23,7 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
         leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new),
             onPressed: () {
-              Get.toNamed(Routes.HOME);
+              Get.offAllNamed(Routes.HOME);
             }),
         centerTitle: true,
         backgroundColor: ColorConstants.darkClearBlue,

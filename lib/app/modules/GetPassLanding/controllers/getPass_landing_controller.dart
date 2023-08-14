@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
-class AddEmployeeController extends GetxController {
+class GetPassLandingController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 

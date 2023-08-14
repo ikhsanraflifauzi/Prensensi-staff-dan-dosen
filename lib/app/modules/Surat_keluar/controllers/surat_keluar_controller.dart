@@ -50,6 +50,27 @@ class SuratKeluarController extends GetxController {
             "Status": statusGetPass
           }
         });
+        Get.defaultDialog(
+            title: "Berhasil",
+            content: Column(
+              children: [
+                Image.asset('Assets/icon/check icon.png'),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Get.offNamed(Routes.ADD_EMPLOYEE);
+                  },
+                  child: Text('Ok'))
+            ]);
       }
       if (pass.text.isEmpty) {
         Get.snackbar('Peringatan', 'text area harus di isi',
