@@ -216,17 +216,15 @@ class HomeView extends GetView<HomeController> {
                                       blurRadius: 5)
                                 ]),
                             child: Center(
-                              child: controller.isLoading.isTrue
-                                  ? const CircularProgressIndicator()
-                                  : IconButton(
-                                      icon: Icon(
-                                        Icons.door_front_door,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () async {
-                                        controller.onCheckIn(context);
-                                      },
-                                    ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.door_front_door,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () async {
+                                  controller.onCheckIn(context);
+                                },
+                              ),
                             ),
                           ),
                           SizedBox(

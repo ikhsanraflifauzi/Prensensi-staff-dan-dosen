@@ -7,7 +7,7 @@
    <application
         android:label="PEI Presensi"
         android:name="${applicationName}"
-        android:icon="@mipmap/peiPutih">
+        android:icon="@mipmap/pei_putih">
         <activity
             android:name=".MainActivity"
             android:exported="true"
