@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_lock_screen:
+    dependency: "direct main"
+    description:
+      name: flutter_lock_screen
+      sha256: "4d0181ad75ec608a8bb92a02e0de968bac740ef8087f72565c6486ee06bbade3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -246,6 +254,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+  flutter_screen_lock:
+    dependency: "direct main"
+    description:
+      name: flutter_screen_lock
+      sha256: "1d86191e67f8c2f09349c2d2929b6d019db213f012d577ad3b85935d22b13207"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter

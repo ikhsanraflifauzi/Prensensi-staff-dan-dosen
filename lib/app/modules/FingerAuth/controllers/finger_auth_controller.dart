@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
+import 'package:flutter_lock_screen/flutter_lock_screen.dart';
 
 class FingerAuthController extends GetxController {
   final _localAuth = LocalAuthentication();
@@ -48,5 +49,14 @@ class FingerAuthController extends GetxController {
           title: 'terjadi Kesalahan',
           middleText: 'device tidak mendukung untuk fingerprint auth');
     }
+  }
+
+  bool verifyPassCode(List<int> enteredPassCode, List<int> myPass) {
+    for (int i = 0; i < myPass.length; i++) {
+      if (enteredPassCode[i] != myPass[i]) {
+        return false;
+      }
+    }
+    return true;
   }
 }

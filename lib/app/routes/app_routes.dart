@@ -29,6 +29,7 @@ abstract class Routes {
   static const TIME_CONTROL = _Paths.TIME_CONTROL;
 
   static const GETPASSVIEW = _Paths.GETPASSVIEW;
+  static const SCREENLOCK = _Paths.SCREENLOCK;
 }
 
 abstract class _Paths {
@@ -59,4 +60,5 @@ abstract class _Paths {
   static const TIME_CONTROL = '/time-control';
 
   static const GETPASSVIEW = '/getpassview';
+  static const SCREENLOCK = '/screenlock';
 }

@@ -32,15 +32,15 @@ import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
 import '../modules/Surat_keluar/bindings/getpassview_binding.dart';
 import '../modules/Surat_keluar/bindings/surat_keluar_binding.dart';
-
 import '../modules/Surat_keluar/views/surat_keluar_view.dart';
 import '../modules/TimeControl/bindings/time_control_binding.dart';
 import '../modules/TimeControl/views/time_control_view.dart';
 import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
-
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/screenlock/bindings/screenlock_binding.dart';
+import '../modules/screenlock/views/screenlock_view.dart';
 import '../modules/user_control/bindings/user_control_binding.dart';
 import '../modules/user_control/views/user_control_view.dart';
 
@@ -50,7 +50,7 @@ class AppPages {
   AppPages._();
 
   // ignore: constant_identifier_names
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.FINGER_AUTH;
 
   static final routes = [
     GetPage(
@@ -142,6 +142,11 @@ class AppPages {
       name: _Paths.TIME_CONTROL,
       page: () => const TimeControlView(),
       binding: TimeControlBinding(),
+    ),
+    GetPage(
+      name: _Paths.SCREENLOCK,
+      page: () => ScreenlockView(),
+      binding: ScreenlockBinding(),
     ),
   ];
 }

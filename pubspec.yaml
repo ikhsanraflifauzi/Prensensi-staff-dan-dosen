@@ -28,6 +28,8 @@ dependencies:
   expendable_fab: ^0.0.1
   circular_menu : any
   syncfusion_flutter_datepicker: ^21.2.3
+  flutter_lock_screen: ^2.0.1
+  flutter_screen_lock: ^9.0.1
   
 
 dev_dependencies: 
@@ -42,6 +44,7 @@ flutter:
     - Assets/image/peiPutih.png
     - Assets/image/Exp1.png
     - Assets/image/exp2.png
+    - Assets/image/lock.jpg
     - Assets/image/girlWithPohne.png
     - Assets/image/Rectangle 29.png
     - Assets/image/White_fingeprint.png
