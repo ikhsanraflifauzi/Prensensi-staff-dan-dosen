@@ -19,15 +19,6 @@ class HomeController extends GetxController {
   void onCheckIn(context) async {
     try {
       isLoading.isTrue;
-      await showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext birudo) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
       Map<String, dynamic> dataResponse = await determinePosition();
 
       try {
@@ -44,32 +35,33 @@ class HomeController extends GetxController {
               -6.5540221, 107.4155447, position.latitude, position.longitude);
 
           await checkIn(position, address, jarak);
-
-          // Hide loading indicator
           isLoading.isFalse;
-
-          // Dismiss the loading dialog
-          Navigator.of(context, rootNavigator: true).pop();
-
-          Get.snackbar(
-              icon: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Image.asset(
-                  'Assets/icon/location.png',
-                  width: 25,
-                  height: 25,
-                ),
+          Get.defaultDialog(
+              title: "Berhasil",
+              content: Column(
+                children: [
+                  Image.asset('Assets/icon/check icon.png'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "anda telah melakukan Check in untuk presensi hari ini ",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              "${dataResponse['message']}",
-              address,
-              backgroundColor: Colors.white);
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text('Ok'))
+              ]);
         } else {
           // Hide loading indicator
           isLoading.isFalse;
 
           // Dismiss the loading dialog
-
-          Navigator.of(context, rootNavigator: true).pop();
 
           Get.snackbar(
               icon: Padding(
@@ -90,8 +82,6 @@ class HomeController extends GetxController {
 
         // Dismiss the loading dialog
 
-        Navigator.of(context, rootNavigator: true).pop();
-
         Get.snackbar(
             icon: Padding(
               padding: const EdgeInsets.only(left: 15),
@@ -110,7 +100,6 @@ class HomeController extends GetxController {
       isLoading.isFalse;
 
       // Dismiss the loading dialog
-      Navigator.of(context, rootNavigator: true).pop();
 
       Get.snackbar("terjadi kesalahan", "tidak dapat check in");
     }
@@ -181,6 +170,7 @@ class HomeController extends GetxController {
 
   Future<void> checkIn(Position position, String address, double jarak) async {
     String uid = auth.currentUser!.uid;
+
     DateTime dateTime = DateTime.now();
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
@@ -189,6 +179,13 @@ class HomeController extends GetxController {
     TimeOfDay waktu2 = TimeOfDay.now();
     TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
 
+    final docRef = fireStore.collection('TimePic').doc('waktu_masuk');
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
 
@@ -196,7 +193,7 @@ class HomeController extends GetxController {
     // if (jarak <= 500) {
     jangkauan = "di dalam area";
 
-    if (snapPresensi.docs.length == 0 && waktu == waktu2) {
+    if (snapPresensi.docs.length == 0 && docRef == 'masuk'.isDateTime) {
       status = "Masuk";
       await colPresensi.doc(docPresensi).set({
         "tanggal": dateTime.toIso8601String(),
@@ -209,7 +206,7 @@ class HomeController extends GetxController {
           "jangkauan": jangkauan
         }
       });
-    } else if (snapPresensi.docs.length == 0 && waktu3 == waktu2) {
+    } else if (snapPresensi.docs.length == 0 && docRef != 'masuk'.isDateTime) {
       status = "Terlambat";
       await colPresensi.doc(docPresensi).set({
         "tanggal": dateTime.toIso8601String(),
@@ -299,11 +296,18 @@ class HomeController extends GetxController {
     DateTime dateTime = DateTime.now();
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
-    String status = "Terlambat";
+    String status = "Terlalu cepat";
     TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
     TimeOfDay waktu2 = TimeOfDay.now();
     TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
-
+    final docRef = fireStore.collection('TimePic').doc('waktu_masuk');
+    docRef.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        // ...
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
 
@@ -358,15 +362,30 @@ class HomeController extends GetxController {
                   )),
               TextButton(
                   onPressed: () async {
-                    await colPresensi.doc(docPresensi).update({
-                      "check out": {
-                        "tanggal": dateTime.toIso8601String(),
-                        "alamat": address,
-                        "latitude": position.latitude,
-                        "longitude": position.longitude,
-                        "jangkauan": jangkauan
-                      }
-                    });
+                    if (docRef != 'pulang') {
+                      await colPresensi.doc(docPresensi).update({
+                        "check out": {
+                          "tanggal": dateTime.toIso8601String(),
+                          "alamat": address,
+                          "latitude": position.latitude,
+                          "longitude": position.longitude,
+                          "jangkauan": jangkauan,
+                          "status": status
+                        }
+                      });
+                    } else {
+                      await colPresensi.doc(docPresensi).update({
+                        "check out": {
+                          "tanggal": dateTime.toIso8601String(),
+                          "alamat": address,
+                          "latitude": position.latitude,
+                          "longitude": position.longitude,
+                          "jangkauan": jangkauan,
+                          "status": 'sesuai jam kerja'
+                        }
+                      });
+                    }
+
                     Get.back();
                   },
                   child: Text(

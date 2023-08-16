@@ -28,23 +28,6 @@ class HomeView extends GetView<HomeController> {
             style: TextStyle(fontFamily: 'Lexend'),
           ),
           centerTitle: true,
-          actions: [
-            StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                stream: controller.streamUser(),
-                builder: (context, snap) {
-                  if (snap.connectionState == ConnectionState.waiting) {
-                    return SizedBox();
-                  }
-                  String role = snap.data!.data()!["role"];
-                  if (role == "admin") {
-                    return IconButton(
-                        onPressed: () => Get.toNamed(Routes.TIME_CONTROL),
-                        icon: Icon(Icons.admin_panel_settings_outlined));
-                  } else {
-                    return SizedBox();
-                  }
-                }),
-          ],
         ),
         body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             stream: controller.streamUser(),
@@ -55,306 +38,436 @@ class HomeView extends GetView<HomeController> {
                       color: ColorConstants.darkClearBlue),
                 );
               }
-
               if (snapshot.hasData) {
                 Map<String, dynamic> user = snapshot.data!.data()!;
-                var children2 = <Widget>[
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ClipOval(
-                          child: Container(
-                            width: 70,
-                            height: 70,
-                            child: Image.network(
-                              user["profile"] != null
-                                  ? user["profile"]
-                                  : "https://ui-avatars.com/api/?name= ${user['Name']}",
-                              fit: BoxFit.cover,
+
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ClipOval(
+                            child: Container(
+                              width: 70,
+                              height: 70,
+                              child: Image.network(
+                                user["profile"] != null
+                                    ? user["profile"]
+                                    : "https://ui-avatars.com/api/?name= ${user['Name']}",
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${user['Name']}',
-                              style: TextStyle(
-                                  fontFamily: 'Lexend',
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Container(
-                              width: 200,
-                              child: Text(
-                                user["alamat"] != null
-                                    ? "${user['alamat']}"
-                                    : "posisi tidak terdeteksi",
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${user['Name']}',
                                 style: TextStyle(
                                     fontFamily: 'Lexend',
                                     fontSize: 15,
-                                    fontWeight: FontWeight.w100),
+                                    fontWeight: FontWeight.w500),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                      stream: controller.streamInfoPresensi(),
-                      builder: (
-                        context,
-                        snapDataPresensi,
-                      ) {
-                        Map<String, dynamic>? dataToday =
-                            snapDataPresensi.data?.data();
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          height: 150,
-                          decoration: BoxDecoration(
-                              color: ColorConstants.lightClearBlue,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: ColorConstants.darkClearBlue,
-                                    offset: Offset(5, 6),
-                                    blurRadius: 5)
-                              ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Center(
-                                  child: Text(
-                                'Presensi',
-                                style: TextStyle(
-                                    fontFamily: 'Lexend',
-                                    fontSize: 14,
-                                    color: Colors.white),
-                              )),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: DataText(
-                                    name: 'Hari/Tanggal',
-                                    value:
-                                        '${DateFormat.yMMMEd().format(DateTime.now())}'),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: DataText(
-                                    name: 'Status',
-                                    value: dataToday?['check in'] == null
-                                        ? "-"
-                                        : dataToday!['check in']['status']),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: DataText(
-                                  name: 'Jam Masuk',
-                                  value: dataToday?["check in"] == null
-                                      ? "-"
-                                      : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check in"]!["tanggal"]))}',
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: DataText(
-                                  name: 'Jam pulang',
-                                  value: dataToday?["check out"] == null
-                                      ? "-"
-                                      : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check out"]!["tanggal"]))}',
+                              Container(
+                                width: 200,
+                                child: Text(
+                                  user["alamat"] != null
+                                      ? "${user['alamat']}"
+                                      : "posisi tidak terdeteksi",
+                                  style: TextStyle(
+                                      fontFamily: 'Lexend',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w100),
                                 ),
                               ),
                             ],
-                          ),
-                        );
-                      }),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorConstants.lightClearBlue,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: ColorConstants.darkClearBlue,
-                                      offset: Offset(5, 6),
-                                      blurRadius: 5)
-                                ]),
-                            child: Center(
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.door_front_door,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () async {
-                                  controller.onCheckIn(context);
-                                },
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text('Check In')
+                          )
                         ],
                       ),
                       SizedBox(
-                        width: 31,
+                        height: 30,
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorConstants.lightClearBlue,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: ColorConstants.darkClearBlue,
-                                      offset: Offset(5, 6),
-                                      blurRadius: 5)
-                                ]),
-                            child: Center(
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.door_front_door_outlined,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () async {
-                                  controller.onCheckOut();
-                                },
+                      StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                          stream: controller.streamInfoPresensi(),
+                          builder: (
+                            context,
+                            snapDataPresensi,
+                          ) {
+                            Map<String, dynamic>? dataToday =
+                                snapDataPresensi.data?.data();
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              height: 150,
+                              decoration: BoxDecoration(
+                                  color: ColorConstants.lightClearBlue,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: ColorConstants.darkClearBlue,
+                                        offset: Offset(5, 6),
+                                        blurRadius: 5)
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Center(
+                                      child: Text(
+                                    'Presensi',
+                                    style: TextStyle(
+                                        fontFamily: 'Lexend',
+                                        fontSize: 14,
+                                        color: Colors.white),
+                                  )),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DataText(
+                                        name: 'Hari/Tanggal',
+                                        value:
+                                            '${DateFormat.yMMMEd().format(DateTime.now())}'),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DataText(
+                                        name: 'Status',
+                                        value: dataToday?['check in'] == null
+                                            ? "-"
+                                            : dataToday!['check in']['status']),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DataText(
+                                      name: 'Jam Masuk',
+                                      value: dataToday?["check in"] == null
+                                          ? "-"
+                                          : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check in"]!["tanggal"]))}',
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: DataText(
+                                      name: 'Jam pulang',
+                                      value: dataToday?["check out"] == null
+                                          ? "-"
+                                          : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check out"]!["tanggal"]))}',
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text('Check out')
-                        ],
-                      ),
+                            );
+                          }),
                       SizedBox(
-                        width: 31,
+                        height: 15,
                       ),
-                      Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorConstants.lightClearBlue,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: ColorConstants.darkClearBlue,
-                                      offset: Offset(5, 6),
-                                      blurRadius: 5)
-                                ]),
-                            child: Center(
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.mail,
-                                  color: Colors.white,
+                          Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorConstants.lightClearBlue,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: ColorConstants.darkClearBlue,
+                                          offset: Offset(5, 6),
+                                          blurRadius: 5)
+                                    ]),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.door_front_door,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () async {
+                                      controller.onCheckIn(context);
+                                    },
+                                  ),
                                 ),
-                                onPressed: () {
-                                  Get.toNamed(Routes.SURAT_KELUAR);
-                                },
                               ),
-                            ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text('Check In')
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            width: 31,
                           ),
-                          Text('Get pass')
-                        ],
-                      ),
-                      SizedBox(
-                        width: 31,
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: ColorConstants.lightClearBlue,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: ColorConstants.darkClearBlue,
-                                      offset: Offset(5, 6),
-                                      blurRadius: 5)
-                                ]),
-                            child: Center(
-                              child: IconButton(
-                                icon: Icon(
-                                  Icons.history,
-                                  color: Colors.white,
+                          Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorConstants.lightClearBlue,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: ColorConstants.darkClearBlue,
+                                          offset: Offset(5, 6),
+                                          blurRadius: 5)
+                                    ]),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.door_front_door_outlined,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () async {
+                                      controller.onCheckOut();
+                                    },
+                                  ),
                                 ),
-                                onPressed: () {
-                                  Get.toNamed(Routes.RIWAYAT_PRESENSI);
-                                },
                               ),
-                            ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text('Check out')
+                            ],
                           ),
                           SizedBox(
-                            height: 10,
+                            width: 31,
                           ),
-                          Text('Riwayat')
+                          Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorConstants.lightClearBlue,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: ColorConstants.darkClearBlue,
+                                          offset: Offset(5, 6),
+                                          blurRadius: 5)
+                                    ]),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.mail,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      Get.toNamed(Routes.SURAT_KELUAR);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text('Get pass')
+                            ],
+                          ),
+                          SizedBox(
+                            width: 31,
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: ColorConstants.lightClearBlue,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: ColorConstants.darkClearBlue,
+                                          offset: Offset(5, 6),
+                                          blurRadius: 5)
+                                    ]),
+                                child: Center(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.history,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      Get.toNamed(Routes.RIWAYAT_PRESENSI);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text('Riwayat')
+                            ],
+                          ),
                         ],
                       ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 24,
+                          ),
+                          Text(
+                            '5 hari terakhir',
+                            style:
+                                TextStyle(fontFamily: 'Lexend', fontSize: 18),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Expanded(
+                          child: StreamBuilder<
+                              QuerySnapshot<Map<String, dynamic>>>(
+                        stream: controller.streamLastPresensi(),
+                        builder: (context, snapPresnsi) {
+                          if (snapPresnsi.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                          if (snapPresnsi.data?.docs.length == 0 ||
+                              snapPresnsi.data == null) {
+                            return SizedBox(
+                              height: 200,
+                              child: Center(
+                                child: Text(
+                                  'belum ada data presensi',
+                                  style: TextStyle(
+                                      fontFamily: 'Lexend', fontSize: 14),
+                                ),
+                              ),
+                            );
+                          }
+                          return ListView.builder(
+                            itemCount: snapPresnsi.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              if (snapPresnsi.hasData) {
+                                Map<String, dynamic>? data = snapPresnsi
+                                    .data!.docs.reversed
+                                    .toList()[index]
+                                    .data();
+                                return Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Container(
+                                    margin: EdgeInsets.only(bottom: 15),
+                                    width: 303,
+                                    height: 113,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            offset: Offset(0, 7),
+                                            blurRadius: 7,
+                                            color: Colors.grey),
+                                      ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: Column(children: [
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Check in ',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lexend',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                                '${DateFormat.yMMMEd().format(DateTime.parse(data["tanggal"]))}'),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              data['check in']?['tanggal'] ==
+                                                      null
+                                                  ? "-"
+                                                  : '${DateFormat.Hms().format(DateTime.parse(data["check in"]!["tanggal"]))}',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lexend',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text('-'),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text(
+                                              'Check Out',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lexend',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              data['check out']?['tanggal'] ==
+                                                      null
+                                                  ? "-"
+                                                  : '${DateFormat.Hms().format(DateTime.parse(data["check out"]!["tanggal"]))}',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lexend',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ))
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 24,
-                      ),
-                      Text(
-                        '5 hari terakhir',
-                        style: TextStyle(fontFamily: 'Lexend', fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  lastFiveDay(controller: controller),
-                ];
-                return ListView(children: children2);
+                );
               } else {
                 return Center(
                   child: Text('tidak dapa memuat data'),
