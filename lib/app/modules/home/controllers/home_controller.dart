@@ -36,27 +36,6 @@ class HomeController extends GetxController {
 
           await checkIn(position, address, jarak);
           isLoading.isFalse;
-          Get.defaultDialog(
-              title: "Berhasil",
-              content: Column(
-                children: [
-                  Image.asset('Assets/icon/check icon.png'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "anda telah melakukan Check in untuk presensi hari ini ",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: Text('Ok'))
-              ]);
         } else {
           // Hide loading indicator
           isLoading.isFalse;
@@ -73,7 +52,7 @@ class HomeController extends GetxController {
                 ),
               ),
               ' Terjadi kesalahan',
-              dataResponse["message"],
+              'hanya mendapatkan lokasi',
               backgroundColor: Colors.white);
         }
       } catch (e) {
@@ -92,7 +71,7 @@ class HomeController extends GetxController {
               ),
             ),
             ' Terjadi kesalahan',
-            dataResponse["message"],
+            'device hanya mendeteksi lokasi',
             backgroundColor: Colors.white);
       }
     } catch (e) {
@@ -147,7 +126,7 @@ class HomeController extends GetxController {
               ),
             ),
             ' Terjadi kesalahan',
-            dataResponse["message"],
+            'Hanya mendapatkan lokasi , tidak bisa check in',
             backgroundColor: Colors.white);
       }
     } catch (e) {}
@@ -170,30 +149,29 @@ class HomeController extends GetxController {
 
   Future<void> checkIn(Position position, String address, double jarak) async {
     String uid = auth.currentUser!.uid;
+    TimeOfDay timeOfDay = TimeOfDay.now();
 
-    DateTime dateTime = DateTime.now();
-    String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
     String status = "Terlambat";
-    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
-    TimeOfDay waktu2 = TimeOfDay.now();
-    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
+    DocumentReference<Map<String, dynamic>> timeref =
+        await fireStore.collection('TimePic').doc('waktu_masuk');
+    DocumentSnapshot getmasuk = await timeref.get();
+    String waktuString = getmasuk.get('masuk');
+    DateFormat format = DateFormat('yyyy-MM-dd HH:mm:ss');
+    DateTime waktuMasuk = format.parse(waktuString);
 
-    final docRef = fireStore.collection('TimePic').doc('waktu_masuk');
-    docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
+    print(waktuMasuk);
+    print(timeOfDay);
+
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
-
     QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
-    // if (jarak <= 500) {
-    jangkauan = "di dalam area";
+    DateTime dateTime = DateTime.now();
+    print(dateTime);
+    String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
 
-    if (snapPresensi.docs.length == 0 && docRef == 'masuk'.isDateTime) {
+    jangkauan = "di dalam area";
+    if (snapPresensi.docs.length == 0) {
       status = "Masuk";
       await colPresensi.doc(docPresensi).set({
         "tanggal": dateTime.toIso8601String(),
@@ -206,25 +184,34 @@ class HomeController extends GetxController {
           "jangkauan": jangkauan
         }
       });
-    } else if (snapPresensi.docs.length == 0 && docRef != 'masuk'.isDateTime) {
-      status = "Terlambat";
-      await colPresensi.doc(docPresensi).set({
-        "tanggal": dateTime.toIso8601String(),
-        "check in": {
-          "tanggal": dateTime.toIso8601String(),
-          "alamat": address,
-          "latitude": position.latitude,
-          "longitude": position.longitude,
-          "status": status,
-          "jangkauan": jangkauan
-        }
-      });
+      // Get.defaultDialog(
+      //     title: "Berhasil",
+      //     content: Column(
+      //       children: [
+      //         Image.asset('Assets/icon/check icon.png'),
+      //         SizedBox(
+      //           height: 10,
+      //         ),
+      //         Text(
+      //           "anda telah melakukan Check in untuk presensi hari ini ",
+      //           textAlign: TextAlign.center,
+      //         ),
+      //       ],
+      //     ),
+      //     actions: [
+      //       TextButton(
+      //           onPressed: () {
+      //             Get.back();
+      //           },
+      //           child: Text('Ok'))
+      //     ]);
     } else {
       DocumentSnapshot<Map<String, dynamic>> todayPresensi =
           await colPresensi.doc(docPresensi).get();
-
+      print(todayPresensi.exists);
       if (todayPresensi.exists == true) {
         Map<String, dynamic>? dataTodayPresensi = todayPresensi.data();
+
         if (dataTodayPresensi?["check out"] != null) {
           Get.defaultDialog(
               title: 'Pemberitahuan',
@@ -247,48 +234,77 @@ class HomeController extends GetxController {
               ]);
         }
       } else {
-        await colPresensi.doc(docPresensi).set({
-          "tanggal": dateTime.toIso8601String(),
-          "check in": {
+        if (dateTime == waktuMasuk || dateTime.isBefore(waktuMasuk)) {
+          status = "Masuk";
+          await colPresensi.doc(docPresensi).set({
             "tanggal": dateTime.toIso8601String(),
-            "alamat": address,
-            "latitude": position.latitude,
-            "longitude": position.longitude,
-            "status": status,
-            "jangkauan": jangkauan
-          }
-        });
+            "check in": {
+              "tanggal": dateTime.toIso8601String(),
+              "alamat": address,
+              "latitude": position.latitude,
+              "longitude": position.longitude,
+              "status": status,
+              "jangkauan": jangkauan
+            }
+          });
+          Get.defaultDialog(
+              title: "Berhasil",
+              content: Column(
+                children: [
+                  Image.asset('Assets/icon/check icon.png'),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "anda telah melakukan Check in untuk presensi hari ini ",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text('Ok'))
+              ]);
+        } else {
+          print('malah ke sini si ajg');
+          await colPresensi.doc(docPresensi).set({
+            "tanggal": dateTime.toIso8601String(),
+            "check in": {
+              "tanggal": dateTime.toIso8601String(),
+              "alamat": address,
+              "latitude": position.latitude,
+              "longitude": position.longitude,
+              "status": status,
+              "jangkauan": jangkauan
+            }
+          });
+          // Get.defaultDialog(
+          //     title: "Berhasil",
+          //     content: Column(
+          //       children: [
+          //         Image.asset('Assets/icon/check icon.png'),
+          //         SizedBox(
+          //           height: 10,
+          //         ),
+          //         Text(
+          //           "anda telah melakukan Check in untuk presensi hari ini ",
+          //           textAlign: TextAlign.center,
+          //         ),
+          //       ],
+          //     ),
+          //     actions: [
+          //       TextButton(
+          //           onPressed: () {
+          //             Get.back();
+          //           },
+          //           child: Text('Ok'))
+          //     ]);
+        }
       }
     }
-    // }
-    // else {
-    //   print(jarak);
-    //   jangkauan = "di luar area";
-    // //   Get.defaultDialog(
-    //       content: Column(
-    //         children: [
-    //           Image.asset('Assets/icon/Warning icon.png'),
-    //           Text(
-    //             'anda berada di luar jangkauan area presnsi',
-    //             textAlign: TextAlign.center,
-    //           )
-    //         ],
-    //       ),
-    //       title: 'Terjadi Kesalahan',
-    //       backgroundColor: Colors.white,
-    //       actions: [
-    //         TextButton(
-    //             onPressed: () => Get.back(),
-    //             child: Text(
-    //               'kembali',
-    //               style: TextStyle(
-    //                   fontFamily: 'Lexend',
-    //                   fontSize: 18,
-    //                   color: ColorConstants.darkClearBlue),
-    //             ))
-    //       ]);
-    // }
-    ;
   }
 
   Future<void> checkOut(Position position, String address, double jarak) async {
@@ -297,21 +313,9 @@ class HomeController extends GetxController {
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
     String status = "Terlalu cepat";
-    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
-    TimeOfDay waktu2 = TimeOfDay.now();
-    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
-    final docRef = fireStore.collection('TimePic').doc('waktu_masuk');
-    docRef.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        // ...
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
     CollectionReference<Map<String, dynamic>> colPresensi =
         await fireStore.collection("Employee").doc(uid).collection("presensi");
 
-    QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
     DocumentSnapshot<Map<String, dynamic>> todayPresensi =
         await colPresensi.doc(docPresensi).get();
 
@@ -362,29 +366,16 @@ class HomeController extends GetxController {
                   )),
               TextButton(
                   onPressed: () async {
-                    if (docRef != 'pulang') {
-                      await colPresensi.doc(docPresensi).update({
-                        "check out": {
-                          "tanggal": dateTime.toIso8601String(),
-                          "alamat": address,
-                          "latitude": position.latitude,
-                          "longitude": position.longitude,
-                          "jangkauan": jangkauan,
-                          "status": status
-                        }
-                      });
-                    } else {
-                      await colPresensi.doc(docPresensi).update({
-                        "check out": {
-                          "tanggal": dateTime.toIso8601String(),
-                          "alamat": address,
-                          "latitude": position.latitude,
-                          "longitude": position.longitude,
-                          "jangkauan": jangkauan,
-                          "status": 'sesuai jam kerja'
-                        }
-                      });
-                    }
+                    await colPresensi.doc(docPresensi).update({
+                      "check out": {
+                        "tanggal": dateTime.toIso8601String(),
+                        "alamat": address,
+                        "latitude": position.latitude,
+                        "longitude": position.longitude,
+                        "jangkauan": jangkauan,
+                        "status": status
+                      }
+                    });
 
                     Get.back();
                   },
@@ -481,3 +472,33 @@ class HomeController extends GetxController {
     Get.offAllNamed(Routes.LOGIN);
   }
 }
+
+// if (jarak <= 500) {
+// }
+// else {
+//   print(jarak);
+//   jangkauan = "di luar area";
+// //   Get.defaultDialog(
+//       content: Column(
+//         children: [
+//           Image.asset('Assets/icon/Warning icon.png'),
+//           Text(
+//             'anda berada di luar jangkauan area presnsi',
+//             textAlign: TextAlign.center,
+//           )
+//         ],
+//       ),
+//       title: 'Terjadi Kesalahan',
+//       backgroundColor: Colors.white,
+//       actions: [
+//         TextButton(
+//             onPressed: () => Get.back(),
+//             child: Text(
+//               'kembali',
+//               style: TextStyle(
+//                   fontFamily: 'Lexend',
+//                   fontSize: 18,
+//                   color: ColorConstants.darkClearBlue),
+//             ))
+//       ]);
+// }
