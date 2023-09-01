@@ -19,68 +19,12 @@ class PageIndexController extends GetxController {
     // pageIndex.value = i;
     switch (i) {
       case 1:
-        Map<String, dynamic> dataResponse = await determinePosition();
-        try {
-          if (!dataResponse["error"]) {
-            Position position = dataResponse["Position"];
-
-            List<Placemark> placemarks = await placemarkFromCoordinates(
-                position.latitude, position.longitude);
-            String address =
-                "${placemarks[0].street}, ${placemarks[0].subLocality}, ${placemarks[0].locality}";
-            await updatePosition(position, address);
-            // print(placemarks[0].street);
-            double jarak = Geolocator.distanceBetween(
-                -6.5540221, 107.4155447, position.latitude, position.longitude);
-
-            await presensi(position, address, jarak);
-
-            // Get.snackbar(
-            //     icon: Padding(
-            //       padding: const EdgeInsets.only(left: 15),
-            //       child: Image.asset(
-            //         'Assets/icon/location.png',
-            //         width: 25,
-            //         height: 25,
-            //       ),
-            //     ),
-            //     "${dataResponse['message']}",
-            //     address,
-            //     backgroundColor: Colors.white);
-          } else {
-            Get.snackbar(
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Image.asset(
-                    'Assets/icon/Warning icon.png',
-                    width: 36,
-                    height: 36,
-                  ),
-                ),
-                ' Terjadi kesalahan',
-                dataResponse["message"],
-                backgroundColor: Colors.white);
-          }
-        } catch (e) {
-          Get.snackbar(
-              icon: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Image.asset(
-                  'Assets/icon/Warning icon.png',
-                  width: 36,
-                  height: 36,
-                ),
-              ),
-              ' Terjadi kesalahan',
-              dataResponse["message"],
-              backgroundColor: Colors.white);
-        }
-
-        break;
-
-      case 2:
         pageIndex.value = i;
         Get.offAllNamed(Routes.PROFILE);
+        break;
+      case 2:
+        pageIndex.value = i;
+        Get.offAllNamed(Routes.IZIN_SAKIT);
         break;
       default:
         pageIndex.value = i;
