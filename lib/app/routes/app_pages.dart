@@ -39,6 +39,8 @@ import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/reguster/bindings/reguster_binding.dart';
+import '../modules/reguster/views/reguster_view.dart';
 import '../modules/screenlock/bindings/screenlock_binding.dart';
 import '../modules/screenlock/views/screenlock_view.dart';
 import '../modules/user_control/bindings/user_control_binding.dart';
@@ -147,6 +149,11 @@ class AppPages {
       name: _Paths.SCREENLOCK,
       page: () => ScreenlockView(),
       binding: ScreenlockBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGUSTER,
+      page: () => const RegusterView(),
+      binding: RegusterBinding(),
     ),
   ];
 }

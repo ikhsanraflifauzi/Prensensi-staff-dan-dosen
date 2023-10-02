@@ -30,6 +30,7 @@ abstract class Routes {
 
   static const GETPASSVIEW = _Paths.GETPASSVIEW;
   static const SCREENLOCK = _Paths.SCREENLOCK;
+  static const REGUSTER = _Paths.REGUSTER;
 }
 
 abstract class _Paths {
@@ -61,4 +62,5 @@ abstract class _Paths {
 
   static const GETPASSVIEW = '/getpassview';
   static const SCREENLOCK = '/screenlock';
+  static const REGUSTER = '/reguster';
 }
