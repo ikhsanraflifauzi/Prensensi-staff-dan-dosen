@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../modules/Daftar/bindings/daftar_binding.dart';
 import '../modules/Daftar/views/daftar_view.dart';
 import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
@@ -27,6 +28,8 @@ import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/rekap_Data/bindings/rekap_data_binding.dart';
+import '../modules/rekap_Data/views/rekap_data_view.dart';
 import '../modules/screenlock/bindings/screenlock_binding.dart';
 import '../modules/screenlock/views/screenlock_view.dart';
 
@@ -113,6 +116,11 @@ class AppPages {
       name: _Paths.SCREENLOCK,
       page: () => const ScreenlockView(),
       binding: ScreenlockBinding(),
+    ),
+    GetPage(
+      name: _Paths.REKAP_DATA,
+      page: () => const RekapDataView(),
+      binding: RekapDataBinding(),
     ),
   ];
 }

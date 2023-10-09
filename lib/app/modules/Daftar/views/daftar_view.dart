@@ -17,6 +17,9 @@ class DaftarView extends GetView<DaftarController> {
         body: ListView(
           padding: const EdgeInsets.all(20),
           children: [
+            const SizedBox(
+              height: 75,
+            ),
             const Text(
               'Daftar',
               style: TextStyle(

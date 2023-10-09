@@ -399,7 +399,7 @@ class HomeView extends GetView<HomeController> {
                                   child: Container(
                                     margin: const EdgeInsets.only(bottom: 15),
                                     width: 303,
-                                    height: 113,
+                                    height: 150,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(15),
@@ -480,6 +480,48 @@ class HomeView extends GetView<HomeController> {
                                             ),
                                           ],
                                         ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text(
+                                              'Jam kerja(Menit)',
+                                              style: TextStyle(
+                                                  fontFamily: 'Lexend',
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              data['check out']?['Jamkerja'] ==
+                                                      null
+                                                  ? "-"
+                                                  : data['check out']
+                                                          ['Jamkerja']
+                                                      .toString(),
+                                              style: TextStyle(
+                                                fontFamily: 'Lexend',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: data['check out']
+                                                            ?['Jamkerja'] ==
+                                                        null
+                                                    ? Colors.black
+                                                    : data['check out']
+                                                                ?['Jamkerja'] <
+                                                            540
+                                                        ? Colors.red
+                                                        : Colors
+                                                            .green, // Warna teks lainnya
+                                              ),
+                                            ),
+                                          ],
+                                        )
                                       ]),
                                     ),
                                   ),
