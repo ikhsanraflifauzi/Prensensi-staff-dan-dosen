@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 import 'package:geolocator/geolocator.dart';
-
-import '../Utils/Colors.dart';
 
 class PageIndexController extends GetxController {
   RxInt pageIndex = 0.obs;
@@ -49,15 +46,10 @@ class PageIndexController extends GetxController {
     DateTime dateTime = DateTime.now();
     String docPresensi = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     String jangkauan = "di luar area";
-    String status = "Terlambat";
-    TimeOfDay waktu = TimeOfDay(hour: 08, minute: 15);
-    TimeOfDay waktu2 = TimeOfDay.now();
-    TimeOfDay waktu3 = TimeOfDay(hour: 08, minute: 30);
 
     CollectionReference<Map<String, dynamic>> colPresensi =
-        await fireStore.collection("Employee").doc(uid).collection("presensi");
+        fireStore.collection("Employee").doc(uid).collection("presensi");
 
-    QuerySnapshot<Map<String, dynamic>> snapPresensi = await colPresensi.get();
     await colPresensi.doc(docPresensi).update({
       "check out": {
         "tanggal": dateTime.toIso8601String(),

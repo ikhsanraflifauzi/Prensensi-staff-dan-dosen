@@ -29,7 +29,7 @@ class ProfileView extends GetView<ProfileController> {
           stream: controller.streamUser(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -42,26 +42,25 @@ class ProfileView extends GetView<ProfileController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ClipOval(
-                        child: Container(
+                        child: SizedBox(
                           width: 165,
                           height: 165,
                           child: Image.network(
-                            user["profile"] != null
-                                ? user["profile"]
-                                : "https://ui-avatars.com/api/?name= ${user['Name']}",
+                            user["profile"] ??
+                                "https://ui-avatars.com/api/?name= ${user['Name']}",
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
                     "${user['Name']}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Lexend',
                         fontSize: 20,
                         color: Colors.white),
@@ -69,7 +68,7 @@ class ProfileView extends GetView<ProfileController> {
                   Text(
                     "${user['email']}",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Lexend',
                         fontSize: 12,
                         color: Colors.white),
@@ -78,8 +77,8 @@ class ProfileView extends GetView<ProfileController> {
                     onTap: () {
                       Get.toNamed(Routes.UPDATE_PROFILE, arguments: user);
                     },
-                    leading: Icon(Icons.person, color: Colors.white),
-                    title: Text('Update profile',
+                    leading: const Icon(Icons.person, color: Colors.white),
+                    title: const Text('Update profile',
                         style: TextStyle(
                             fontFamily: 'Lexend',
                             fontSize: 12,
@@ -89,8 +88,8 @@ class ProfileView extends GetView<ProfileController> {
                     onTap: () {
                       Get.toNamed(Routes.PASSWORD_UPDATES);
                     },
-                    leading: Icon(Icons.key, color: Colors.white),
-                    title: Text('Ganti Password',
+                    leading: const Icon(Icons.key, color: Colors.white),
+                    title: const Text('Ganti Password',
                         style: TextStyle(
                             fontFamily: 'Lexend',
                             fontSize: 12,
@@ -100,8 +99,8 @@ class ProfileView extends GetView<ProfileController> {
                     onTap: () {
                       controller.logout();
                     },
-                    leading: Icon(Icons.logout, color: Colors.white),
-                    title: Text('Keluar',
+                    leading: const Icon(Icons.logout, color: Colors.white),
+                    title: const Text('Keluar',
                         style: TextStyle(
                             fontFamily: 'Lexend',
                             fontSize: 12,
@@ -110,7 +109,7 @@ class ProfileView extends GetView<ProfileController> {
                 ],
               );
             } else {
-              return Center(
+              return const Center(
                 child: Text('Tidak dapat membuat user'),
               );
             }
@@ -120,7 +119,7 @@ class ProfileView extends GetView<ProfileController> {
             backgroundColor: ColorConstants.lightClearBlue,
             activeColor: Colors.white,
             height: 60,
-            items: [
+            items: const [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.person, title: 'Profil'),
               TabItem(icon: Icons.sick, title: 'Absen')

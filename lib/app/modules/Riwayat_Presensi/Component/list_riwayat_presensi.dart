@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 import 'package:protoype_t_a/app/modules/Riwayat_Presensi/controllers/riwayat_presensi_controller.dart';
 
 class ListRiwayat extends GetView<RiwayatPresensiController> {
@@ -18,10 +16,10 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
           future: controller.getAllPresensi(),
           builder: (context, snap) {
             if (snap.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             if (snap.data?.docs.length == 0 || snap.data == null) {
-              return SizedBox(
+              return const SizedBox(
                 height: 200,
                 child: Center(
                   child: Text(
@@ -42,13 +40,13 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
                   return Padding(
                     padding: const EdgeInsets.all(20),
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
                       width: 303,
                       height: 113,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               offset: Offset(0, 7),
                               blurRadius: 7,
@@ -58,21 +56,21 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Column(children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Check in ',
                                 style: TextStyle(
                                     fontFamily: 'Lexend',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
                               ),
-                              Text(
-                                  '${DateFormat.yMMMEd().format(DateTime.parse(data["tanggal"]))}'),
+                              Text(DateFormat.yMMMEd()
+                                  .format(DateTime.parse(data["tanggal"]))),
                             ],
                           ),
                           Row(
@@ -81,16 +79,17 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
                               Text(
                                 data['check in']?['tanggal'] == null
                                     ? "-"
-                                    : '${DateFormat.Hms().format(DateTime.parse(data["check in"]!["tanggal"]))}',
-                                style: TextStyle(
+                                    : DateFormat.Hms().format(DateTime.parse(
+                                        data["check in"]!["tanggal"])),
+                                style: const TextStyle(
                                     fontFamily: 'Lexend',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
                               ),
-                              Text('-'),
+                              const Text('-'),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Row(
@@ -111,8 +110,9 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
                               Text(
                                 data['check out']?['tanggal'] == null
                                     ? "-"
-                                    : '${DateFormat.Hms().format(DateTime.parse(data["check out"]!["tanggal"]))}',
-                                style: TextStyle(
+                                    : DateFormat.Hms().format(DateTime.parse(
+                                        data["check out"]!["tanggal"])),
+                                style: const TextStyle(
                                     fontFamily: 'Lexend',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500),
@@ -124,7 +124,7 @@ class ListRiwayat extends GetView<RiwayatPresensiController> {
                     ),
                   );
                 }
-                return Center(
+                return const Center(
                   child: SizedBox(),
                 );
               },

@@ -1,16 +1,10 @@
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
-import 'package:protoype_t_a/app/modules/home/component/isiText.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../../../Utils/Colors.dart';
-import '../../Login/Component/primaryTextField.dart';
 import '../controllers/surat_keluar_controller.dart';
-import '../../../controllers/page_index_controller.dart';
 
 class SuratKeluarView extends GetView<SuratKeluarController> {
   const SuratKeluarView({Key? key}) : super(key: key);
@@ -22,7 +16,7 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
         centerTitle: true,
         backgroundColor: ColorConstants.darkClearBlue,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             Get.offAllNamed(Routes.HOME);
           },
@@ -32,11 +26,11 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
-            child: Column(children: [
+            child: Column(children: const [
               Text(
                 ' Tuliskan perihal anda untuk keluar kantor sementara ',
                 style: TextStyle(
@@ -46,7 +40,7 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
               ),
             ]),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -62,7 +56,7 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                   fillColor: Colors.white),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
@@ -77,13 +71,13 @@ class SuratKeluarView extends GetView<SuratKeluarController> {
                   onPressed: () async {
                     await controller.getPass();
                   },
-                  child: Text(
+                  child: const Text(
                     "Kirim",
                     style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Center(

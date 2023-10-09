@@ -43,12 +43,7 @@ class IzinSakitController extends GetxController {
   void imagepic() async {
     image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      print(image!.name);
-      print(image!.name.split(" . ").last);
-      print(image!.path);
-    } else {
-      print(image);
-    }
+    } else {}
     update();
   }
 
@@ -57,7 +52,7 @@ class IzinSakitController extends GetxController {
     DateTime dateTime = DateTime.now();
     String docAbsen = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
     CollectionReference<Map<String, dynamic>> colAbsen =
-        await firestore.collection("Employee").doc(uid).collection("Absen");
+        firestore.collection("Employee").doc(uid).collection("Absen");
     if (items.isNotEmpty) {
       try {
         Map<String, dynamic> data = {"Name": nameController.text};
@@ -82,10 +77,10 @@ class IzinSakitController extends GetxController {
               content: Column(
                 children: [
                   Image.asset('Assets/icon/check icon.png'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "foto dan keterangan tidak dapat hadir telah terkirim",
                     textAlign: TextAlign.center,
                   )
@@ -96,7 +91,7 @@ class IzinSakitController extends GetxController {
                     onPressed: () {
                       Get.offNamed(Routes.RIWAYAT_IZIN);
                     },
-                    child: Text('ok'))
+                    child: const Text('ok'))
               ]);
         }
       } catch (e) {
@@ -121,10 +116,10 @@ class IzinSakitController extends GetxController {
           content: Column(
             children: [
               Image.asset('Assets/icon/Warning icon.png'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Anda harus mengisi keterangan dan foto bukti ketidak hadarian",
                 textAlign: TextAlign.center,
               )
@@ -137,10 +132,10 @@ class IzinSakitController extends GetxController {
           content: Column(
             children: [
               Image.asset('Assets/icon/Warning icon.png'),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 "Anda harus mengirimkan foto bukti keterangan tidak hadir",
                 textAlign: TextAlign.center,
               )

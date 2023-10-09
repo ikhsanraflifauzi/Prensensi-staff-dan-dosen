@@ -4,11 +4,12 @@ import 'package:flutter_lock_screen/flutter_lock_screen.dart';
 import 'package:get/get.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
-import 'package:flutter_screen_lock/flutter_screen_lock.dart';
 
 import '../controllers/screenlock_controller.dart';
 
 class ScreenlockView extends GetView<ScreenlockController> {
+  const ScreenlockView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

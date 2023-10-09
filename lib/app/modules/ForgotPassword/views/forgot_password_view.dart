@@ -20,24 +20,24 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
           backgroundColor: ColorConstants.darkClearBlue,
         ),
         body: ListView(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 54,
             ),
-            Text(
+            const Text(
               'email ',
               style: TextStyle(
                   fontFamily: 'Lexend', fontSize: 20, color: Colors.white),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             PrimaryTextfield(
               controller: controller.emailController,
               hintText: 'Masukkan email',
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Obx(
@@ -47,18 +47,18 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
                     await controller.emailVerif();
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    backgroundColor: ColorConstants.lightClearBlue),
                 child: Text(
                   controller.isLoading.isFalse ? 'Verfikasi email' : 'Loding',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Lexend',
                     fontSize: 15,
                     color: Colors.white,
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    backgroundColor: ColorConstants.lightClearBlue),
               ),
             )
           ],

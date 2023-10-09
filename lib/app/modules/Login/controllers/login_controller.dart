@@ -71,10 +71,10 @@ class LoginController extends GetxController {
                       width: 150,
                       height: 150,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       'Email Anda belum di verifikasi',
                       textAlign: TextAlign.center,
                     )
@@ -127,13 +127,13 @@ class LoginController extends GetxController {
                             backgroundColor: Colors.white);
                       }
                     },
-                    child: Text(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: ColorConstants.darkClearBlue),
+                    child: const Text(
                       'Kirim ulang',
                       style:
                           TextStyle(fontFamily: 'Lexend', color: Colors.white),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorConstants.darkClearBlue),
                   )
                 ]);
           }
@@ -143,10 +143,10 @@ class LoginController extends GetxController {
           isLoading.value = false;
           Get.defaultDialog(
               title: 'Terjadi Kesalahan',
-              titleStyle: TextStyle(fontFamily: 'Lexend'),
+              titleStyle: const TextStyle(fontFamily: 'Lexend'),
               middleText: 'email tidak valid',
-              middleTextStyle:
-                  TextStyle(fontFamily: 'Lexend', fontWeight: FontWeight.w500),
+              middleTextStyle: const TextStyle(
+                  fontFamily: 'Lexend', fontWeight: FontWeight.w500),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -159,27 +159,25 @@ class LoginController extends GetxController {
                           color: ColorConstants.darkClearBlue),
                     ))
               ]);
-          print('No user found for that email.');
         } else if (e.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
           Get.defaultDialog(
               content: Column(
                 children: [
                   Image.asset('Assets/icon/Failed Icon.png'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     'password anda salah',
                     textAlign: TextAlign.center,
                   )
                 ],
               ),
               title: 'Terjadi Kesalahan',
-              titleStyle: TextStyle(fontFamily: 'Lexend'),
+              titleStyle: const TextStyle(fontFamily: 'Lexend'),
               middleText: 'password anda salah',
-              middleTextStyle:
-                  TextStyle(fontFamily: 'Lexend', fontWeight: FontWeight.w500),
+              middleTextStyle: const TextStyle(
+                  fontFamily: 'Lexend', fontWeight: FontWeight.w500),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -200,7 +198,7 @@ class LoginController extends GetxController {
           content: Column(
             children: [
               Image.asset('Assets/icon/Warning icon.png'),
-              Text(
+              const Text(
                 'email dan password yang anda masukkan tidak valid',
                 textAlign: TextAlign.center,
               )

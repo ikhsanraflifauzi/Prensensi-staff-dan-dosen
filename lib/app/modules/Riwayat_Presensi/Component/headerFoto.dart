@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../../../Utils/Colors.dart';
@@ -12,14 +14,14 @@ class HeaderFoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size.height * 0.3,
       child: Stack(children: <Widget>[
         Container(
           height: size.height * 0.2 - 25,
           decoration: BoxDecoration(
             color: ColorConstants.darkClearBlue,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(50),
               bottomRight: Radius.circular(50),
             ),
@@ -32,7 +34,7 @@ class HeaderFoto extends StatelessWidget {
             left: 0,
             right: 0,
             child: ClipOval(
-              child: Container(
+              child: SizedBox(
                 width: 125,
                 height: 125,
                 child: Image.asset(

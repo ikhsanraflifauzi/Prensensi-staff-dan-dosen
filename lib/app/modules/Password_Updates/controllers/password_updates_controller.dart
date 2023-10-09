@@ -66,7 +66,7 @@ class PasswordUpdatesController extends GetxController {
                   ),
                 ),
                 'Gagal',
-                "${e.code.toLowerCase()}",
+                e.code.toLowerCase(),
                 backgroundColor: Colors.white);
           }
         }

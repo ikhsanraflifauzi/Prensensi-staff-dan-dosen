@@ -1,3 +1,5 @@
+// ignore_for_file: library_prefixes
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,12 +24,8 @@ class UpdateProfileController extends GetxController {
   void imagepic() async {
     image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      print(image!.name);
-      print(image!.name.split(" . ").last);
-      print(image!.path);
-    } else {
-      print(image);
-    }
+      Get.snackbar('peringatan', 'foto belum kosong');
+    } else {}
     update();
   }
 

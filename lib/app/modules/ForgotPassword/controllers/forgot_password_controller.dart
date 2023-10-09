@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:protoype_t_a/app/Utils/Colors.dart';
 
 class ForgotPasswordController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -19,7 +18,7 @@ class ForgotPasswordController extends GetxController {
         await auth.sendPasswordResetEmail(email: emailController.text);
         Get.snackbar('berhasil', 'email untuk ganti password telah terkirim',
             backgroundColor: Colors.white);
-      } on FirebaseException catch (e) {
+      } on FirebaseException {
         Get.snackbar(
             ' Terjadi Kesalahan', 'email untuk ganti password tidak terkirim',
             backgroundColor: Colors.red.shade600);

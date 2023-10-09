@@ -26,17 +26,17 @@ class RiwayatIzinView extends GetView<RiwayatIzinController> {
             onPressed: () {
               Get.offAllNamed(Routes.HOME);
             },
-            icon: Icon(Icons.arrow_back_ios_new)),
+            icon: const Icon(Icons.arrow_back_ios_new)),
       ),
       body: GetBuilder<RiwayatIzinController>(
         builder: (c) => FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
             future: controller.getAllIzin(),
             builder: (context, snapIz) {
               if (snapIz.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapIz.data?.docs.length == 0 || snapIz.data == null) {
-                return SizedBox(
+                return const SizedBox(
                   height: 200,
                   child: Center(
                     child: Text(
@@ -64,14 +64,14 @@ class RiwayatIzinView extends GetView<RiwayatIzinController> {
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Tanggal',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
@@ -79,32 +79,30 @@ class RiwayatIzinView extends GetView<RiwayatIzinController> {
                                         color: Colors.white),
                                   ),
                                   Text(
-                                      '${DateFormat.yMMMEd().format(DateTime.parse(data["Tanggal"]))}',
-                                      style: TextStyle(
+                                      DateFormat.yMMMEd().format(
+                                          DateTime.parse(data["Tanggal"])),
+                                      style: const TextStyle(
                                           fontFamily: 'Lexend',
                                           fontSize: 14,
                                           color: Colors.white))
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Keterangan',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
                                         fontSize: 14,
                                         color: Colors.white),
                                   ),
-                                  Text(
-                                      data['Absen']['Keterangan'] == null
-                                          ? '-'
-                                          : data['Absen']['Keterangan'],
-                                      style: TextStyle(
+                                  Text(data['Absen']['Keterangan'] ?? '-',
+                                      style: const TextStyle(
                                           fontFamily: 'Lexend',
                                           fontSize: 14,
                                           color: Colors.white))
@@ -140,7 +138,7 @@ class RiwayatIzinView extends GetView<RiwayatIzinController> {
               onTap: () {
                 Get.dialog(Dialog(
                   child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       height: 400,
                       child: SfDateRangePicker(
                         startRangeSelectionColor: ColorConstants.lightClearBlue,

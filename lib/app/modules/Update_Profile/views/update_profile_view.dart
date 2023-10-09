@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -40,15 +39,15 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
         body: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 54,
             ),
-            Text(
+            const Text(
               'NIP',
               style: TextStyle(
                   fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             PrimaryTextfield(
@@ -56,30 +55,30 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
               labelText: 'NIP',
               readOnly: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
-            Text(
+            const Text(
               'Nama',
               style: TextStyle(
                   fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             PrimaryTextfield(
               controller: controller.nameController,
               labelText: 'Nama',
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
-            Text(
+            const Text(
               'email',
               style: TextStyle(
                   fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             PrimaryTextfield(
@@ -87,15 +86,15 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
               labelText: 'email',
               readOnly: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               'Pilih Foto',
               style: TextStyle(
                   fontFamily: 'Lexend', color: Colors.white, fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Row(
@@ -104,7 +103,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                 GetBuilder<UpdateProfileController>(builder: (b) {
                   if (b.image != null) {
                     return ClipOval(
-                        child: Container(
+                        child: SizedBox(
                       width: 100,
                       height: 100,
                       child: Image.file(
@@ -121,17 +120,17 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                               content: Column(
                                 children: [
                                   Image.asset('Assets/icon/Warning icon.png'),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
-                                  Text(
+                                  const Text(
                                     'Anda akan menghapus foto profil',
                                     textAlign: TextAlign.center,
                                   )
                                 ],
                               ),
                               title: 'Peringatan !',
-                              titleStyle: TextStyle(fontFamily: 'Lexend'),
+                              titleStyle: const TextStyle(fontFamily: 'Lexend'),
                               actions: [
                                 TextButton(
                                     onPressed: () {
@@ -147,7 +146,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                     )),
                               ]);
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: 100,
                           height: 100,
                           child: Image.network(
@@ -157,7 +156,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                         ),
                       ));
                     }
-                    return Text(
+                    return const Text(
                       'tidak ada foto',
                       style: TextStyle(
                           fontFamily: 'Lexend',
@@ -170,7 +169,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                   onPressed: () {
                     controller.imagepic();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.upload,
                     color: Colors.white,
                   ),

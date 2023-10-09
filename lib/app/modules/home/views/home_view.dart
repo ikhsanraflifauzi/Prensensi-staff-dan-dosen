@@ -1,18 +1,15 @@
+// ignore_for_file: unnecessary_string_interpolations, prefer_is_empty
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
-import 'package:protoype_t_a/app/modules/home/component/history.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
-
 import '../../Riwayat_Presensi/Component/dataText.dart';
 import '../controllers/home_controller.dart';
 import '../../../controllers/page_index_controller.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -49,18 +46,17 @@ class HomeView extends GetView<HomeController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           ClipOval(
-                            child: Container(
+                            child: SizedBox(
                               width: 70,
                               height: 70,
                               child: Image.network(
-                                user["profile"] != null
-                                    ? user["profile"]
-                                    : "https://ui-avatars.com/api/?name= ${user['Name']}",
+                                user["profile"] ??
+                                    "https://ui-avatars.com/api/?name= ${user['Name']}",
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Column(
@@ -68,18 +64,18 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               Text(
                                 '${user['Name']}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'Lexend',
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500),
                               ),
-                              Container(
+                              SizedBox(
                                 width: 200,
                                 child: Text(
                                   user["alamat"] != null
                                       ? "${user['alamat']}"
                                       : "posisi tidak terdeteksi",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: 'Lexend',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w100),
@@ -89,7 +85,7 @@ class HomeView extends GetView<HomeController> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -101,24 +97,25 @@ class HomeView extends GetView<HomeController> {
                             Map<String, dynamic>? dataToday =
                                 snapDataPresensi.data?.data();
                             return Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              height: 150,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              height: 211,
                               decoration: BoxDecoration(
                                   color: ColorConstants.lightClearBlue,
                                   borderRadius: BorderRadius.circular(15),
                                   boxShadow: [
                                     BoxShadow(
                                         color: ColorConstants.darkClearBlue,
-                                        offset: Offset(5, 6),
+                                        offset: const Offset(5, 6),
                                         blurRadius: 5)
                                   ]),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
-                                  Center(
+                                  const Center(
                                       child: Text(
                                     'Presensi',
                                     style: TextStyle(
@@ -126,12 +123,12 @@ class HomeView extends GetView<HomeController> {
                                         fontSize: 14,
                                         color: Colors.white),
                                   )),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: DataText(
                                         name: 'Hari/Tanggal',
                                         value:
@@ -141,8 +138,8 @@ class HomeView extends GetView<HomeController> {
                                     height: 10,
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: DataText(
                                         name: 'Status',
                                         value: dataToday?['check in'] == null
@@ -153,8 +150,21 @@ class HomeView extends GetView<HomeController> {
                                     height: 10,
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: DataText(
+                                        name: 'Kegiatan',
+                                        value: dataToday?['check in'] == null
+                                            ? "-"
+                                            : dataToday!['check in']
+                                                ['kegiatan']),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: DataText(
                                       name: 'Jam Masuk',
                                       value: dataToday?["check in"] == null
@@ -166,8 +176,8 @@ class HomeView extends GetView<HomeController> {
                                     height: 10,
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: DataText(
                                       name: 'Jam pulang',
                                       value: dataToday?["check out"] == null
@@ -175,11 +185,25 @@ class HomeView extends GetView<HomeController> {
                                           : '${DateFormat.Hms().format(DateTime.parse(dataToday!["check out"]!["tanggal"]))}',
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: DataText(
+                                      name: 'Jam kerja (menit)',
+                                      value: dataToday?['check out'] == null
+                                          ? "-"
+                                          : dataToday!['check out']['Jamkerja']
+                                              .toString(),
+                                    ),
+                                  ),
                                 ],
                               ),
                             );
                           }),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -196,12 +220,12 @@ class HomeView extends GetView<HomeController> {
                                     boxShadow: [
                                       BoxShadow(
                                           color: ColorConstants.darkClearBlue,
-                                          offset: Offset(5, 6),
+                                          offset: const Offset(5, 6),
                                           blurRadius: 5)
                                     ]),
                                 child: Center(
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.door_front_door,
                                       color: Colors.white,
                                     ),
@@ -211,13 +235,13 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text('Check In')
+                              const Text('Check In')
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 31,
                           ),
                           Column(
@@ -231,12 +255,12 @@ class HomeView extends GetView<HomeController> {
                                     boxShadow: [
                                       BoxShadow(
                                           color: ColorConstants.darkClearBlue,
-                                          offset: Offset(5, 6),
+                                          offset: const Offset(5, 6),
                                           blurRadius: 5)
                                     ]),
                                 child: Center(
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.door_front_door_outlined,
                                       color: Colors.white,
                                     ),
@@ -246,13 +270,13 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text('Check out')
+                              const Text('Check out')
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 31,
                           ),
                           Column(
@@ -266,12 +290,12 @@ class HomeView extends GetView<HomeController> {
                                     boxShadow: [
                                       BoxShadow(
                                           color: ColorConstants.darkClearBlue,
-                                          offset: Offset(5, 6),
+                                          offset: const Offset(5, 6),
                                           blurRadius: 5)
                                     ]),
                                 child: Center(
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.mail,
                                       color: Colors.white,
                                     ),
@@ -281,13 +305,13 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text('Get pass')
+                              const Text('Get pass')
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 31,
                           ),
                           Column(
@@ -301,12 +325,12 @@ class HomeView extends GetView<HomeController> {
                                     boxShadow: [
                                       BoxShadow(
                                           color: ColorConstants.darkClearBlue,
-                                          offset: Offset(5, 6),
+                                          offset: const Offset(5, 6),
                                           blurRadius: 5)
                                     ]),
                                 child: Center(
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.history,
                                       color: Colors.white,
                                     ),
@@ -316,17 +340,17 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text('Riwayat')
+                              const Text('Riwayat')
                             ],
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
-                        children: [
+                        children: const [
                           SizedBox(
                             width: 24,
                           ),
@@ -337,7 +361,7 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Expanded(
                           child: StreamBuilder<
                               QuerySnapshot<Map<String, dynamic>>>(
@@ -345,13 +369,13 @@ class HomeView extends GetView<HomeController> {
                         builder: (context, snapPresnsi) {
                           if (snapPresnsi.connectionState ==
                               ConnectionState.waiting) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
                           if (snapPresnsi.data?.docs.length == 0 ||
                               snapPresnsi.data == null) {
-                            return SizedBox(
+                            return const SizedBox(
                               height: 200,
                               child: Center(
                                 child: Text(
@@ -373,13 +397,13 @@ class HomeView extends GetView<HomeController> {
                                 return Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 15),
+                                    margin: const EdgeInsets.only(bottom: 15),
                                     width: 303,
                                     height: 113,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(15),
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                             offset: Offset(0, 7),
                                             blurRadius: 7,
@@ -389,14 +413,14 @@ class HomeView extends GetView<HomeController> {
                                     child: Padding(
                                       padding: const EdgeInsets.all(8),
                                       child: Column(children: [
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
+                                            const Text(
                                               'Check in ',
                                               style: TextStyle(
                                                   fontFamily: 'Lexend',
@@ -416,15 +440,15 @@ class HomeView extends GetView<HomeController> {
                                                       null
                                                   ? "-"
                                                   : '${DateFormat.Hms().format(DateTime.parse(data["check in"]!["tanggal"]))}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Lexend',
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
                                             ),
-                                            Text('-'),
+                                            const Text('-'),
                                           ],
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 8,
                                         ),
                                         Row(
@@ -449,7 +473,7 @@ class HomeView extends GetView<HomeController> {
                                                       null
                                                   ? "-"
                                                   : '${DateFormat.Hms().format(DateTime.parse(data["check out"]!["tanggal"]))}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontFamily: 'Lexend',
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w500),
@@ -461,6 +485,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 );
                               }
+                              return const Center(child: Text('--------'));
                             },
                           );
                         },
@@ -469,7 +494,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                 );
               } else {
-                return Center(
+                return const Center(
                   child: Text('tidak dapa memuat data'),
                 );
               }
@@ -478,7 +503,7 @@ class HomeView extends GetView<HomeController> {
             backgroundColor: ColorConstants.darkClearBlue,
             activeColor: Colors.white,
             height: 60,
-            items: [
+            items: const [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.person, title: 'Profil'),
               TabItem(icon: Icons.sick, title: 'Absen')

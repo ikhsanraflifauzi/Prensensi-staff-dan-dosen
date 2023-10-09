@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
-import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
 import '../../../routes/app_pages.dart';
 import '../controllers/getPass_landing_controller.dart';
@@ -22,7 +21,7 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           StreamBuilder(
@@ -43,16 +42,16 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
                     decoration: BoxDecoration(
                         color: ColorConstants.lightClearBlue,
                         borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(color: Colors.grey, offset: Offset(5, 6))
                         ]),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        Text(
+                        const Text(
                           "Status Get Pass",
                           style: TextStyle(
                               fontFamily: 'Lexend',
@@ -60,13 +59,13 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
                               fontWeight: FontWeight.w600,
                               color: Colors.white),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "jam keluar",
                               style: TextStyle(
                                   fontFamily: 'Lexend', color: Colors.white),
@@ -74,42 +73,44 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
                             Text(
                                 dataGetPass?["GetPass"] == null
                                     ? "-"
-                                    : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetPass"]!["Tanggal"]))}',
-                                style: TextStyle(
+                                    : DateFormat.Hms().format(DateTime.parse(
+                                        dataGetPass!["GetPass"]!["Tanggal"])),
+                                style: const TextStyle(
                                     fontFamily: 'Lexend', color: Colors.white))
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Jam kembali",
+                            const Text("Jam kembali",
                                 style: TextStyle(
                                     fontFamily: 'Lexend', color: Colors.white)),
                             Text(
                                 dataGetPass?["GetBack"] == null
                                     ? "-"
-                                    : '${DateFormat.Hms().format(DateTime.parse(dataGetPass!["GetBack"]!["Tanggal"]))}',
-                                style: TextStyle(
+                                    : DateFormat.Hms().format(DateTime.parse(
+                                        dataGetPass!["GetBack"]!["Tanggal"])),
+                                style: const TextStyle(
                                     fontFamily: 'Lexend', color: Colors.white)),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("perihal :",
+                            const Text("perihal :",
                                 style: TextStyle(
                                     fontFamily: 'Lexend', color: Colors.white)),
                             Text(
                                 dataGetPass?['GetPass'] == null
                                     ? "-"
                                     : dataGetPass!['GetPass']['Alasan'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontFamily: 'Lexend', color: Colors.white))
                           ],
                         ),
@@ -118,10 +119,10 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
                   ),
                 );
               }),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Center(
@@ -136,13 +137,13 @@ class GetPassLandingView extends GetView<GetPassLandingController> {
                   onPressed: () async {
                     await controller.getPass();
                   },
-                  child: Text(
+                  child: const Text(
                     "Kembali",
                     style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
                   )),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Center(

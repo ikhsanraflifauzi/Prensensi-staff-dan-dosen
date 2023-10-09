@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -33,14 +32,12 @@ class SuratKeluarController extends GetxController {
     String docGetPass = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
 
     CollectionReference<Map<String, dynamic>> colGetPass =
-        await firestore.collection("Employee").doc(uid).collection("GetPass");
+        firestore.collection("Employee").doc(uid).collection("GetPass");
 
     QuerySnapshot<Map<String, dynamic>> snapGetPass = await colGetPass.get();
-    DocumentSnapshot<Map<String, dynamic>> todayGetPass =
-        await colGetPass.doc(docGetPass).get();
 
     try {
-      if (pass.text.isNotEmpty && snapGetPass.docs.length == 0) {
+      if (pass.text.isNotEmpty && snapGetPass.docs.isEmpty) {
         statusGetPass;
         await colGetPass.doc(docGetPass).set({
           "Tanggal": dateTime.toIso8601String(),
@@ -55,10 +52,10 @@ class SuratKeluarController extends GetxController {
             content: Column(
               children: [
                 Image.asset('Assets/icon/check icon.png'),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Text(
+                const Text(
                   "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
                   textAlign: TextAlign.center,
                 ),
@@ -69,7 +66,7 @@ class SuratKeluarController extends GetxController {
                   onPressed: () {
                     Get.offNamed(Routes.ADD_EMPLOYEE);
                   },
-                  child: Text('Ok'))
+                  child: const Text('Ok'))
             ]);
       }
       if (pass.text.isEmpty) {
@@ -83,9 +80,9 @@ class SuratKeluarController extends GetxController {
           if (dataTodayGetPass?["GetBack"] != null) {
             Get.defaultDialog(
                 title: 'Pemberitahuan',
-                titleStyle: TextStyle(fontFamily: 'Lexend'),
+                titleStyle: const TextStyle(fontFamily: 'Lexend'),
                 middleText: 'Anda sudah melakukan GetPass hari ini',
-                middleTextStyle: TextStyle(
+                middleTextStyle: const TextStyle(
                     fontFamily: 'Lexend', fontWeight: FontWeight.w500),
                 actions: [
                   TextButton(
@@ -128,10 +125,10 @@ class SuratKeluarController extends GetxController {
               content: Column(
                 children: [
                   Image.asset('Assets/icon/check icon.png'),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "anda telah melakukan Get pass, anda dapat meninggalkan kantor untuk sementara",
                     textAlign: TextAlign.center,
                   ),
@@ -142,7 +139,7 @@ class SuratKeluarController extends GetxController {
                     onPressed: () {
                       Get.offNamed(Routes.ADD_EMPLOYEE);
                     },
-                    child: Text('Ok'))
+                    child: const Text('Ok'))
               ]);
         }
       }

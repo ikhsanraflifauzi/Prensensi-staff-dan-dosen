@@ -1,8 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
@@ -30,11 +30,7 @@ class GetPassLandingController extends GetxController {
     String docGetPass = DateFormat.yMd().format(dateTime).replaceAll("/", "-");
 
     CollectionReference<Map<String, dynamic>> colGetPass =
-        await firestore.collection("Employee").doc(uid).collection("GetPass");
-
-    QuerySnapshot<Map<String, dynamic>> snapGetPass = await colGetPass.get();
-    DocumentSnapshot<Map<String, dynamic>> todayGetPass =
-        await colGetPass.doc(docGetPass).get();
+        firestore.collection("Employee").doc(uid).collection("GetPass");
 
     try {
       statusGetPass = "kembali ke Kantor";

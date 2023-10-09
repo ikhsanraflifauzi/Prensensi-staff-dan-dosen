@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:protoype_t_a/app/Utils/Colors.dart';
-import 'package:protoype_t_a/app/modules/Login/Component/primaryTextField.dart';
 
 import '../../../controllers/page_index_controller.dart';
 import '../controllers/izin_sakit_controller.dart';
@@ -27,9 +26,9 @@ class IzinSakitView extends GetView<IzinSakitController> {
         ),
         backgroundColor: ColorConstants.whitegray,
         body: ListView(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Text(
@@ -70,7 +69,7 @@ class IzinSakitView extends GetView<IzinSakitController> {
                       },
                     )),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                 ],
@@ -83,7 +82,7 @@ class IzinSakitView extends GetView<IzinSakitController> {
                   fontSize: 14,
                   color: ColorConstants.darkClearBlue),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
@@ -107,7 +106,7 @@ class IzinSakitView extends GetView<IzinSakitController> {
                         ),
                       );
                     }
-                    return Center();
+                    return const Center();
                   }),
                   IconButton(
                     onPressed: () {
@@ -133,7 +132,7 @@ class IzinSakitView extends GetView<IzinSakitController> {
                     onPressed: () async {
                       await controller.uploadImage();
                     },
-                    child: Text(
+                    child: const Text(
                       "Kirim",
                       style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
                     )),
@@ -145,7 +144,7 @@ class IzinSakitView extends GetView<IzinSakitController> {
             backgroundColor: ColorConstants.darkClearBlue,
             activeColor: Colors.white,
             height: 60,
-            items: [
+            items: const [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.person, title: 'Profil'),
               TabItem(icon: Icons.sick, title: 'Absen')

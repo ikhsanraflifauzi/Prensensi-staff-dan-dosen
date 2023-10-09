@@ -16,7 +16,7 @@ class LoginView extends GetView<LoginController> {
         body: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 54,
             ),
             SizedBox(
@@ -28,7 +28,7 @@ class LoginView extends GetView<LoginController> {
             const Center(
               child: Padding(
                 padding: EdgeInsets.all(19),
-                child: const Text(
+                child: Text(
                   'Aplikasi Presensi',
                   style: TextStyle(
                       fontSize: 20,
@@ -79,7 +79,7 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24,
             ),
             SizedBox(
@@ -92,19 +92,19 @@ class LoginView extends GetView<LoginController> {
                       await controller.login();
                     }
                   },
-                  child: Text(
-                    controller.isLoading.isFalse ? "Login" : "Loading",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Lexend',
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
-                  ),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                       backgroundColor: ColorConstants.lightClearBlue),
+                  child: Text(
+                    controller.isLoading.isFalse ? "Login" : "Loading",
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Lexend',
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
                 ),
               ),
             ),
@@ -123,7 +123,23 @@ class LoginView extends GetView<LoginController> {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: TextButton(
+                onPressed: () {
+                  Get.toNamed(Routes.DAFTAR);
+                },
+                child: const Text(
+                  'Daftar',
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Lexend',
+                      color: Colors.yellow,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
           ],
         ));
   }

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../../../Utils/Colors.dart';
-import '../../../controllers/page_index_controller.dart';
 import '../Component/list_riwayat_presensi.dart';
 import '../controllers/riwayat_presensi_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -14,8 +13,6 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
   const RiwayatPresensiView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final pageController = Get.find<PageIndexController>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -52,16 +49,9 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
             ),
             CircularMenuItem(
               onTap: () {
-                Get.toNamed(Routes.FINGER_AUTH);
-              },
-              color: ColorConstants.lightClearBlue,
-              icon: Icons.fingerprint,
-            ),
-            CircularMenuItem(
-              onTap: () {
                 Get.dialog(Dialog(
                   child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       height: 400,
                       child: SfDateRangePicker(
                         startRangeSelectionColor: ColorConstants.lightClearBlue,

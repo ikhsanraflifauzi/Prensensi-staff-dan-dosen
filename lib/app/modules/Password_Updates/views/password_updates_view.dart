@@ -23,7 +23,7 @@ class PasswordUpdatesView extends GetView<PasswordUpdatesController> {
         body: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 54,
             ),
             Padding(
@@ -33,7 +33,7 @@ class PasswordUpdatesView extends GetView<PasswordUpdatesController> {
                 labelText: 'kata sandi saat ini',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Obx(
@@ -60,7 +60,7 @@ class PasswordUpdatesView extends GetView<PasswordUpdatesController> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Obx(
@@ -87,7 +87,7 @@ class PasswordUpdatesView extends GetView<PasswordUpdatesController> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Center(
@@ -109,7 +109,8 @@ class PasswordUpdatesView extends GetView<PasswordUpdatesController> {
                         controller.isLoading.isFalse
                             ? "Ganti Sandi"
                             : const CircularProgressIndicator().toString(),
-                        style: TextStyle(fontFamily: 'Lexend', fontSize: 15),
+                        style:
+                            const TextStyle(fontFamily: 'Lexend', fontSize: 15),
                       )),
                 ),
               ),

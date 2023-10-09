@@ -1,19 +1,10 @@
 import 'package:get/get.dart';
-
 import '../modules/Daftar/bindings/daftar_binding.dart';
 import '../modules/Daftar/views/daftar_view.dart';
-import '../modules/DashboardEmployee/bindings/dashboard_employee_binding.dart';
-import '../modules/DashboardEmployee/views/dashboard_employee_view.dart';
-import '../modules/Explain1/bindings/explain1_binding.dart';
-import '../modules/Explain1/views/explain1_view.dart';
-import '../modules/FingerAuth/bindings/finger_auth_binding.dart';
-import '../modules/FingerAuth/views/finger_auth_view.dart';
 import '../modules/ForgotPassword/bindings/forgot_password_binding.dart';
 import '../modules/ForgotPassword/views/forgot_password_view.dart';
 import '../modules/GetPassLanding/bindings/getPass_landing_binding.dart';
 import '../modules/GetPassLanding/views/getpass_landing_view.dart';
-import '../modules/ImpresionPage/bindings/impresion_page_binding.dart';
-import '../modules/ImpresionPage/views/impresion_page_view.dart';
 import '../modules/IzinSakit/bindings/izin_sakit_binding.dart';
 import '../modules/IzinSakit/views/izin_sakit_view.dart';
 import '../modules/Login/bindings/login_binding.dart';
@@ -30,21 +21,14 @@ import '../modules/Riwayat_Izin/bindings/riwayat_izin_binding.dart';
 import '../modules/Riwayat_Izin/views/riwayat_izin_view.dart';
 import '../modules/Riwayat_Presensi/bindings/riwayat_presensi_binding.dart';
 import '../modules/Riwayat_Presensi/views/riwayat_presensi_view.dart';
-import '../modules/Surat_keluar/bindings/getpassview_binding.dart';
 import '../modules/Surat_keluar/bindings/surat_keluar_binding.dart';
 import '../modules/Surat_keluar/views/surat_keluar_view.dart';
-import '../modules/TimeControl/bindings/time_control_binding.dart';
-import '../modules/TimeControl/views/time_control_view.dart';
 import '../modules/Update_Profile/bindings/update_profile_binding.dart';
 import '../modules/Update_Profile/views/update_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/reguster/bindings/reguster_binding.dart';
-import '../modules/reguster/views/reguster_view.dart';
 import '../modules/screenlock/bindings/screenlock_binding.dart';
 import '../modules/screenlock/views/screenlock_view.dart';
-import '../modules/user_control/bindings/user_control_binding.dart';
-import '../modules/user_control/views/user_control_view.dart';
 
 part 'app_routes.dart';
 
@@ -86,19 +70,9 @@ class AppPages {
       binding: GetPassLandingBinding(),
     ),
     GetPage(
-      name: _Paths.FINGER_AUTH,
-      page: () => const FingerAuthView(),
-      binding: FingerAuthBinding(),
-    ),
-    GetPage(
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
-    ),
-    GetPage(
-      name: _Paths.DASHBOARD_EMPLOYEE,
-      page: () => const DashboardEmployeeView(),
-      binding: DashboardEmployeeBinding(),
     ),
     GetPage(
       name: _Paths.PROFILE,
@@ -114,11 +88,6 @@ class AppPages {
       name: _Paths.PASSWORD_UPDATES,
       page: () => const PasswordUpdatesView(),
       binding: PasswordUpdatesBinding(),
-    ),
-    GetPage(
-      name: _Paths.USER_CONTROL,
-      page: () => const UserControlView(),
-      binding: UserControlBinding(),
     ),
     GetPage(
       name: _Paths.SURAT_KELUAR,
@@ -141,19 +110,9 @@ class AppPages {
       binding: RiwayatIzinBinding(),
     ),
     GetPage(
-      name: _Paths.TIME_CONTROL,
-      page: () => const TimeControlView(),
-      binding: TimeControlBinding(),
-    ),
-    GetPage(
       name: _Paths.SCREENLOCK,
-      page: () => ScreenlockView(),
+      page: () => const ScreenlockView(),
       binding: ScreenlockBinding(),
-    ),
-    GetPage(
-      name: _Paths.REGUSTER,
-      page: () => const RegusterView(),
-      binding: RegusterBinding(),
     ),
   ];
 }

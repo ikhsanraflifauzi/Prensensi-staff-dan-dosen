@@ -30,7 +30,7 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
       ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             width: 360,
             height: 202,
             // color: ColorConstants.blue1,
@@ -43,10 +43,10 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                 future: controller.getAllGetPass(),
                 builder: (context, snapGet) {
                   if (snapGet.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapGet.data?.docs.length == 0 || snapGet.data == null) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: 200,
                       child: Center(
                         child: Text(
@@ -77,7 +77,7 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Tanggal :',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
@@ -85,22 +85,23 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                                         color: Colors.white),
                                   ),
                                   Text(
-                                    '${DateFormat.yMMMEd().format(DateTime.parse(data["Tanggal"]))}',
-                                    style: TextStyle(
+                                    DateFormat.yMMMEd().format(
+                                        DateTime.parse(data["Tanggal"])),
+                                    style: const TextStyle(
                                         fontFamily: 'Lexend',
                                         fontSize: 14,
                                         color: Colors.white),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 18,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     ' Jam Keluar',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
@@ -110,22 +111,24 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                                   Text(
                                     data['GetPass']['Tanggal'] == null
                                         ? '-'
-                                        : '${DateFormat.Hms().format(DateTime.parse(data["GetPass"]!["Tanggal"]))}',
-                                    style: TextStyle(
+                                        : DateFormat.Hms().format(
+                                            DateTime.parse(
+                                                data["GetPass"]!["Tanggal"])),
+                                    style: const TextStyle(
                                         fontFamily: 'Lexend',
                                         fontSize: 14,
                                         color: Colors.white),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 18,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Jam Kembali',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
@@ -135,22 +138,24 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                                   Text(
                                     data["GetBack"] == null
                                         ? "-"
-                                        : '${DateFormat.Hms().format(DateTime.parse(data["GetBack"]!["Tanggal"]))}',
-                                    style: TextStyle(
+                                        : DateFormat.Hms().format(
+                                            DateTime.parse(
+                                                data["GetBack"]!["Tanggal"])),
+                                    style: const TextStyle(
                                         fontFamily: 'Lexend',
                                         fontSize: 14,
                                         color: Colors.white),
                                   ),
                                 ],
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 18,
                               ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     'Perihal :',
                                     style: TextStyle(
                                         fontFamily: 'Lexend',
@@ -158,10 +163,8 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
                                         color: Colors.white),
                                   ),
                                   Text(
-                                    data['GetPass']['Alasan'] == null
-                                        ? '-'
-                                        : data['GetPass']['Alasan'],
-                                    style: TextStyle(
+                                    data['GetPass']['Alasan'] ?? '-',
+                                    style: const TextStyle(
                                         fontFamily: 'Lexend',
                                         fontSize: 14,
                                         color: Colors.white),
@@ -200,7 +203,7 @@ class RiwayatGetPassView extends GetView<RiwayatGetPassController> {
               onTap: () {
                 Get.dialog(Dialog(
                   child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       height: 400,
                       child: SfDateRangePicker(
                         startRangeSelectionColor: ColorConstants.lightClearBlue,
