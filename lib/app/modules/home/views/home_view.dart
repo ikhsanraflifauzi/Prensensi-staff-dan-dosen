@@ -514,7 +514,7 @@ class HomeView extends GetView<HomeController> {
                                                     ? Colors.black
                                                     : data['check out']
                                                                 ?['Jamkerja'] <
-                                                            540
+                                                            360
                                                         ? Colors.red
                                                         : Colors
                                                             .green, // Warna teks lainnya
@@ -548,7 +548,8 @@ class HomeView extends GetView<HomeController> {
             items: const [
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.person, title: 'Profil'),
-              TabItem(icon: Icons.sick, title: 'Absen')
+              TabItem(icon: Icons.sick, title: 'Absen'),
+              TabItem(icon: Icons.data_object, title: 'Rekap'),
             ],
             initialActiveIndex: pageController.pageIndex.value,
             onTap: (int i) => pageController.pagemove(i)));

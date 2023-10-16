@@ -22,6 +22,10 @@ class PageIndexController extends GetxController {
         pageIndex.value = i;
         Get.offAllNamed(Routes.IZIN_SAKIT);
         break;
+      case 3:
+        pageIndex.value = i;
+        Get.toNamed(Routes.REKAP_DATA);
+        break;
       default:
         pageIndex.value = i;
         Get.offAllNamed(Routes.HOME);
