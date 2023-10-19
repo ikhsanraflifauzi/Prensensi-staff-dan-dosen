@@ -14,6 +14,7 @@ class HomeController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   TextEditingController kegC = TextEditingController();
+  TextEditingController izinC = TextEditingController();
 
   void onCheckIn(context) async {
     try {
@@ -432,18 +433,87 @@ class HomeController extends GetxController {
               children: [
                 Image.asset('Assets/icon/Warning icon.png'),
                 const Text(
-                  'anda akan melakukan check out , sekarang ?',
+                  'anda akan melakukan check out, sekarang ?',
                   textAlign: TextAlign.center,
                 )
               ],
             ),
-            title: 'Terjadi Kesalahan',
+            title: 'Perhatian',
             backgroundColor: Colors.white,
             actions: [
               TextButton(
                   onPressed: () => Get.back(),
                   child: Text(
                     'kembali',
+                    style: TextStyle(
+                        fontFamily: 'Lexend',
+                        fontSize: 18,
+                        color: ColorConstants.darkClearBlue),
+                  )),
+              TextButton(
+                  onPressed: () {
+                    Get.defaultDialog(
+                        title: "izin pulang",
+                        content: Column(
+                          children: [
+                            TextField(
+                              controller: izinC,
+                            )
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () async {
+                                status = 'Terlalu cepat';
+                                if (datawaktu != null &&
+                                    datawaktu['check in'] != null &&
+                                    datawaktu['check in']['tanggal'] != null) {
+                                  String tanggalString =
+                                      datawaktu['check in']['tanggal'];
+                                  DateTime checkTime =
+                                      DateTime.parse(tanggalString);
+                                  int jam = checkTime.hour;
+                                  int menit = checkTime.minute;
+                                  TimeOfDay waktuMasuk =
+                                      TimeOfDay(hour: jam, minute: menit);
+
+                                  int convertToInt(TimeOfDay time) {
+                                    return time.hour * 60 + time.minute;
+                                  }
+
+                                  int masukAsInt = convertToInt(waktuMasuk);
+                                  await colPresensi.doc(docPresensi).update({
+                                    "check out": {
+                                      "tanggal": dateTime.toIso8601String(),
+                                      "alamat": address,
+                                      "latitude": position.latitude,
+                                      "longitude": position.longitude,
+                                      "jangkauan": jangkauan,
+                                      "status": status,
+                                      'Jamkerja': pulangAsInt - masukAsInt,
+                                      "izin": izinC.text
+                                    }
+                                  });
+                                }
+                                Get.back();
+                                Get.snackbar(
+                                    icon: Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Image.asset(
+                                        'Assets/icon/check icon.png',
+                                        width: 36,
+                                        height: 38,
+                                      ),
+                                    ),
+                                    'Pemberitahuan',
+                                    'Anda telah melakukan izin pulang lebih cepat',
+                                    backgroundColor: Colors.white);
+                              },
+                              child: const Text('ok'))
+                        ]);
+                  },
+                  child: Text(
+                    'izin',
                     style: TextStyle(
                         fontFamily: 'Lexend',
                         fontSize: 18,

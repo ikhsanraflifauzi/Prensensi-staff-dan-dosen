@@ -30,227 +30,398 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
             }),
       ),
       backgroundColor: ColorConstants.whitegray,
-      body: Column(
-        children: [
-          Table(
-            border: TableBorder.all(
-              color: Colors.black,
-            ),
-            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-            columnWidths: const <int, TableColumnWidth>{
-              0: FixedColumnWidth(60),
-              1: FixedColumnWidth(60),
-              2: FixedColumnWidth(60),
-              3: FlexColumnWidth(40),
-              4: FlexColumnWidth(40),
-              5: FlexColumnWidth(30),
-            },
-            children: [
-              TableRow(children: [
-                for (var title in [
-                  'Tgl',
-                  'Nama',
-                  'Check in',
-                  'Status',
-                  'Check out',
-                  'Jam kerja',
-                ])
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    color: ColorConstants.lightClearBlue,
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        fontFamily: 'lexend',
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-              ]),
-            ],
-          ),
-          Expanded(
-            child: GetBuilder<RiwayatPresensiController>(
-              builder: (c) {
-                return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  future: controller.getAllPresensi(),
-                  builder: (context, snap) {
-                    if (snap.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snap.data?.docs.length == 0 ||
-                        snap.data == null) {
-                      return const SizedBox(
-                        height: 200,
-                        child: Center(
-                          child: Text(
-                            'belum ada data presensi',
-                            style:
-                                TextStyle(fontFamily: 'Lexend', fontSize: 14),
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          stream: controller.streamUser(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(
+                    color: ColorConstants.darkClearBlue),
+              );
+            }
+            if (snapshot.hasData) {
+              Map<String, dynamic> user = snapshot.data!.data()!;
+
+              return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ClipOval(
+                          child: SizedBox(
+                            width: 70,
+                            height: 70,
+                            child: Image.network(
+                              user["profile"] ??
+                                  "https://ui-avatars.com/api/?name= ${user['Name']}",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: snap.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          if (snap.hasData) {
-                            Map<String, dynamic>? data =
-                                snap.data!.docs.reversed.toList()[index].data();
-
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Table(
-                                border: TableBorder.all(
-                                  color: Colors.black,
-                                ),
-                                defaultVerticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-                                columnWidths: const <int, TableColumnWidth>{
-                                  0: FixedColumnWidth(60),
-                                  1: FixedColumnWidth(60),
-                                  2: FixedColumnWidth(60),
-                                  3: FlexColumnWidth(40),
-                                  4: FlexColumnWidth(40),
-                                  5: FlexColumnWidth(30),
-                                },
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${user['Name']}',
+                              style: const TextStyle(
+                                  fontFamily: 'Lexend',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: Row(
                                 children: [
-                                  TableRow(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: Text(
-                                          DateFormat.yMMMEd().format(
-                                            DateTime.parse(data["tanggal"]),
-                                          ),
-                                          style: const TextStyle(
-                                            fontFamily: 'lexend',
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: const Text(
-                                          "Ikhsan",
-                                          style: TextStyle(
-                                            fontFamily: 'lexend',
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: Text(
-                                          data['check in']?['tanggal'] == null
-                                              ? "-"
-                                              : DateFormat.Hm().format(
-                                                  DateTime.parse(
-                                                      data["check in"]
-                                                          ["tanggal"]),
-                                                ),
-                                          style: const TextStyle(
-                                            fontFamily: 'lexend',
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: Text(
-                                          data['check in']?['status'] == null
-                                              ? "-"
-                                              : data['check in']['status'],
-                                          style: TextStyle(
-                                            fontFamily: 'lexend',
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: Text(
-                                          data['check out']?['tanggal'] == null
-                                              ? "-"
-                                              : DateFormat.Hm().format(
-                                                  DateTime.parse(
-                                                      data["check out"]
-                                                          ["tanggal"]),
-                                                ),
-                                          style: TextStyle(
-                                            fontFamily: 'lexend',
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5),
-                                        color: Colors.white,
-                                        child: Text(
-                                          data['check out']?['Jamkerja'] == null
-                                              ? "-"
-                                              : data['check out']['Jamkerja']
-                                                  .toString(),
-                                          style: TextStyle(
-                                            fontFamily: 'Lexend',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: data['check out']
-                                                        ?['Jamkerja'] ==
-                                                    null
-                                                ? Colors.black
-                                                : data['check out']
-                                                            ['Jamkerja'] <
-                                                        360
-                                                    ? Colors.red
-                                                    : Colors.green,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ],
+                                  const Text(
+                                    'Jabatan :',
+                                    style: TextStyle(
+                                        fontFamily: 'Lexend',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w100),
+                                  ),
+                                  Text(
+                                    user["jabatan"] != null
+                                        ? "${user['jabatan']}"
+                                        : "-",
+                                    style: const TextStyle(
+                                        fontFamily: 'Lexend',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w100),
                                   ),
                                 ],
                               ),
-                            );
-                          }
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: Row(
+                                children: [
+                                  const Text(
+                                    'Prodi :',
+                                    style: TextStyle(
+                                        fontFamily: 'Lexend',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w100),
+                                  ),
+                                  Text(
+                                    user["prodi"] != null
+                                        ? "${user['prodi']}"
+                                        : " - ",
+                                    style: const TextStyle(
+                                        fontFamily: 'Lexend',
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w100),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Table(
+                      border: TableBorder.all(
+                        color: Colors.black,
+                      ),
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: FixedColumnWidth(60),
+                        1: FixedColumnWidth(60),
+                        2: FixedColumnWidth(60),
+                        3: FlexColumnWidth(40),
+                        4: FlexColumnWidth(40),
+                        5: FlexColumnWidth(30),
+                      },
+                      children: [
+                        TableRow(children: [
+                          for (var title in [
+                            'Tgl',
+                            'Kegiatan',
+                            'Check in',
+                            'Status',
+                            'Check out',
+                            'Jam kerja',
+                          ])
+                            Container(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              color: ColorConstants.lightClearBlue,
+                              child: Text(
+                                title,
+                                style: const TextStyle(
+                                  fontFamily: 'lexend',
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                        ]),
+                      ],
+                    ),
+                    Expanded(
+                      child: GetBuilder<RiwayatPresensiController>(
+                        builder: (c) {
+                          return FutureBuilder<
+                              QuerySnapshot<Map<String, dynamic>>>(
+                            future: controller.getAllPresensi(),
+                            builder: (context, snap) {
+                              if (snap.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (snap.data?.docs.length == 0 ||
+                                  snap.data == null) {
+                                return const SizedBox(
+                                  height: 200,
+                                  child: Center(
+                                    child: Text(
+                                      'belum ada data presensi',
+                                      style: TextStyle(
+                                          fontFamily: 'Lexend', fontSize: 14),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  itemCount: snap.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    if (snap.hasData) {
+                                      Map<String, dynamic>? data = snap
+                                          .data!.docs.reversed
+                                          .toList()[index]
+                                          .data();
 
-                          return const Center(
-                            child: SizedBox(),
+                                      return Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 5),
+                                        child: Table(
+                                          border: TableBorder.all(
+                                            color: Colors.black,
+                                          ),
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          columnWidths: const <int,
+                                              TableColumnWidth>{
+                                            0: FixedColumnWidth(60),
+                                            1: FixedColumnWidth(60),
+                                            2: FixedColumnWidth(60),
+                                            3: FlexColumnWidth(40),
+                                            4: FlexColumnWidth(40),
+                                            5: FlexColumnWidth(30),
+                                          },
+                                          children: [
+                                            TableRow(
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  color: Colors.white,
+                                                  child: Text(
+                                                    DateFormat.yMMMEd().format(
+                                                      DateTime.parse(
+                                                          data["tanggal"]),
+                                                    ),
+                                                    style: const TextStyle(
+                                                      fontFamily: 'lexend',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  color: Colors.white,
+                                                  child: Text(
+                                                    data['check in']
+                                                                ?['kegiatan'] ==
+                                                            null
+                                                        ? "-"
+                                                        : data['check in']
+                                                            ['kegiatan'],
+                                                    style: const TextStyle(
+                                                      fontFamily: 'lexend',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  color: Colors.white,
+                                                  child: Text(
+                                                    data['check in']
+                                                                ?['tanggal'] ==
+                                                            null
+                                                        ? "-"
+                                                        : DateFormat.Hm()
+                                                            .format(
+                                                            DateTime.parse(data[
+                                                                    "check in"]
+                                                                ["tanggal"]),
+                                                          ),
+                                                    style: const TextStyle(
+                                                      fontFamily: 'lexend',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  color: Colors.white,
+                                                  child: Text(
+                                                    data['check in']
+                                                                ?['status'] ==
+                                                            null
+                                                        ? "-"
+                                                        : data['check in']
+                                                            ['status'],
+                                                    style: const TextStyle(
+                                                      fontFamily: 'lexend',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 5),
+                                                  color: Colors.white,
+                                                  child: Text(
+                                                    data['check out']
+                                                                ?['tanggal'] ==
+                                                            null
+                                                        ? "-"
+                                                        : DateFormat.Hm()
+                                                            .format(
+                                                            DateTime.parse(data[
+                                                                    "check out"]
+                                                                ["tanggal"]),
+                                                          ),
+                                                    style: TextStyle(
+                                                      fontFamily: 'lexend',
+                                                      color: Colors.black,
+                                                      fontSize: 12,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ),
+                                                Container(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(vertical: 5),
+                                                    color: Colors.white,
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        Get.defaultDialog(
+                                                            title:
+                                                                'Keterangan Izin',
+                                                            content: Row(
+                                                              children: [
+                                                                Text(
+                                                                  ' Alasan :',
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'lexend',
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 5,
+                                                                ),
+                                                                Text(
+                                                                  data['check out']
+                                                                              ?[
+                                                                              'izin'] ==
+                                                                          null
+                                                                      ? "tanpa keterangan"
+                                                                      : data['check out']
+                                                                          [
+                                                                          'izin'],
+                                                                  style: TextStyle(
+                                                                      fontFamily:
+                                                                          'lexend',
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ],
+                                                            ));
+                                                      },
+                                                      child: Text(
+                                                        data['check out']?[
+                                                                    'Jamkerja'] ==
+                                                                null
+                                                            ? "-"
+                                                            : data['check out']
+                                                                    ['Jamkerja']
+                                                                .toString(),
+                                                        style: TextStyle(
+                                                          fontFamily: 'Lexend',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: data['check out']
+                                                                      ?[
+                                                                      'Jamkerja'] ==
+                                                                  null
+                                                              ? Colors.black
+                                                              : data['check out']
+                                                                          [
+                                                                          'Jamkerja'] <
+                                                                      360
+                                                                  ? Colors.red
+                                                                  : Colors
+                                                                      .green,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+
+                                    return const Center(
+                                      child: SizedBox(),
+                                    );
+                                  },
+                                );
+                              }
+                            },
                           );
                         },
-                      );
-                    }
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-
+                      ),
+                    ),
+                  ]));
+            }
+            return Center();
+          }),
       floatingActionButton: CircularMenu(
           alignment: Alignment.bottomRight,
           toggleButtonColor: ColorConstants.darkClearBlue,
@@ -295,13 +466,6 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
               icon: Icons.calendar_month,
             ),
           ]),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //
-      //   },
-      //   child: Icon(Icons.calendar_month_outlined),
-      //   backgroundColor: ColorConstants.lightClearBlue,
-      // ),
     );
   }
 }

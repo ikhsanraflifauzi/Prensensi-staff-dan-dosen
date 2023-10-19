@@ -36,4 +36,9 @@ class RiwayatPresensiController extends GetxController {
     end = pickEnd;
     update();
   }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
+    String uid = auth.currentUser!.uid;
+    yield* fireStore.collection('Employee').doc(uid).snapshots();
+  }
 }
