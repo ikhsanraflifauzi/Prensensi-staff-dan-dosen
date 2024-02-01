@@ -349,8 +349,8 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      Row(
-                        children: const [
+                      const Row(
+                        children: [
                           SizedBox(
                             width: 24,
                           ),
@@ -451,10 +451,10 @@ class HomeView extends GetView<HomeController> {
                                         const SizedBox(
                                           height: 8,
                                         ),
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: const [
+                                          children: [
                                             Text(
                                               'Check Out',
                                               style: TextStyle(
@@ -480,10 +480,10 @@ class HomeView extends GetView<HomeController> {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: const [
+                                          children: [
                                             Text(
                                               'Jam kerja(Menit)',
                                               style: TextStyle(
@@ -549,7 +549,6 @@ class HomeView extends GetView<HomeController> {
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.person, title: 'Profil'),
               TabItem(icon: Icons.sick, title: 'Absen'),
-              TabItem(icon: Icons.data_object, title: 'Rekap'),
             ],
             initialActiveIndex: pageController.pageIndex.value,
             onTap: (int i) => pageController.pagemove(i)));

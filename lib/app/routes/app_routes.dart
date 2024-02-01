@@ -34,6 +34,7 @@ abstract class Routes {
   static const SCREENLOCK = _Paths.SCREENLOCK;
   static const REGUSTER = _Paths.REGUSTER;
   static const REKAP_DATA = _Paths.REKAP_DATA;
+  static const TEST = _Paths.TEST;
 }
 
 abstract class _Paths {
@@ -67,4 +68,5 @@ abstract class _Paths {
   static const SCREENLOCK = '/screenlock';
   static const REGUSTER = '/reguster';
   static const REKAP_DATA = '/rekap-data';
+  static const TEST = '/test';
 }

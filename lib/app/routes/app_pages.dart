@@ -30,8 +30,6 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/rekap_Data/bindings/rekap_data_binding.dart';
 import '../modules/rekap_Data/views/rekap_data_view.dart';
-import '../modules/screenlock/bindings/screenlock_binding.dart';
-import '../modules/screenlock/views/screenlock_view.dart';
 
 part 'app_routes.dart';
 
@@ -111,11 +109,6 @@ class AppPages {
       name: _Paths.RIWAYAT_IZIN,
       page: () => const RiwayatIzinView(),
       binding: RiwayatIzinBinding(),
-    ),
-    GetPage(
-      name: _Paths.SCREENLOCK,
-      page: () => const ScreenlockView(),
-      binding: ScreenlockBinding(),
     ),
     GetPage(
       name: _Paths.REKAP_DATA,

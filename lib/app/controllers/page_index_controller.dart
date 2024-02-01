@@ -12,7 +12,7 @@ class PageIndexController extends GetxController {
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   void pagemove(int i) async {
-    // pageIndex.value = i;
+    pageIndex.value = i;
     switch (i) {
       case 1:
         pageIndex.value = i;
@@ -21,10 +21,6 @@ class PageIndexController extends GetxController {
       case 2:
         pageIndex.value = i;
         Get.offAllNamed(Routes.IZIN_SAKIT);
-        break;
-      case 3:
-        pageIndex.value = i;
-        Get.toNamed(Routes.REKAP_DATA);
         break;
       default:
         pageIndex.value = i;

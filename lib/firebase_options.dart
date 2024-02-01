@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +49,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDWzPEIN6t9zgz2JCIOqNx2lNORQgybbPo',
-    appId: '1:950578543441:web:5f3041c78de72b0de53170',
-    messagingSenderId: '950578543441',
-    projectId: 'presensi-ddd76',
-    authDomain: 'presensi-ddd76.firebaseapp.com',
-    storageBucket: 'presensi-ddd76.appspot.com',
-    measurementId: 'G-14MHR2H140',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyByMG2b9zgLeBUpGy80qqP9lNkVpyx5Vms',
     appId: '1:950578543441:android:2efac338a328b99fe53170',
@@ -67,16 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '950578543441',
     projectId: 'presensi-ddd76',
     storageBucket: 'presensi-ddd76.appspot.com',
-    iosClientId: '950578543441-t7k7sb0ekjvfc7ctn9e1hdulecr9porm.apps.googleusercontent.com',
-    iosBundleId: 'com.proTA.protoypeTa',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC_egGZXTono7wCq62ejLEgKe3OgNwHw5c',
-    appId: '1:950578543441:ios:919294299f86aa71e53170',
-    messagingSenderId: '950578543441',
-    projectId: 'presensi-ddd76',
-    storageBucket: 'presensi-ddd76.appspot.com',
+    androidClientId: '950578543441-ed4d2hc39csnricuhc8jofqrtip828r4.apps.googleusercontent.com',
     iosClientId: '950578543441-t7k7sb0ekjvfc7ctn9e1hdulecr9porm.apps.googleusercontent.com',
     iosBundleId: 'com.proTA.protoypeTa',
   );

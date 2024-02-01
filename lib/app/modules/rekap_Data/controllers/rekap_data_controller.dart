@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 
 class RekapDataController extends GetxController {
-  //TODO: Implement RekapDataController
-
   final count = 0.obs;
   @override
   void onInit() {

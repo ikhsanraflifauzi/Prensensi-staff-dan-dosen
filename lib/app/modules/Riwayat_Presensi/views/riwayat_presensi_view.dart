@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:protoype_t_a/app/routes/app_pages.dart';
 
 import '../../../Utils/Colors.dart';
-import '../Component/list_riwayat_presensi.dart';
 import '../controllers/riwayat_presensi_controller.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -312,7 +311,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
                                                                     "check out"]
                                                                 ["tanggal"]),
                                                           ),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontFamily: 'lexend',
                                                       color: Colors.black,
                                                       fontSize: 12,
@@ -331,7 +330,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
                                                                 'Keterangan Izin',
                                                             content: Row(
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   ' Alasan :',
                                                                   style: TextStyle(
                                                                       fontFamily:
@@ -344,7 +343,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
                                                                           FontWeight
                                                                               .w600),
                                                                 ),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                   width: 5,
                                                                 ),
                                                                 Text(
@@ -356,7 +355,7 @@ class RiwayatPresensiView extends GetView<RiwayatPresensiController> {
                                                                       : data['check out']
                                                                           [
                                                                           'izin'],
-                                                                  style: TextStyle(
+                                                                  style: const TextStyle(
                                                                       fontFamily:
                                                                           'lexend',
                                                                       color: Colors

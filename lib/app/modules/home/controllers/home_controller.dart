@@ -549,7 +549,7 @@ class HomeController extends GetxController {
                             'Jamkerja': pulangAsInt - masukAsInt
                           }
                         });
-                      } else {}
+                      }
                     } else if (dateTime.isBefore(waktuBefore)) {
                       status = 'Terlalu cepat';
                       if (datawaktu != null &&
@@ -578,7 +578,7 @@ class HomeController extends GetxController {
                             'Jamkerja': pulangAsInt - masukAsInt
                           }
                         });
-                      } else {}
+                      }
 
                       Get.back();
                       Get.snackbar(
@@ -603,6 +603,7 @@ class HomeController extends GetxController {
                         color: ColorConstants.darkClearBlue),
                   )),
             ]);
+        // Get.back();
       }
     }
   }

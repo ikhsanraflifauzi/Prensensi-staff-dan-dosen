@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "950578543441-ed4d2hc39csnricuhc8jofqrtip828r4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.proTA.protoype_t_a",
+            "certificate_hash": "356029543c73c57fc4988b55c431e5c511e2f049"
+          }
+        },
+        {
           "client_id": "950578543441-skv3hbhkeukhhis078s9q6ikt2a6joma.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "950578543441-t7k7sb0ekjvfc7ctn9e1hdulecr9porm.apps.googleusercontent.com",
+              "client_id": "950578543441-e90v2o3irdn41gql94m4ictrrnocifsb.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.proTA.protoypeTa"
+                "bundle_id": "AdminPresensi.com.adminWebPresensi"
               }
             }
           ]

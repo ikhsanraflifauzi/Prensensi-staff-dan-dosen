@@ -16,7 +16,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 

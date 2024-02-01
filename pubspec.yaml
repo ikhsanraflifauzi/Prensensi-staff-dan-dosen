@@ -9,7 +9,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.5
   get_storage: ^2.1.1
-  firebase_core: 2.9.0
+  firebase_core: 2.11.0
+  firebase_analytics: 10.2.1
   firebase_auth: 4.4.0
   cloud_firestore: 4.5.0
   firebase_storage: 11.1.0
@@ -28,9 +29,7 @@ dependencies:
   expendable_fab: ^0.0.1
   circular_menu : any
   syncfusion_flutter_datepicker: ^21.2.3
-  flutter_lock_screen: ^2.0.1
-  flutter_screen_lock: ^9.0.1
-  
+
 
 dev_dependencies: 
   flutter_lints: 2.0.1
